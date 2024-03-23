@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 07:24:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/23 05:42:53 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/03/23 08:33:19 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[i])
 		str[j++] = s2[i++];
 	str[j] = '\0';
-	if (s1)
-		free (s1);
-	return (str);
+	return (free(s1), str);
 }
 
 void	ft_lstadd_back(t_node **lst, t_node *new)

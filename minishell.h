@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/23 05:27:50 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/03/23 10:58:47 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,5 @@ t_node	*create_node(char **matr, int start, int end);
 //-------------------------------------------------//
 
 int		exec_cmd(char *cmd, char **env);
-
+void	exec_node(t_node *node, char **env);
 #endif

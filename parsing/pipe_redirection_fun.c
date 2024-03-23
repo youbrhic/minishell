@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 08:29:41 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/22 11:01:04 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/03/23 11:48:39 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,21 @@
 int	open_file(char *file, char *redirection)
 {
 	int		fd;
+	char	*str;
 
 	fd = -1;
 	if (!ft_strcmp(redirection, ">"))
 		fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0777);
 	else if (!ft_strcmp(redirection, "<"))
+	{
 		fd = open(file, O_RDWR | O_TRUNC, 0777);
+		if (fd < 0)
+		{
+			str = ft_strndup("minishell : ", 13);
+			str = ft_strjoin(str, file);
+			perror(str);
+		}
+	}
 	else if (!ft_strcmp(redirection, ">>"))
 		fd = open(file, O_CREAT | O_RDWR | O_APPEND, 0777);
 	else if (!ft_strcmp(redirection, "<<"))

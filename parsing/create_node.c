@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 06:35:56 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/23 05:50:02 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/03/23 08:36:53 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,19 @@
 
 static void set_file_redirection(t_node *node, char **matr, int i)
 {
-	node->list_files_redirections = ft_strndup(matr[i], ft_strlen(matr[i]));
-	node->list_files_redirections = ft_strjoin(node->list_files_redirections, " ");
-	node->list_files_redirections = ft_strjoin(node->list_files_redirections, matr[i + 1]);
+	if (!node->list_files_redirections)
+	{
+		node->list_files_redirections = ft_strndup(matr[i], ft_strlen(matr[i]));
+		node->list_files_redirections = ft_strjoin(node->list_files_redirections, " ");
+		node->list_files_redirections = ft_strjoin(node->list_files_redirections, matr[i + 1]);
+	}
+	else 
+	{
+		node->list_files_redirections = ft_strjoin(node->list_files_redirections, " ");
+		node->list_files_redirections = ft_strjoin(node->list_files_redirections, matr[i]);
+		node->list_files_redirections = ft_strjoin(node->list_files_redirections, " ");
+		node->list_files_redirections = ft_strjoin(node->list_files_redirections, matr[i + 1]);
+	}
 }
 
 static void set_node(t_node *node, char **matr, int *i, int end)

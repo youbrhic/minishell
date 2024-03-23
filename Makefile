@@ -6,15 +6,18 @@
 #    By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 14:12:01 by youbrhic          #+#    #+#              #
-#    Updated: 2024/03/22 06:39:32 by youbrhic         ###   ########.fr        #
+#    Updated: 2024/03/23 11:03:34 by youbrhic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-FILES = main.c parsing/add_space.c parsing/pipe_redirection_fun.c util/libft_util.c \
-		parsing/create_node.c util/libft_util2.c parsing/get_nodes.c util/ft_split_cmd.c \
-		parsing/parse_line.c util/ft_split_cmd_util.c
+FILES = main.c execution/exec_cmd.c parsing/pipe_redirection_fun.c \
+		execution/exec_node.c util/ft_split.c \
+		parsing/add_space.c  util/ft_split_cmd.c \
+		parsing/create_node.c util/ft_split_cmd_util.c \
+		parsing/get_nodes.c  util/libft_util.c \
+		parsing/parse_line.c   util/libft_util2.c \
 
 OBJS = $(FILES:.c=.o)
 

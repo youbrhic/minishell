@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/23 05:23:20 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/03/23 10:59:15 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ static char *get_first_cmd(char *cmd)
 static char *get_path_cmd(char *cmd, char **env)
 {
 	int		i;
-	char	*path_cmds;
 	char	**all_paths;
 	char	*tmp;
 	char	*first_cmd;
