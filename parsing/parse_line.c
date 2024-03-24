@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 04:27:39 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/22 06:36:36 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/03/24 07:54:19 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	parse_line(char **matr)
 		str = ft_strndup("bash: syntax error nearunexpected token `newline'", 50);
 		write(2, str, ft_strlen(str));
 		write(1, "\n", 1);
-		return (-1);
+		return (free(str), -1);
 	}
 	return (1);
 }

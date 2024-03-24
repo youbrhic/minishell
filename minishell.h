@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/23 10:58:47 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/03/24 06:33:17 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,8 @@
 
 typedef struct s_node
 {
-	int				input;
-	int				output;
 	char			*cmd;
-	char			*list_files_redirections;
+	char			*redirections;
 	struct s_node	*next;
 }				t_node;
 
@@ -67,4 +65,5 @@ t_node	*create_node(char **matr, int start, int end);
 
 int		exec_cmd(char *cmd, char **env);
 void	exec_node(t_node *node, char **env);
+
 #endif

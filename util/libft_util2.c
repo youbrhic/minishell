@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 07:24:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/23 08:33:19 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/03/24 06:33:17 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,10 @@ static void	del(void *p)
 	t_node	*node;
 
 	node = p;
-	if (node->input)
-		close(node->input);
-	if (node->output != 1)
-		close(node->output);
-	free(node->cmd);
-	free(node->list_files_redirections);
+	if (node->cmd)
+		free(node->cmd);
+	if (node->redirections)
+		free(node->redirections);
 }
 
 void	ft_lstclear(t_node **lst)
@@ -86,8 +84,6 @@ void	ft_lstclear(t_node **lst)
 void	init_node(t_node **node)
 {
 	(*node)->cmd = ft_strndup("", 1);
-	(*node)->input = 0;
-	(*node)->output = 1;
+	(*node)->redirections = NULL;
 	(*node)->next = NULL;
-	(*node)->list_files_redirections = NULL;
 }

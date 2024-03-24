@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 08:29:41 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/23 11:48:39 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/03/24 06:31:47 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@ int	open_file(char *file, char *redirection)
 	return (fd);
 }
 
-void	check_fd(t_node *node, char *redirection)
-{
-	if (((!ft_strcmp(redirection, "<") || !ft_strcmp(redirection, "<<")))
-		&& node->input != 0)
-		close(node->input);
-	else if (((!ft_strcmp(redirection, ">") || !ft_strcmp(redirection, ">>")))
-		&& node->output != 1)
-		close(node->output);
-}
+// void	check_fd(t_node *node, char *redirection)
+// {
+// 	if (((!ft_strcmp(redirection, "<") || !ft_strcmp(redirection, "<<")))
+// 		&& node->input != 0)
+// 		close(node->input);
+// 	else if (((!ft_strcmp(redirection, ">") || !ft_strcmp(redirection, ">>")))
+// 		&& node->output != 1)
+// 		close(node->output);
+// }
 
 int	check_cmd_line(char **matr, int start, int end)
 {
