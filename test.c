@@ -1,34 +1,17 @@
 #include <stdio.h>
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
 
 int main() {
-    pid_t pid = fork();
+    // Create an array of strings for the command and its arguments
+    char *args[] = {"ls", "-l", NULL};
 
-    if (pid == -1) {
-        perror("fork");
-        return 1;
-    } else if (pid == 0)
-    {
-        // Child process
-        char *args[] = {"ls", "-l", NULL};
-        FILE *file = fopen("output.txt", "a");
-        if (file == NULL) {
-            perror("fopen");
-            return 1;
-        }
-        // Redirect stdout to the file
-        dup2(fileno(file), STDOUT_FILENO);
-        fclose(file);
-        execvp("ls", args);
-        perror("execvp");
-        return 1;
-    } else {
-        // Parent process
-        int status;
-        waitpid(pid, &status, 0);
-    }
+    // Create an array of strings for the environment variables
+    char *envp[] = {NULL};
 
-    return 0;
+    // Use execve to execute the command
+    execve("/bin/ls", args, envp);
+
+    // If execve returns, an error occurred
+    perror("execve");
+    return 1;
 }

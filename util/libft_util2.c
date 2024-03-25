@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 07:24:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/24 06:33:17 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/03/24 09:23:17 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,19 @@ void	ft_lstclear(t_node **lst)
 	*lst = NULL;
 }
 
-void	init_node(t_node **node)
+int	ft_lstsize(t_node *lst)
 {
-	(*node)->cmd = ft_strndup("", 1);
-	(*node)->redirections = NULL;
-	(*node)->next = NULL;
+	t_node	*temp;
+	int		size;
+
+	if (!lst)
+		return (0);
+	temp = lst;
+	size = 0;
+	while (temp)
+	{
+		size++;
+		temp = temp->next;
+	}
+	return (size);
 }

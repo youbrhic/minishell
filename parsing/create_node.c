@@ -6,12 +6,25 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 06:35:56 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/24 08:06:19 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:04:54 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+static int	check_cmd_line(char **matr, int start, int end)
+{
+	int		i;
+
+	i = start;
+	while (i < get_size_mat(matr) && matr[i] && i < end)
+	{
+		if (is_redirection(matr[i]))
+			return (i);
+		i++;
+	}
+	return (-1);
+}
 
 static void set_node(t_node *node, char **matr, int start, int end)
 {
@@ -66,8 +79,9 @@ t_node	*create_node(char **matr, int start, int end)
 	{
 		while (++i < end && matr[i])
 		{
+			if (ft_strlen(node->cmd) != 0)
+				node->cmd = ft_strjoin(node->cmd, " ");
 			node->cmd = ft_strjoin(node->cmd, matr[i]);
-			node->cmd = ft_strjoin(node->cmd, " ");
 		}
 		return (node);
 	}

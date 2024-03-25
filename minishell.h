@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/24 06:33:17 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/03/24 10:56:55 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,16 @@ int		ft_strcmp(const char *s1, const char *s2);
 int		is_quot(char c);
 int		is_space(char c);
 int		get_size_mat(char **str);
+int		ft_lstsize(t_node *lst);
 
 /*-----------------parsing-------------------*/
 //-------------------------------------------//
 
-void	check_fd(t_node *node, char *redirection);
+//void	check_fd(t_node *node, char *redirection);
 char	*add_space(char *input);
 int		parse_line(char **matr);
 int		is_oper(char *str);
 int		is_redirection(char	*str);
-int		open_file(char *file, char *redirection);
-int		check_cmd_line(char **matr, int start, int end);
 t_node	*get_nodes(char **matr);
 t_node	*create_node(char **matr, int start, int end);
 
@@ -64,6 +63,6 @@ t_node	*create_node(char **matr, int start, int end);
 //-------------------------------------------------//
 
 int		exec_cmd(char *cmd, char **env);
-void	exec_node(t_node *node, char **env);
+void	exec_list(t_node *node, char **env);
 
 #endif

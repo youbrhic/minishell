@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/24 08:07:07 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:08:21 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,14 @@ int	main(int ac, char **av, char **env)
 	char	*input;
 	char	**matrice;
 	t_node	*head;
+	int		input_fd;
+	int		output;
 
-	atexit(f);
 	(void)ac;
 	(void)av;
 	(void)env;
+	input_fd = dup(0);
+	output = dup(1);
 	while (1)
 	{
 		input = readline("minibash$ ");
@@ -68,11 +71,13 @@ int	main(int ac, char **av, char **env)
 							printf ("it's her \n");
 							exit(-1);
 						}
-						affiche(head);
-						//exec_node(head, env);
+						//affiche(head);
+						exec_list(head, env);
 						ft_lstclear(&head);
 					}
 					free_mat(&matrice);
+					dup2(0, input_fd);
+					dup2(1, output);
 				}
 			}
 			free(input);
