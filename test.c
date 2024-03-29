@@ -17,9 +17,72 @@ static void	affiche(t_node *head)
 		printf ("cmd : %s \n", tmp->cmd);
 		printf ("rederiction : %s \n", tmp->redirections);
 		tmp = tmp->next;
-		printf(" %d ------------------------\n", i);
+		printf(" ------------------------\n");
 		i++;
 	}
+}
+
+void	check_fd2(int input, int output)
+{
+	if (input != 0)
+		close(input);
+	if (output != 1)
+		close(output);
+}
+
+void	open_file2(char *redirection, int *input, int *output)
+{
+	int		i;
+	char	**matr;
+
+	if (!redirection)
+		return ;
+	i = -1;
+	matr = ft_split(redirection, ' ');
+	while (matr[++i])
+	{
+		check_fd2(*input, *output);
+		if (!ft_strcmp(matr[i], ">"))
+		{
+			*output = open(matr[i + 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			i++;
+		}
+		else if (!ft_strcmp(matr[i], "<"))
+		{
+			*input = open(matr[i + 1], O_RDONLY , 0644);
+			if (*input < 0)
+				perror(matr[i + 1]);
+			i++;
+		}
+		else if (!ft_strcmp(matr[i], ">>"))
+		{
+			*output = open(matr[i + 1], O_CREAT | O_WRONLY  | O_APPEND, 0644);
+			i++;
+		}
+	}
+	free_mat(&matr);
+}
+
+static void dup_io(int	input, int output)
+{
+	if (input != 0)
+	{
+		if (dup2(input, 0) < 0)
+			exit(1);
+	}
+	if (output != 1)
+	{
+		if (dup2(output, 1) < 0)
+			exit(1);
+	}
+}
+
+static void close_fd(int input, int output)
+{
+	if (input != 0)
+		close(input);
+	if (output != 1)
+		close(output);
 }
 
 static char	**add_pipes(char **av)
@@ -50,7 +113,7 @@ static int	ft_close_fd(int	*p_1, int *p_2, int i)
 	{
 		if (close(p_2[0]) < 0)
 			return (perror("Error"), -1);
-	} 
+	}
 	return (0);
 }
 
@@ -100,16 +163,22 @@ static int	ft_dup(int	*p_1, int *p_2, t_node*node, int i)
 	return (0); 
 }
 
-int	ft_execute_lst(char **av, int *p_1, int *p_2, char **env)
+int	ft_execute_lst(char *av, int *p_1, int *p_2, char **env)
 {
 	int			i;
 	int			pid;
 	t_node		*lst;
 	char		**matr;
+	char 		*word;
+	int			input;
+	int			output;
 
 	i = 1;
-	matr = add_pipes(&av[1]);
+	word = ft_strndup(av, ft_strlen(av));
+	matr = ft_split_cmd(word);
 	lst = get_nodes(matr);
+	input = 0;
+	output = 1;
 	while (lst)
 	{
 		if ((ft_pipe(p_1, p_2, lst, i) < 0))
@@ -119,6 +188,11 @@ int	ft_execute_lst(char **av, int *p_1, int *p_2, char **env)
 		{
 			if (0 <= ft_dup(p_1, p_2, lst, i))
 			{
+				if (lst->redirections)
+				{
+					open_file2(lst->redirections, &input, &output);
+					dup_io(input, output);
+				}
 				exec_cmd(lst->cmd, env);
 			}
 			exit(1);
@@ -132,7 +206,6 @@ int	ft_execute_lst(char **av, int *p_1, int *p_2, char **env)
 	return (0);
 }
 
-
 int main(int ac, char **av, char **env)
 {
 	int		pipes1[2];
@@ -141,7 +214,10 @@ int main(int ac, char **av, char **env)
 	char	**matr;
 	t_node	*head;
 
-	//node = get_nodes(matr);
+	//node = get_nodes(&av[1]);
 	//affiche(node);
-	ft_execute_lst(av, pipes1, pipes2, env);
+	// matr = add_pipes(&av[1]);
+	// node = get_nodes(matr);
+	if (ac == 2)
+		ft_execute_lst(av[1], pipes1, pipes2, env);
 }

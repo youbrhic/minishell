@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/28 13:20:04 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/03/29 13:36:13 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int	main(int ac, char **av, char **env)
 							printf ("it's her \n");
 							exit(-1);
 						}
-						//affiche(head);
-						exec_list(head, env);
+						affiche(head);
+						//exec_list(head, env);
 						ft_lstclear(&head);
 					}
 					free_mat(&matrice);
