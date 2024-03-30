@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/28 13:19:42 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/03/30 13:03:08 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,6 @@
 # include <readline/history.h>
 # include <libc.h>
 # include <errno.h>
-
-
-/*-----------------struct-of-data------------*/
-//-------------------------------------------//
-
-typedef struct s_data
-{
-	char		**env;
-	int			pipes1[2];
-	int			pipes2[2];
-}				t_data;
 
 /*-----------------struct-of-node------------*/
 //-------------------------------------------//
@@ -74,7 +63,7 @@ t_node	*create_node(char **matr, int start, int end);
 //-------------------------------------------------//
 
 int		exec_cmd(char *cmd, char **env);
-void	exec_list(t_node *node, char **env);
-
+int		exec_list(t_node *lst, int *p_1, int *p_2, char **env);
+int		open_file(char *redirection, int *input, int *output);
 
 #endif

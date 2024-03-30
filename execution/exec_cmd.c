@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/28 15:21:34 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/03/30 13:09:58 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char **get_all_paths(char **env)
 	return (paths);
 }
 
-static char *get_path_cmd(char *first_cmd, char *cmd, char **env)
+static char *get_path_cmd(char *first_cmd, char **env)
 {
 	int		i;
 	char	**all_paths;
@@ -83,7 +83,7 @@ int	exec_cmd(char *cmd, char **env)
 
 	all_cmd = ft_split_cmd(cmd);
 	i = -1;
-	path_cmd = get_path_cmd(all_cmd[0], cmd, env);
+	path_cmd = get_path_cmd(all_cmd[0], env);
 	if (!path_cmd || !all_cmd)
 		return (-1);
 	if (execve(path_cmd, all_cmd, env) < 0)

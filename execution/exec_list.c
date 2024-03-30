@@ -6,100 +6,103 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:01:51 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/28 17:25:59 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/03/30 13:22:00 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	check_fd(int input, int output)
-{
-	if (input != 0)
-		close(input);
-	if (output != 1)
-		close(output);
-}
 
-void	open_file(char *redirection, int *input, int *output)
+static int	ft_close_fd(int	*p_1, int *p_2, int i)
 {
-	int		i;
-	char	**matr;
-
-	if (!redirection)
-		return ;
-	i = -1;
-	matr = ft_split(redirection, ' ');
-	while (matr[++i])
+	if (i % 2 == 0)
 	{
-		check_fd(*input, *output);
-		if (!ft_strcmp(matr[i], ">"))
-		{
-			*output = open(matr[i + 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-			i++;
-		}
-		else if (!ft_strcmp(matr[i], "<"))
-		{
-			*input = open(matr[i + 1], O_RDONLY , 0644);
-			if (*input < 0)
-				perror(matr[i + 1]);
-			i++;
-		}
-		else if (!ft_strcmp(matr[i], ">>"))
-		{
-			*output = open(matr[i + 1], O_CREAT | O_WRONLY  | O_APPEND, 0644);
-			i++;
-		}
-	}
-	free_mat(&matr);
-}
-
-static void dup_io(int	input, int output)
-{
-	if (input != 0)
+		if (close(p_1[0]) < 0)
+			return (perror("Error"), -1);
+	} 
+	if ((1 < i) && (i % 2 != 0))
 	{
-		if (dup2(input, 0) < 0)
-			exit(1);
+		if (close(p_2[0]) < 0)
+			return (perror("Error"), -1);
 	}
-	if (output != 1)
+	return (0);
+}
+
+static int	ft_pipe(int	*p_1, int *p_2, t_node*node, int i)
+{
+	if ((i == 1) && node->next && ((pipe(p_1) < 0)))
+		return (perror("Error"), -1);
+	else if (1 < i)
 	{
-		if (dup2(output, 1) < 0)
-			exit(1);
+		if (!node->next)
+		{
+			if ((i % 2 == 0) && ((close(p_1[1]) < 0)))
+				return (perror("Error"), -1);
+			else if (i % 2 != 0 && ((close(p_2[1]) < 0)))
+				return (perror("Error"), -1);
+		}
+		else if ((i % 2 == 0) && \
+			((close(p_1[1]) < 0) || (pipe(p_2) < 0)))
+			return (perror("Error"), -1);
+		else if ((i % 2 != 0) && \
+			((close(p_2[1]) < 0) || (pipe(p_1) < 0)))
+			return (perror("Error"), -1);
 	}
+	return (0); 
 }
 
-static void close_fd(int input, int output)
+static int	ft_dup(int	*p_1, int *p_2, t_node *node, int i)
 {
-	if (input != 0)
-		close(input);
-	if (output != 1)
-		close(output);
+	if ((i == 1) && node->next && ((dup2(p_1[1], 1) < 0)))
+		return (perror("Error"), -1);
+	else if (1 < i)
+	{
+		if (!node->next)
+		{
+			if ((i % 2 == 0) && ((dup2(p_1[0], 0) < 0)))
+				return (perror("Error"), -1);
+			else if (i % 2 != 0 && ((dup2(p_2[0], 0) < 0)))
+				return (perror("Error"), -1);
+		}
+		else if ((i % 2 == 0) && ((dup2(p_1[0], 0) < 0) || \
+			(dup2(p_2[1], 1) < 0)))
+			return (perror("Error"), -1);
+		else if ((i % 2 != 0) && ((dup2(p_2[0], 0) < 0) ||
+			(dup2(p_1[1], 1) < 0)))
+			return (perror("Error"), -1);
+	}
+	return (0); 
 }
 
-void	exec_list(t_node *node, char **env)
+int	exec_list(t_node *lst, int *p_1, int *p_2, char **env)
 {
-	pid_t	pid;
-	int		input;
-	int		output;
+	int			i;
+	int			pid;
+	int			input;
+	int			output;
 
+	i = 0;
 	input = 0;
 	output = 1;
-	if (ft_lstsize(node) == 1)
+	while (lst && ++i)
 	{
+		if ((ft_pipe(p_1, p_2, lst, i) < 0))
+			return (-1);
 		pid = fork();
 		if (pid == 0)
 		{
-			open_file(node->redirections, &input, &output);
-			dup_io(input, output);
-			close_fd(input, output);
-			if (exec_cmd(node->cmd, env) < 0)
+			if (0 <= ft_dup(p_1, p_2, lst, i))
 			{
-				perror(node->cmd);
-				exit(1);
+				if (lst->redirections && open_file(lst->redirections, &input, &output) < 0)
+					exit(1);
+				exec_cmd(lst->cmd, env);
 			}
+			exit(1);
 		}
-		else if (pid == -1)
-			perror("fork error");
-		else
-			wait(&pid);
+		ft_close_fd(p_1, p_2, i);
+		lst = lst->next;
 	}
+	while (0 < wait(NULL))
+		;
+	return (0);
 }

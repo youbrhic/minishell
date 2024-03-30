@@ -6,30 +6,30 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/29 13:36:13 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/03/30 13:17:23 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	affiche(t_node *head)
-{
-	t_node	*tmp;
+// static void	affiche(t_node *head)
+// {
+// 	t_node	*tmp;
 
-	tmp = head;
-	while (tmp)
-	{
-		printf ("cmd : %s \n", tmp->cmd);
-		printf ("rederiction : %s \n", tmp->redirections);
-		tmp = tmp->next;
-		printf("------------------------\n");
-	}
-}
+// 	tmp = head;
+// 	while (tmp)
+// 	{
+// 		printf ("cmd : %s \n", tmp->cmd);
+// 		printf ("rederiction : %s \n", tmp->redirections);
+// 		tmp = tmp->next;
+// 		printf("------------------------\n");
+// 	}
+// }
 
-void f()
-{
-	system ("leaks minishell");
-}
+// void f()
+// {
+// 	system ("leaks minishell");
+// }
 
 int	main(int ac, char **av, char **env)
 {
@@ -38,7 +38,8 @@ int	main(int ac, char **av, char **env)
 	t_node	*head;
 	int		input_fd;
 	int		output;
-
+	int		pipes1[2];
+	int		pipes2[2];
 	(void)ac;
 	(void)av;
 	(void)env;
@@ -71,8 +72,8 @@ int	main(int ac, char **av, char **env)
 							printf ("it's her \n");
 							exit(-1);
 						}
-						affiche(head);
-						//exec_list(head, env);
+						//affiche(head);
+						exec_list(head, pipes1, pipes2, env);
 						ft_lstclear(&head);
 					}
 					free_mat(&matrice);
