@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/31 08:20:39 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/01 08:20:56 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,9 @@
 int	main(int ac, char **av, char **env)
 {
 	char	*input;
-	char	**matrice;
+	char	**token;
 	t_node	*head;
-	int		pipes1[2];
-	int		pipes2[2];
+
 	(void)ac;
 	(void)av;
 	(void)env;
@@ -55,24 +54,24 @@ int	main(int ac, char **av, char **env)
 				printf("syntaxe error : quote not close (\" or \')\n");
 			else
 			{
-				matrice = ft_split_cmd(input);
-				if (!matrice)
+				token = ft_split_cmd(input);
+				if (!token)
 					printf ("error");
 				else
 				{
-					if (parse_line(matrice) > 0)
+					if (parse_line(token) > 0)
 					{
-						head = get_nodes(matrice);
+						head = get_nodes(token);
 						if (!head)
 						{
 							printf ("it's her \n");
 							exit(-1);
 						}
 						//affiche(head);
-						exec_list(head, pipes1, pipes2, env);
+						exec_list(head, env);
 						ft_lstclear(&head);
 					}
-					free_mat(&matrice);
+					free_mat(&token);
 				}
 			}
 			free(input);

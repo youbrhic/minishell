@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:10:31 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/21 14:08:45 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/01 08:20:56 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,15 @@ char	**ft_split(char const *s, char c)
 {
 	int		i;
 	int		index;
-	int		tail_matrice;
+	int		tail_token;
 	char	**arr;
 
-	tail_matrice = count_words2(s, c);
+	tail_token = count_words2(s, c);
 	index = -1;
-	arr = (char **)malloc((sizeof(char *)) * (tail_matrice + 1));
+	arr = (char **)malloc((sizeof(char *)) * (tail_token + 1));
 	if (!arr || !s)
 		return (NULL);
-	while (++index < tail_matrice)
+	while (++index < tail_token)
 	{
 		i = 0;
 		while (*s && *s == c)

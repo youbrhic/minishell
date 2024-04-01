@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/30 13:03:08 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/01 10:03:00 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,18 @@ typedef struct s_node
 	char			*redirections;
 	struct s_node	*next;
 }				t_node;
+
+
+/*-------------------struct-of-argument------------*/
+//--------------------------------------------------//
+
+typedef struct s_argument
+{
+	int		p_1[2];
+	int		p_2[2];
+	int		input;
+	int		output;
+}				t_argument;
 
 /*-------------util functions -------------*/
 //-----------------------------------------//
@@ -51,7 +63,6 @@ int		ft_lstsize(t_node *lst);
 /*-----------------parsing-------------------*/
 //-------------------------------------------//
 
-//void	check_fd(t_node *node, char *redirection);
 char	*add_space(char *input);
 int		parse_line(char **matr);
 int		is_oper(char *str);
@@ -63,7 +74,7 @@ t_node	*create_node(char **matr, int start, int end);
 //-------------------------------------------------//
 
 int		exec_cmd(char *cmd, char **env);
-int		exec_list(t_node *lst, int *p_1, int *p_2, char **env);
+int		exec_list(t_node *lst, char **env);
 int		open_file(char *redirection, int *input, int *output);
 
 #endif

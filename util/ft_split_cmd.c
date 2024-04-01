@@ -67,15 +67,15 @@ char	**ft_split_cmd(char const *s)
 {
 	int		i;
 	int		index;
-	int		tail_matrice;
+	int		tail_token;
 	char	**arr;
 
-	tail_matrice = count_words(s);
+	tail_token = count_words(s);
 	index = -1;
-	arr = (char **)malloc((sizeof(char *)) * (tail_matrice + 1));
+	arr = (char **)malloc((sizeof(char *)) * (tail_token + 1));
 	if (!arr || !s)
 		return (NULL);
-	while (++index < tail_matrice)
+	while (++index < tail_token)
 	{
 		i = 0;
 		while (*s && is_space(*s))

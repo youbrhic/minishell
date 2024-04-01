@@ -6,37 +6,37 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/30 13:09:58 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/01 09:56:58 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char *get_path_env(char **env)
+static char	*get_path_env(char **env)
 {
-    int     i;
-    int     j;
-    char    *path;
+	int		i;
+	int		j;
+	char	*path;
 
-    i = -1;
-    path = ft_strndup("PATH", 4);
+	i = -1;
+	path = ft_strndup("PATH", 4);
 	if (!path)
 		return (NULL);
-    while(env[++i])
-    {
-        j = -1;
-        while (env[i][++j] && j < 5)
-        {
+	while (env[++i])
+	{
+		j = -1;
+		while (env[i][++j] && j < 5)
+		{
 			if (env[i][j] != path[j])
-				break;
-        }
+				break ;
+		}
 		if (j == 4)
 			return (free(path), env[i]);
-    }
+	}
 	return (free(path), NULL);
 }
 
-static char **get_all_paths(char **env)
+static char	**get_all_paths(char **env)
 {
 	char	**paths;
 	char	*path;
@@ -45,14 +45,14 @@ static char **get_all_paths(char **env)
 	path = get_path_env(env);
 	if (!path)
 		return (NULL);
-	i = -1; 
+	i = -1;
 	while (++i < 5 && *path)
 		path++;
 	paths = ft_split(path, ':');
 	return (paths);
 }
 
-static char *get_path_cmd(char *first_cmd, char **env)
+static char	*get_path_cmd(char *first_cmd, char **env)
 {
 	int		i;
 	char	**all_paths;
@@ -72,7 +72,7 @@ static char *get_path_cmd(char *first_cmd, char **env)
 			return (free_mat(&all_paths), tmp);
 		free(tmp);
 	}
-	return (free(first_cmd), free_mat(&all_paths), NULL);
+	return (free_mat(&all_paths), NULL);
 }
 
 int	exec_cmd(char *cmd, char **env)
@@ -82,12 +82,17 @@ int	exec_cmd(char *cmd, char **env)
 	int		i;
 
 	all_cmd = ft_split_cmd(cmd);
+	if (!all_cmd)
+		return (strerror(errno), -1);
 	i = -1;
 	path_cmd = get_path_cmd(all_cmd[0], env);
-	if (!path_cmd || !all_cmd)
-		return (-1);
+	if (!path_cmd)
+	{
+		write(2, all_cmd[0], ft_strlen(all_cmd[0]));
+		write(2, " : command not found \n", 23);
+		return (free_mat(&all_cmd), -1);
+	}
 	if (execve(path_cmd, all_cmd, env) < 0)
 		return (free_mat(&all_cmd), free(path_cmd), -1);
 	return (free_mat(&all_cmd), free(path_cmd), 1);
-	return (1);
 }
