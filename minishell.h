@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/01 10:03:00 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/02 13:05:22 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ typedef struct s_node
 	struct s_node	*next;
 }				t_node;
 
-
-/*-------------------struct-of-argument------------*/
+/*------------------struct-of-argument-------------*/
 //--------------------------------------------------//
 
 typedef struct s_argument

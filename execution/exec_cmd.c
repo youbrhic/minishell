@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/01 09:56:58 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:41:50 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,17 @@ static char	*get_path_cmd(char *first_cmd, char **env)
 			return (free_mat(&all_paths), tmp);
 		free(tmp);
 	}
-	return (free_mat(&all_paths), NULL);
+	return (free_mat(&all_paths), ft_strndup(first_cmd, ft_strlen(first_cmd)));
+}
+
+static void print_error(char *str)
+{
+	if (str)
+	{
+		write(2, "minishell :", 11);
+		write(2, str, ft_strlen(str));
+		write(2, ": command not found\n", 20);
+	}
 }
 
 int	exec_cmd(char *cmd, char **env)
@@ -83,16 +93,15 @@ int	exec_cmd(char *cmd, char **env)
 
 	all_cmd = ft_split_cmd(cmd);
 	if (!all_cmd)
-		return (strerror(errno), -1);
+		return (perror("error"), errno);
 	i = -1;
 	path_cmd = get_path_cmd(all_cmd[0], env);
-	if (!path_cmd)
-	{
-		write(2, all_cmd[0], ft_strlen(all_cmd[0]));
-		write(2, " : command not found \n", 23);
-		return (free_mat(&all_cmd), -1);
-	}
 	if (execve(path_cmd, all_cmd, env) < 0)
-		return (free_mat(&all_cmd), free(path_cmd), -1);
-	return (free_mat(&all_cmd), free(path_cmd), 1);
+	{
+		if (path_cmd)
+			free(path_cmd);
+		print_error(all_cmd[0]);
+		return (free_mat(&all_cmd), 127);
+	}
+	return (free_mat(&all_cmd), free(path_cmd), 0);
 }

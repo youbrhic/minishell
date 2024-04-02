@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:01:51 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/01 10:04:41 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:47:22 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,13 @@ static int	ft_dup(int	*p_1, int *p_2, t_node *node, int i)
 
 static void	exec_node(t_node *lst, int *input, int *output, char **env)
 {
+	int n;
+
 	if (lst->redirections
-		&& open_file(lst->redirections, input, output) < 0)
-		exit(errno);
-	if (exec_cmd(lst->cmd, env) < 0)
-		exit(errno);
+		&& (n = open_file(lst->redirections, input, output) != 0))
+		exit(n);
+	if ((n = exec_cmd(lst->cmd, env)) != 0)
+		exit(n);
 }
 
 int	exec_list(t_node *lst, char **env)
@@ -89,6 +91,7 @@ int	exec_list(t_node *lst, char **env)
 	int			i;
 	int			pid;
 	t_argument	args;
+	int			status;
 
 	(1) && (i = 0, args.input = 0, args.output = 1);
 	while (lst && ++i)
@@ -103,7 +106,7 @@ int	exec_list(t_node *lst, char **env)
 		}
 		(1) && (ft_close_fd(args.p_1, args.p_2, i), lst = lst->next);
 	}
-	while (0 < wait(NULL))
-		;
+	waitpid(-1, &status, 0);
+	// printf ("%d \n", WEXITSTATUS(status));
 	return (0);
 }

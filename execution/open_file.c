@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 11:09:12 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/01 10:06:49 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:43:59 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	open_file_help(char *redirection, int *input, int *output)
 	char	**matr;
 
 	i = -1;
-	matr = ft_split(redirection, ' ');
+	matr = ft_split_cmd(redirection);
 	while (matr[++i])
 	{
 		check_fd(*input, *output);
@@ -64,14 +64,16 @@ static int	open_file_help(char *redirection, int *input, int *output)
 			break ;
 	}
 	if (i != get_size_mat(matr))
-		return (perror(matr[i]), free_mat(&matr), -1);
-	return (free_mat(&matr), 1);
+		return (perror(matr[i]), free_mat(&matr), errno);
+	return (free_mat(&matr), 0);
 }
 
 int	open_file(char *redirection, int *input, int *output)
 {
-	if (open_file_help(redirection, input, output) < 0
+	int		n;
+
+	if ((n = open_file_help(redirection, input, output) != 0)
 		|| dup_io(*input, *output) < 0 || close_fd(*input, *output) < 0)
-		return (-1);
-	return (1);
+		return (n);
+	return (0);
 }
