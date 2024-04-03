@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:01:51 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/02 14:47:22 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/03 14:52:49 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ int	exec_list(t_node *lst, char **env)
 		}
 		(1) && (ft_close_fd(args.p_1, args.p_2, i), lst = lst->next);
 	}
-	waitpid(-1, &status, 0);
-	// printf ("%d \n", WEXITSTATUS(status));
-	return (0);
+	//;WEXITSTATUS(status)
+	while (waitpid(-1, &status, 0) > 0)
+			;
+	return (1);
 }
