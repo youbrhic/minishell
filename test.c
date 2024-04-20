@@ -206,18 +206,18 @@ int	ft_execute_lst(char *av, int *p_1, int *p_2, char **env)
 	return (0);
 }
 
-int main(int ac, char **av, char **env)
-{
-	int		pipes1[2];
-	int		pipes2[2];
-	t_node  *node;
-	char	**matr;
-	t_node	*head;
+// int main(int ac, char **av, char **env)
+// {
+// 	int		pipes1[2];
+// 	int		pipes2[2];
+// 	t_node  *node;
+// 	char	**matr;
+// 	t_node	*head;
 
-	//node = get_nodes(&av[1]);
-	//affiche(node);
-	// matr = add_pipes(&av[1]);
-	// node = get_nodes(matr);
-	if (ac == 2)
-		ft_execute_lst(av[1], pipes1, pipes2, env);
-}
+// 	//node = get_nodes(&av[1]);
+// 	//affiche(node);
+// 	// matr = add_pipes(&av[1]);
+// 	// node = get_nodes(matr);
+// 	if (ac == 2)
+// 		ft_execute_lst(av[1], pipes1, pipes2, env);
+// }

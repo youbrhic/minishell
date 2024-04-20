@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/01 08:20:56 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:35:59 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int ac, char **av, char **env)
             	add_history(input);
 			input = add_space(input);
 			if (!input)
-				printf("syntaxe error : quote not close (\" or \')\n");
+				printf("syntaxe error : quote not close \n");
 			else
 			{
 				token = ft_split_cmd(input);
@@ -68,6 +68,7 @@ int	main(int ac, char **av, char **env)
 							exit(-1);
 						}
 						//affiche(head);
+						// exec_bultin(head, env);
 						exec_list(head, env);
 						ft_lstclear(&head);
 					}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/02 13:05:22 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/19 18:11:34 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,17 @@ t_node	*create_node(char **matr, int start, int end);
 int		exec_cmd(char *cmd, char **env);
 int		exec_list(t_node *lst, char **env);
 int		open_file(char *redirection, int *input, int *output);
+// bultin function
+void 	exec_bultin(char *cmd, char **env);
+int		check_bultin(char *cmd);
+
+
+/*--------------------bultin--------------------*/
+//-------------------------------------------------//
+
+void 	ft_echo(char *args);
+void	ft_pwd();
+void	ft_cd(char *args);
+void	ft_env(char **env);
 
 #endif

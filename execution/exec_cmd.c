@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/02 14:41:50 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:23:01 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,11 @@ int	exec_cmd(char *cmd, char **env)
 	all_cmd = ft_split_cmd(cmd);
 	if (!all_cmd)
 		return (perror("error"), errno);
+	if (check_bultin(all_cmd[0]))
+	{
+		exec_bultin(cmd, env);
+		return (free_mat(&all_cmd), 0);
+	}
 	i = -1;
 	path_cmd = get_path_cmd(all_cmd[0], env);
 	if (execve(path_cmd, all_cmd, env) < 0)
