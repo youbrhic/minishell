@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:56:37 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/21 11:35:26 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/20 03:35:38 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strndup(const char *s1, int n)
 	i = 0;
 	new = (char *)malloc(n + 1);
 	if (new == NULL)
-		return (NULL);
+		ft_perror("malloc", -1);
 	while (s1[i] && i < n)
 	{
 		new[i] = s1[i];
@@ -55,20 +55,6 @@ void	free_mat(char ***mtr)
 	free(*mtr);
 }
 
-int	get_size_mat(char **str)
-{
-	int		i;
-	int		count;
-
-	if (!str || !*str)
-		return (0);
-	i = -1;
-	count = 0;
-	while (str[++i])
-		count++;
-	return (count);
-}
-
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;
@@ -84,4 +70,9 @@ int	ft_strcmp(const char *s1, const char *s2)
 	}
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 	return (0);
+}
+
+int	is_alphanum(char c)
+{
+	return ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));	
 }

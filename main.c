@@ -6,25 +6,25 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/03 14:37:45 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/20 03:00:54 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static void	affiche(t_node *head)
-// {
-// 	t_node	*tmp;
+static void	affiche(t_node *head)
+{
+	t_node	*tmp;
 
-// 	tmp = head;
-// 	while (tmp)
-// 	{
-// 		printf ("cmd : %s \n", tmp->cmd);
-// 		printf ("rederiction : %s \n", tmp->redirections);
-// 		tmp = tmp->next;
-// 		printf("------------------------\n");
-// 	}
-// }
+	tmp = head;
+	while (tmp)
+	{
+		printf ("cmd : %s \n", tmp->cmd);
+		printf ("rederiction : %s \n", tmp->redirections);
+		tmp = tmp->next;
+		printf("------------------------\n");
+	}
+}
 
 // void f()
 // {
@@ -59,6 +59,7 @@ int	main(int ac, char **av, char **env)
 					printf ("error");
 				else
 				{
+					expand(token);
 					if (parse_line(token) > 0)
 					{
 						head = get_nodes(token);
@@ -67,8 +68,8 @@ int	main(int ac, char **av, char **env)
 							printf ("it's her \n");
 							exit(-1);
 						}
-						//affiche(head);
-						exec_list(head, env);
+						affiche(head);
+						//exec_list(head, env);
 						ft_lstclear(&head);
 					}
 					free_mat(&token);
