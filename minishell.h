@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/19 18:11:34 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/20 05:14:31 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 # include <readline/history.h>
 # include <libc.h>
 # include <errno.h>
+
+/*-----------------exit_state---------------*/
+int		g_exit_state;
+//------------------------------------------//
 
 /*-----------------struct-of-node------------*/
 //-------------------------------------------//
@@ -43,14 +47,15 @@ typedef struct s_argument
 /*-------------util functions -------------*/
 //-----------------------------------------//
 
-void	init_node(t_node **node);
-void	ft_lstadd_back(t_node **lst, t_node *new);
-void	ft_lstclear(t_node **lst);
 void	free_mat(char ***mtr);
-char	*ft_strjoin(char *s1, char *s2);
-char	**ft_split_cmd(char const *s);
-char	*ft_strndup(const char *s1, int n);
+void	ft_lstclear(t_node **lst);
+void	ft_lstadd_back(t_node **lst, t_node *new);
+void	ft_perror(char *str, int ex);
 char	**ft_split(char const *s, char c);
+char	**ft_split_cmd(char const *s);
+char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strndup(const char *s1, int n);
+char	*ft_itoa(int n);
 int		count_words(char const *s);
 int		ft_strlen(char *c);
 int		ft_strcmp(const char *s1, const char *s2);
@@ -58,10 +63,12 @@ int		is_quot(char c);
 int		is_space(char c);
 int		get_size_mat(char **str);
 int		ft_lstsize(t_node *lst);
-
+int 	is_alphanum(char c);
 /*-----------------parsing-------------------*/
 //-------------------------------------------//
 
+void	expand(char **token);
+void	init_node(t_node **node);
 char	*add_space(char *input);
 int		parse_line(char **matr);
 int		is_oper(char *str);
