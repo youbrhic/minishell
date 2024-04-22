@@ -4,7 +4,7 @@
 int main()
 {
     char    *str;
+    int     fd;
 
-    str = getenv("PATH");
-    printf ("%s \n", str);
+    fd = open ("file   oop", O_CREAT);
 }

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/20 03:00:54 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/22 02:35:09 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,6 @@ static void	affiche(t_node *head)
 		printf("------------------------\n");
 	}
 }
-
-// void f()
-// {
-// 	system ("leaks minishell");
-// }
 
 int	main(int ac, char **av, char **env)
 {
@@ -51,7 +46,7 @@ int	main(int ac, char **av, char **env)
             	add_history(input);
 			input = add_space(input);
 			if (!input)
-				printf("syntaxe error : quote not close (\" or \')\n");
+				printf("syntaxe error \n");
 			else
 			{
 				token = ft_split_cmd(input);
@@ -60,6 +55,7 @@ int	main(int ac, char **av, char **env)
 				else
 				{
 					expand(token);
+					remove_quotes(token);
 					if (parse_line(token) > 0)
 					{
 						head = get_nodes(token);
@@ -68,8 +64,8 @@ int	main(int ac, char **av, char **env)
 							printf ("it's her \n");
 							exit(-1);
 						}
-						affiche(head);
-						//exec_list(head, env);
+						//affiche(head);
+						exec_list(head, env);
 						ft_lstclear(&head);
 					}
 					free_mat(&token);

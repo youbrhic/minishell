@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/20 04:13:45 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:04:49 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,7 @@
 # include <libc.h>
 # include <errno.h>
 
-/*-----------------exit_state---------------*/
 int		g_exit_state;
-//------------------------------------------//
-
-/*-----------------struct-of-node------------*/
-//-------------------------------------------//
 
 typedef struct s_node
 {
@@ -32,9 +27,6 @@ typedef struct s_node
 	char			*redirections;
 	struct s_node	*next;
 }				t_node;
-
-/*------------------struct-of-argument-------------*/
-//--------------------------------------------------//
 
 typedef struct s_argument
 {
@@ -44,13 +36,11 @@ typedef struct s_argument
 	int		output;
 }				t_argument;
 
-/*-------------util functions -------------*/
-//-----------------------------------------//
-
 void	free_mat(char ***mtr);
 void	ft_lstclear(t_node **lst);
 void	ft_lstadd_back(t_node **lst, t_node *new);
 void	ft_perror(char *str, int ex);
+void	remove_quotes(char **token);
 char	**ft_split(char const *s, char c);
 char	**ft_split_cmd(char const *s);
 char	*ft_strjoin(char *s1, char *s2);
@@ -64,8 +54,6 @@ int		is_space(char c);
 int		get_size_mat(char **str);
 int		ft_lstsize(t_node *lst);
 int 	is_alphanum(char c);
-/*-----------------parsing-------------------*/
-//-------------------------------------------//
 
 void	expand(char **token);
 void	init_node(t_node **node);
@@ -75,9 +63,6 @@ int		is_oper(char *str);
 int		is_redirection(char	*str);
 t_node	*get_nodes(char **matr);
 t_node	*create_node(char **matr, int start, int end);
-
-/*--------------------execution--------------------*/
-//-------------------------------------------------//
 
 int		exec_cmd(char *cmd, char **env);
 int		exec_list(t_node *lst, char **env);
