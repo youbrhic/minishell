@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:01:51 by youbrhic          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2024/04/19 18:03:51 by aait-bab         ###   ########.fr       */
+=======
 /*   Updated: 2024/04/03 14:52:49 by youbrhic         ###   ########.fr       */
+>>>>>>> 59802f23c1eec128652d13fd0305fde8ea55e5d8
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +26,7 @@ static int	ft_close_fd(int	*p_1, int *p_2, int i)
 	if ((1 < i) && (i % 2 != 0))
 	{
 		if (close(p_2[0]) < 0)
-			return (perror("Error"), -1);
+			return (perror("Error gg"), -1);
 	}
 	return (0);
 }
@@ -106,8 +110,15 @@ int	exec_list(t_node *lst, char **env)
 		}
 		(1) && (ft_close_fd(args.p_1, args.p_2, i), lst = lst->next);
 	}
+<<<<<<< HEAD
+	while (waitpid(-1, &status, 0) > 0)
+		;
+	// printf ("%d \n", WEXITSTATUS(status));
+	return (0);
+=======
 	//;WEXITSTATUS(status)
 	while (waitpid(-1, &status, 0) > 0)
 			;
 	return (1);
+>>>>>>> 59802f23c1eec128652d13fd0305fde8ea55e5d8
 }
