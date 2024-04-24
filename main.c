@@ -3,18 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/22 02:35:09 by youbrhic         ###   ########.fr       */
-=======
-<<<<<<< HEAD
-/*   Updated: 2024/04/19 15:35:59 by aait-bab         ###   ########.fr       */
-=======
-/*   Updated: 2024/04/20 03:00:54 by youbrhic         ###   ########.fr       */
->>>>>>> 59802f23c1eec128652d13fd0305fde8ea55e5d8
->>>>>>> 93120e4cc50f1e4e24a895bd8021f9c5f7df5175
+/*   Updated: 2024/04/24 03:10:29 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +46,7 @@ int	main(int ac, char **av, char **env)
             	add_history(input);
 			input = add_space(input);
 			if (!input)
-<<<<<<< HEAD
 				printf("syntaxe error \n");
-=======
-				printf("syntaxe error : quote not close \n");
->>>>>>> 93120e4cc50f1e4e24a895bd8021f9c5f7df5175
 			else
 			{
 				token = ft_split_cmd(input);
@@ -66,9 +54,9 @@ int	main(int ac, char **av, char **env)
 					printf ("error");
 				else
 				{
-					expand(token);
+					expand(token, 1);
 					remove_quotes(token);
-					if (parse_line(token) > 0)
+					if (parse_line(token) != 258)
 					{
 						head = get_nodes(token);
 						if (!head)
@@ -76,19 +64,8 @@ int	main(int ac, char **av, char **env)
 							printf ("it's her \n");
 							exit(-1);
 						}
-<<<<<<< HEAD
 						//affiche(head);
 						exec_list(head, env);
-=======
-<<<<<<< HEAD
-						//affiche(head);
-						// exec_bultin(head, env);
-						exec_list(head, env);
-=======
-						affiche(head);
-						//exec_list(head, env);
->>>>>>> 59802f23c1eec128652d13fd0305fde8ea55e5d8
->>>>>>> 93120e4cc50f1e4e24a895bd8021f9c5f7df5175
 						ft_lstclear(&head);
 					}
 					free_mat(&token);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_bultin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 23:02:18 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/04/19 19:06:20 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/24 05:05:22 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ int	check_bultin(char *cmd)
 	return (0);
 }
 
-
-void	exec_bultin(char	*cmd, char **env)
+void	exec_bultin(char *cmd, char **env)
 {
 	char	*command;
 	char	*args;

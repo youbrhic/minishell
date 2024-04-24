@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/21 16:04:49 by youbrhic         ###   ########.fr       */
-=======
-/*   Updated: 2024/04/20 05:14:31 by aait-bab         ###   ########.fr       */
->>>>>>> 93120e4cc50f1e4e24a895bd8021f9c5f7df5175
+/*   Updated: 2024/04/24 03:10:22 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -59,7 +56,7 @@ int		get_size_mat(char **str);
 int		ft_lstsize(t_node *lst);
 int 	is_alphanum(char c);
 
-void	expand(char **token);
+void	expand(char **token, int flag);
 void	init_node(t_node **node);
 char	*add_space(char *input);
 int		parse_line(char **matr);
@@ -68,6 +65,7 @@ int		is_redirection(char	*str);
 t_node	*get_nodes(char **matr);
 t_node	*create_node(char **matr, int start, int end);
 
+void    ft_hardoc(char *limiter);
 int		exec_cmd(char *cmd, char **env);
 int		exec_list(t_node *lst, char **env);
 int		open_file(char *redirection, int *input, int *output);

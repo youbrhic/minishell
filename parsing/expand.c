@@ -6,20 +6,20 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:09:14 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/20 05:03:21 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/24 08:12:57 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	get_index_dollar(char *str)
+static int	get_index_dollar(char *str, int flag)
 {
 	int		i;
 
 	i = -1;
 	while (str[++i])
 	{
-		if (str[i] == '\'')
+		if (str[i] == '\'' && flag)
 		{
 			while (str[i] && str[++i] != '\'')
 				;
@@ -73,7 +73,7 @@ static char	*ft_strenv(char *str, int index)
 	new_str = ft_strndup("", 1);
 	new_str = ft_strjoin(new_str, tmp);
 	i = index;
-	while (str[++i] && is_alphanum(str[i]))
+	while (str[++i] && !is_space(str[i]) && str[i] != '$')
 		;
 	new_str = ft_expenv(str, &i, new_str, index);
 	index = i;
@@ -88,7 +88,7 @@ static char	*ft_strenv(char *str, int index)
 	return (free(str), free(tmp), new_str);
 }
 
-void	expand(char **token)
+void	expand(char **token, int flag)
 {
 	int		i;
 	int		j;
@@ -96,12 +96,12 @@ void	expand(char **token)
 	i = -1;
 	while (token[++i])
 	{
-		if ((i > 0 && !ft_strcmp(token[i - 1], "<<"))
-			|| get_index_dollar(token[i]) < 0)
+		if ((i > 0 && !ft_strcmp(token[i - 1], "<<") && flag)
+			|| get_index_dollar(token[i], flag) < 0)
 			continue ;
 		else
 		{
-			j = get_index_dollar(token[i]);
+			j = get_index_dollar(token[i], flag);
 			token[i] = ft_strenv(token[i], j);
 			i--;
 		}
