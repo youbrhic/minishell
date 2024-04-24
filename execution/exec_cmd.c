@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/24 02:12:03 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/24 13:09:59 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,11 @@ static char	**get_all_paths(char **env)
 	int		i;
 
 	path = get_path_env(env);
-	if (!path)
-		return (NULL);
 	i = -1;
 	while (++i < 5 && *path)
 		path++;
 	paths = ft_split(path, ':');
-	return ( paths);
+	return (paths);
 }
 
 static char	*get_path_cmd(char *first_cmd, char **env)
@@ -83,6 +81,7 @@ int	exec_cmd(char *cmd, char **env)
 	all_cmd = ft_split_cmd(cmd);
 	if (!all_cmd)
 		return (perror("error"), errno);
+	remove_quotes(all_cmd);
 	i = -1;
 	path_cmd = get_path_cmd(all_cmd[0], env);
 	if (execve(path_cmd, all_cmd, env) < 0)

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/24 03:10:22 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/24 13:01:42 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int		is_oper(char *str);
 int		is_redirection(char	*str);
 t_node	*get_nodes(char **matr);
 t_node	*create_node(char **matr, int start, int end);
+t_node	*create_list(char **matr);
 
 void    ft_hardoc(char *limiter);
 int		exec_cmd(char *cmd, char **env);

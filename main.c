@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/24 03:10:29 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:03:20 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	main(int ac, char **av, char **env)
             	add_history(input);
 			input = add_space(input);
 			if (!input)
-				printf("syntaxe error \n");
+				printf("syntax error \n");
 			else
 			{
 				token = ft_split_cmd(input);
@@ -55,15 +55,11 @@ int	main(int ac, char **av, char **env)
 				else
 				{
 					expand(token, 1);
-					remove_quotes(token);
 					if (parse_line(token) != 258)
 					{
 						head = get_nodes(token);
 						if (!head)
-						{
-							printf ("it's her \n");
-							exit(-1);
-						}
+							continue;
 						//affiche(head);
 						exec_list(head, env);
 						ft_lstclear(&head);
