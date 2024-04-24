@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/21 02:49:35 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/24 08:39:04 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,6 @@
 // 		tmp = tmp->next;
 // 		printf("------------------------\n");
 // 	}
-// }
-
-// void f()
-// {
-// 	system ("leaks minishell");
 // }
 
 int	main(int ac, char **av, char **env)
@@ -51,7 +46,7 @@ int	main(int ac, char **av, char **env)
             	add_history(input);
 			input = add_space(input);
 			if (!input)
-				printf("syntaxe error : quote not close \n");
+				printf("syntaxe error \n");
 			else
 			{
 				token = ft_split_cmd(input);
@@ -59,8 +54,9 @@ int	main(int ac, char **av, char **env)
 					printf ("error");
 				else
 				{
-					expand(token);
-					if (parse_line(token) > 0)
+					expand(token, 1);
+					remove_quotes(token);
+					if (parse_line(token) != 258)
 					{
 						head = get_nodes(token);
 						if (!head)
@@ -69,7 +65,6 @@ int	main(int ac, char **av, char **env)
 							exit(-1);
 						}
 						//affiche(head);
-						// exec_bultin(head, env);
 						exec_list(head, env);
 						// affiche(head);
 						//exec_list(head, env);

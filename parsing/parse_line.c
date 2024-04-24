@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 04:27:39 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/24 07:54:19 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/24 03:04:15 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,43 +19,83 @@ int	is_oper(char *str)
 		|| !ft_strcmp(str, ">"));
 }
 
-static void	print_error(char *s)
+static char	*get_error(char *s)
 {
 	char	*str;
 
-	str = ft_strndup("minishell: syntax error near unexpected token : ", 51);
+	str = ft_strndup("minishell: syntax error near unexpected token : ", 48);
 	str = ft_strjoin(str, s);
-	if (str)
-	{
-		write(2, str, ft_strlen(str));
-		write(2, "\n", 1);
-		free(str);
-	}
+	return (str);
 }
 
-int	parse_line(char **matr)
+static char *check_line(char **matr, int *check)
 {
 	int		i;
 	char	*str;
 
 	if (!matr || !*matr)
-		return (-1);
+		return (NULL);
 	if (matr[0][0] == '|')
-		return (print_error("|"), -1);
+		return ((*check = 0), get_error("|"));
 	i = 0;
 	while (matr[++i])
 	{
 		if (is_oper(matr[i - 1]) && is_oper(matr[i]) && matr[i][0] == '|')
-			return (print_error(matr[i]), -1);
+			return ((*check = i), get_error(matr[i]));
 		if (is_oper(matr[i - 1]) && is_oper(matr[i]) && matr[i - 1][0] != '|')
-			return (print_error(matr[i]), -1);
+			return ((*check = i), get_error(matr[i]));
 	}
 	if (is_oper(matr[get_size_mat(matr) - 1]))
 	{
-		str = ft_strndup("bash: syntax error nearunexpected token `newline'", 50);
-		write(2, str, ft_strlen(str));
-		write(1, "\n", 1);
-		return (free(str), -1);
+		str = ft_strndup("bash: syntax error nearunexpected token `newline'", 49);
+		*check = get_size_mat(matr);
+		return (str);
 	}
-	return (1);
+	return ((*check = -1), ft_strndup("", 1));
+}
+
+static void skip_hardoc(char **matr)
+{
+	int		i;
+	int		index_error;
+	char	*str_error;
+
+	i = -1;
+	str_error = check_line(matr, &index_error);
+	if (!ft_strcmp(str_error, ""))
+		index_error = get_size_mat(matr);
+	while (matr[++i] && i < index_error)
+	{
+		if (!ft_strcmp(matr[i], "<<") && !is_oper(matr[i + 1]))
+			ft_hardoc(matr[i + 1]);
+	}
+}
+
+int	parse_line(char **matr)
+{
+	int		index_error;
+	char	*str_error;
+
+	str_error = check_line(matr, &index_error);
+	if (!str_error)
+		return (258);
+	if (index_error != get_size_mat(matr) && ft_strcmp(str_error, ""))
+	{
+		write(2, str_error, ft_strlen(str_error));
+		write(2, "\n", 1);
+		skip_hardoc(matr);
+		return (free(str_error), 258);
+	}
+	else
+	{
+		skip_hardoc(matr);
+		if (!ft_strcmp(str_error, ""))
+			return (free(str_error), 1);
+		else
+		{
+			write(2, str_error, ft_strlen(str_error));
+			write(2, "\n", 1);
+			return (free(str_error), 258);
+		}
+	}
 }

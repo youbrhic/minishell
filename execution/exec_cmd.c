@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/21 02:52:49 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/24 08:38:23 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,10 @@ static char	*get_path_env(char **env)
 	char	*path;
 
 	i = -1;
-	path = ft_strndup("PATH", 4);
+	path = getenv("PATH");
 	if (!path)
-		return (NULL);
-	while (env[++i])
-	{
-		j = -1;
-		while (env[i][++j] && j < 5)
-		{
-			if (env[i][j] != path[j])
-				break ;
-		}
-		if (j == 4)
-			return (free(path), env[i]);
-	}
-	return (free(path), NULL);
+		return ("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
+	return (path);
 }
 
 static char	**get_all_paths(char **env)
@@ -49,7 +38,7 @@ static char	**get_all_paths(char **env)
 	while (++i < 5 && *path)
 		path++;
 	paths = ft_split(path, ':');
-	return (paths);
+	return ( paths);
 }
 
 static char	*get_path_cmd(char *first_cmd, char **env)
