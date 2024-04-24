@@ -6,29 +6,25 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/19 15:35:59 by aait-bab         ###   ########.fr       */
-=======
-/*   Updated: 2024/04/20 03:00:54 by youbrhic         ###   ########.fr       */
->>>>>>> 59802f23c1eec128652d13fd0305fde8ea55e5d8
+/*   Updated: 2024/04/21 02:49:35 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	affiche(t_node *head)
-{
-	t_node	*tmp;
+// static void	affiche(t_node *head)
+// {
+// 	t_node	*tmp;
 
-	tmp = head;
-	while (tmp)
-	{
-		printf ("cmd : %s \n", tmp->cmd);
-		printf ("rederiction : %s \n", tmp->redirections);
-		tmp = tmp->next;
-		printf("------------------------\n");
-	}
-}
+// 	tmp = head;
+// 	while (tmp)
+// 	{
+// 		printf ("cmd : %s \n", tmp->cmd);
+// 		printf ("rederiction : %s \n", tmp->redirections);
+// 		tmp = tmp->next;
+// 		printf("------------------------\n");
+// 	}
+// }
 
 // void f()
 // {
@@ -72,14 +68,11 @@ int	main(int ac, char **av, char **env)
 							printf ("it's her \n");
 							exit(-1);
 						}
-<<<<<<< HEAD
 						//affiche(head);
 						// exec_bultin(head, env);
 						exec_list(head, env);
-=======
-						affiche(head);
+						// affiche(head);
 						//exec_list(head, env);
->>>>>>> 59802f23c1eec128652d13fd0305fde8ea55e5d8
 						ft_lstclear(&head);
 					}
 					free_mat(&token);

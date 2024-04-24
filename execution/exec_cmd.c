@@ -6,11 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/19 17:23:01 by aait-bab         ###   ########.fr       */
-=======
-/*   Updated: 2024/04/19 20:30:30 by youbrhic         ###   ########.fr       */
->>>>>>> 59802f23c1eec128652d13fd0305fde8ea55e5d8
+/*   Updated: 2024/04/21 02:52:49 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +96,7 @@ int	exec_cmd(char *cmd, char **env)
 		return (perror("error"), errno);
 	if (check_bultin(all_cmd[0]))
 	{
-		exec_bultin(cmd, env);
+		exec_bultin(all_cmd, env);
 		return (free_mat(&all_cmd), 0);
 	}
 	i = -1;

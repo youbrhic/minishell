@@ -6,28 +6,18 @@
 #    By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 14:12:01 by youbrhic          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2024/04/19 01:00:24 by aait-bab         ###   ########.fr        #
-=======
-#    Updated: 2024/04/20 05:07:27 by youbrhic         ###   ########.fr        #
->>>>>>> 59802f23c1eec128652d13fd0305fde8ea55e5d8
+#    Updated: 2024/04/24 08:33:36 by aait-bab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-<<<<<<< HEAD
-FILES = main.c execution/exec_cmd.c parsing/create_node.c util/ft_split.c  util/libft_util2.c \
-		execution/exec_list.c  parsing/get_nodes.c util/ft_split_cmd.c util/other_util.c \
-		execution/open_file.c parsing/parse_line.c  util/ft_split_cmd_util.c \
-		parsing/add_space.c  parsing/pipe_redirection_fun.c  util/libft_util.c\
-		execution/exec_bultin.c util/bultin_cmd.c
-=======
-FILES = main.c execution/exec_cmd.c     parsing/create_node.c    parsing/remove_quotes.c  util/ft_split_cmd_util.c \
-		execution/exec_list.c    parsing/expand.c         util/ft_itoa.c           util/libft_util.c \
-		execution/open_file.c    parsing/get_nodes.c      util/ft_split.c          util/libft_util2.c \
-		parsing/add_space.c      parsing/parse_line.c     util/ft_split_cmd.c      util/other_util.c
->>>>>>> 59802f23c1eec128652d13fd0305fde8ea55e5d8
+FILES = main.c butlin/ft_cd.c  execution/exec_bultin.c  parsing/get_nodes.c   util/ft_split_cmd_util.c \
+		butlin/ft_echo.c    execution/exec_cmd.c     parsing/parse_line.c   util/libft_util.c \
+		butlin/ft_env.c          execution/exec_list.c    parsing/remove_quotes.c  util/libft_util2.c \
+		butlin/ft_exit.c         execution/open_file.c     util/other_util.c \
+		butlin/ft_export.c       parsing/add_space.c      util/ft_itoa.c butlin/ft_pwd.c  parsing/create_node.c util/ft_split.c \
+		butlin/ft_unset.c        parsing/expand.c         util/ft_split_cmd.c  
 
 OBJS = $(FILES:.c=.o)
 
@@ -37,7 +27,7 @@ INCLUDE = minishell.h
 
 CC = gcc  -g 
 
-#CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror 
 
 READLINE_FLAGS = -lreadline -lncurses 
 

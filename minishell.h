@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/20 05:14:31 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/21 06:37:47 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int		is_space(char c);
 int		get_size_mat(char **str);
 int		ft_lstsize(t_node *lst);
 int 	is_alphanum(char c);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 /*-----------------parsing-------------------*/
 //-------------------------------------------//
 
@@ -83,16 +84,18 @@ int		exec_cmd(char *cmd, char **env);
 int		exec_list(t_node *lst, char **env);
 int		open_file(char *redirection, int *input, int *output);
 // bultin function
-void 	exec_bultin(char *cmd, char **env);
+void 	exec_bultin(char **args, char **env);
 int		check_bultin(char *cmd);
 
 
 /*--------------------bultin--------------------*/
 //-------------------------------------------------//
 
-void 	ft_echo(char *args);
-void	ft_pwd();
-void	ft_cd(char *args);
+void	ft_echo(char **args);
+void	ft_pwd(void);
+void	ft_cd(char **path);
 void	ft_env(char **env);
-
+void	ft_exit(void);
+void	ft_unset(char **args, char **env);
+void	ft_export(char **args, char **env);
 #endif
