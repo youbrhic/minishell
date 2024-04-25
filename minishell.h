@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/24 08:39:17 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/24 10:17:27 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ int		is_space(char c);
 int		get_size_mat(char **str);
 int		ft_lstsize(t_node *lst);
 int 	is_alphanum(char c);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int	ft_strchr(const char *s, int c);
+
 
 void	expand(char **token, int flag);
 void	init_node(t_node **node);

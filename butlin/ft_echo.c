@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:19:20 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/04/24 08:22:14 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/24 09:07:51 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	ft_echo(char **args)
 	}
 	while (args[i])
 	{
-		if (args[i][0] == '\"' || args[i][0] == '\'')
-			args[i] = ft_strndup(args[i] + 1, ft_strlen(args[i]) - 2);
 		printf("%s", args[i]);
 		if (args[i + 1])
 			printf(" ");

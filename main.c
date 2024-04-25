@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/24 08:39:04 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/24 11:48:25 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,34 @@
 // 		printf("------------------------\n");
 // 	}
 // }
+char	**copy_env(char **env)
+{
+	int		i;
+	char	**nenv;
+
+	i = 0;
+	while (env[i])
+		i++;
+	nenv = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!nenv)
+		return (NULL);
+	i = -1;
+	while (env[++i])
+		nenv[i] = ft_strndup(env[i], ft_strlen(env[i]));
+	nenv[i] = NULL;
+	return (nenv);
+}
 
 int	main(int ac, char **av, char **env)
 {
 	char	*input;
 	char	**token;
 	t_node	*head;
+	char	**nenv;
 
 	(void)ac;
 	(void)av;
-	(void)env;
+	nenv = copy_env(env);
 	while (1)
 	{
 		input = readline("minibash$ ");
@@ -55,7 +73,7 @@ int	main(int ac, char **av, char **env)
 				else
 				{
 					expand(token, 1);
-					remove_quotes(token);
+					// remove_quotes(token);
 					if (parse_line(token) != 258)
 					{
 						head = get_nodes(token);
@@ -65,7 +83,7 @@ int	main(int ac, char **av, char **env)
 							exit(-1);
 						}
 						//affiche(head);
-						exec_list(head, env);
+						exec_list(head, nenv);
 						// affiche(head);
 						//exec_list(head, env);
 						ft_lstclear(&head);

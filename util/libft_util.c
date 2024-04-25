@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:56:37 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/21 02:39:40 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/24 10:17:01 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,20 @@ int	ft_strcmp(const char *s1, const char *s2)
 int	is_alphanum(char c)
 {
 	return ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));	
+}
+
+int	ft_strchr(const char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+			return (i);
+		i++;
+	}
+	return (-1);
 }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)

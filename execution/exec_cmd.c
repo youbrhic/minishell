@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/24 08:38:23 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/24 09:39:23 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	*get_path_env(char **env)
 {
 	int		i;
-	int		j;
+	// int		j;
 	char	*path;
 
 	i = -1;
@@ -38,7 +38,7 @@ static char	**get_all_paths(char **env)
 	while (++i < 5 && *path)
 		path++;
 	paths = ft_split(path, ':');
-	return ( paths);
+	return (paths);
 }
 
 static char	*get_path_cmd(char *first_cmd, char **env)
@@ -81,8 +81,13 @@ int	exec_cmd(char *cmd, char **env)
 	int		i;
 
 	all_cmd = ft_split_cmd(cmd);
+	remove_quotes(all_cmd);
 	if (!all_cmd)
 		return (perror("error"), errno);
+	// for (i = 0; all_cmd[i]; i++)
+	// {
+	// 	printf("cmd[%d] = %s\n", i, all_cmd[i]);
+	// }
 	if (check_bultin(all_cmd[0]))
 	{
 		exec_bultin(all_cmd, env);
