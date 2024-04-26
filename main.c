@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/24 11:48:25 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/26 20:36:21 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 // 		printf("------------------------\n");
 // 	}
 // }
+/*PATH=/Users/aait-bab/.docker/bin:/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.
+PWD=/Users/aait-bab/Desktop/minishell
+SHLVL=1
+_=/usr/bin/env*/
+
 char	**copy_env(char **env)
 {
 	int		i;
@@ -49,6 +54,7 @@ int	main(int ac, char **av, char **env)
 	char	**token;
 	t_node	*head;
 	char	**nenv;
+	int		i;
 
 	(void)ac;
 	(void)av;
@@ -83,7 +89,7 @@ int	main(int ac, char **av, char **env)
 							exit(-1);
 						}
 						//affiche(head);
-						exec_list(head, nenv);
+						exec_list(head, &nenv);
 						// affiche(head);
 						//exec_list(head, env);
 						ft_lstclear(&head);

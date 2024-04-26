@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/24 10:17:27 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/26 20:40:59 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ t_node	*create_node(char **matr, int start, int end);
 
 void    ft_hardoc(char *limiter);
 int		exec_cmd(char *cmd, char **env);
-int		exec_list(t_node *lst, char **env);
+int		exec_list(t_node *lst, char ***env);
 int		open_file(char *redirection, int *input, int *output);
 // bultin function
-void 	exec_bultin(char **args, char **env);
+void 	exec_bultin(char **args, char ***env);
 int		check_bultin(char *cmd);
 
 
@@ -86,5 +86,5 @@ void	ft_cd(char **path);
 void	ft_env(char **env);
 void	ft_exit(void);
 void	ft_unset(char **args, char **env);
-void	ft_export(char **args, char **env);
+void	ft_export(char **args, char ***env);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_util2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 07:24:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/19 11:55:05 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/25 12:01:43 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	str[j] = '\0';
 	return (free(s1), str);
 }
+
 
 void	ft_lstadd_back(t_node **lst, t_node *new)
 {

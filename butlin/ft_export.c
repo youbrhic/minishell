@@ -6,13 +6,13 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:20:22 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/04/24 22:05:28 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/26 20:43:07 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	print_export_env(char **env)
+void	print_export_env(char ***env)
 {
 	char *v_qts;
 	int	f_occu;
@@ -21,17 +21,17 @@ void	print_export_env(char **env)
 	int	k;
 
 	i = -1;
-	while (env[++i])
+	while ((*env)[++i])
 	{
 		j = 0;
 		k = 0;
 		f_occu = 0;
-		v_qts = malloc(ft_strlen(env[i]) + 3);
+		v_qts = malloc(ft_strlen((*env)[i]) + 3);
 		if (!v_qts)
 			return ;
-		while (env[i][k])
+		while ((*env)[i][k])
 		{
-			v_qts[j] = env[i][k];
+			v_qts[j] = (*env)[i][k];
 			if (v_qts[j] == '=' && f_occu == 0)
 			{
 				v_qts[j + 1] = '\"';
@@ -66,24 +66,22 @@ int	get_env(char *key, char **env)
 	return (0);
 }
 
-char**	add_env_kv(char *arg, char **env)
+void	add_env_kv(char *arg, char ***env)
 {
 	char	**new_env;
 	int		j;
 
-	new_env = (char **)malloc(sizeof(char *) * (get_size_mat(env) + 2));
+	printf("size = %d\n", get_size_mat(*env));
+	new_env = (char **)malloc(sizeof(char *) * (get_size_mat(*env) + 2));
 	if (!new_env)
-		return (NULL);
+		return ;
 	j = -1;
 	while ((*env)[++j])
-	{
-		new_env[j] = ft_strndup((env)[j], ft_strlen((env)[j]));
-		free((env)[j]);
-	}
+		new_env[j] = ft_strndup((*env)[j], ft_strlen((*env)[j]));
 	new_env[j] = arg;
 	new_env[j + 1] = NULL;
-	free(env);
-	return (new_env);
+	free_mat(env);
+	*env = new_env;
 }
 
 // void	update_env(char *arg, char **env)
@@ -125,7 +123,30 @@ char**	add_env_kv(char *arg, char **env)
 // 	free(tmp);
 // }
 
-void	ft_export(char **args, char **env)
+int	ft_isalpha(int c)
+{
+	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+}
+
+int parse_arg(char *arg)
+{
+	char	*key;
+	int		i;
+
+	i = 0;
+	while (arg[i] && arg[i] != '=')
+		i++;
+	key = ft_strndup(arg, i);
+	if (key[0] != '_' && !ft_isalpha(key[0]))
+	{
+		printf("minishell: export: `%s': not a valid identifier\n", arg);
+		return 0;
+	}
+	return 1;
+}
+
+
+void	ft_export(char **args, char ***env)
 {
 	int	i;
 
@@ -136,17 +157,19 @@ void	ft_export(char **args, char **env)
 	{
 		while (args[i])
 		{
+			if (!parse_arg(args[i]))
+				return ;
 			// if (ft_strchr(args[i], '+='))
 			// 	update_env(args[i], env);
 			// else if (ft_strchr(args[i], '='))
 			// 	add_env_kv(args[i], env);
 			// else
-			for (int j = 0; env[j]; j++)
-				printf("env[%d] = %s\n", j, env[j]);
-			printf("------------------------\n");
-			env = add_env_kv(args[i], env);
-			for (int j = 0; env[j]; j++)
-				printf("env[%d] = %s\n", j, env[j]);
+			// for (int j = 0; env[j]; j++)
+			// 	printf("env[%d] = %s\n", j, env[j]);
+			// printf("------------------------\n");
+			add_env_kv(args[i], env);
+			for (int j = 0; (*env)[j]; j++)
+				printf("env[%d] = %s\n", j, (*env)[j]);
 			i++;
 		}
 	}

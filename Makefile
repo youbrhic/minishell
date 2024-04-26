@@ -6,7 +6,7 @@
 #    By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 14:12:01 by youbrhic          #+#    #+#              #
-#    Updated: 2024/04/24 08:57:12 by aait-bab         ###   ########.fr        #
+#    Updated: 2024/04/26 18:52:46 by aait-bab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ RM = rm -f
 
 INCLUDE = minishell.h
 
-CC = gcc   # -g -fsanitize=address
+CC = gcc    -g -fsanitize=address
 
 # CFLAGS = -Wall -Wextra -Werror 
 

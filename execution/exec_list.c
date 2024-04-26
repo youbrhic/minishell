@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:01:51 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/24 08:38:40 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/26 20:41:17 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,28 +87,36 @@ static void	exec_node(t_node *lst, int *input, int *output, char **env)
 		exit(n);
 }
 
-int	exec_list(t_node *lst, char **env)
+int	exec_list(t_node *lst, char ***env)
 {
 	int			i;
 	int			pid;
 	t_argument	args;
 	int			status;
 
-	(1) && (i = 0, args.input = 0, args.output = 1);
-	while (lst && ++i)
+	// bultin
+	if (lst->cmd && check_bultin(ft_split_cmd(lst->cmd)[0]))
 	{
-		if ((ft_pipe(args.p_1, args.p_2, lst, i) < 0))
-			return (-1);
-		pid = fork();
-		if (pid == 0)
-		{
-			if (0 <= ft_dup(args.p_1, args.p_2, lst, i))
-				exec_node(lst, &args.input, &args.output, env);
-		}
-		(1) && (ft_close_fd(args.p_1, args.p_2, i), lst = lst->next);
+		printf("bultin\n");
+		exec_bultin(ft_split_cmd(lst->cmd), env);
+		return (0);
 	}
-	while (waitpid(-1, &status, 0) > 0)
-		;
+
+	// (1) && (i = 0, args.input = 0, args.output = 1);
+	// while (lst && ++i)
+	// {
+	// 	if ((ft_pipe(args.p_1, args.p_2, lst, i) < 0))
+	// 		return (-1);
+	// 	pid = fork();
+	// 	if (pid == 0)
+	// 	{
+	// 		if (0 <= ft_dup(args.p_1, args.p_2, lst, i))
+	// 			exec_node(lst, &args.input, &args.output, env);
+	// 	}
+	// 	(1) && (ft_close_fd(args.p_1, args.p_2, i), lst = lst->next);
+	// }
+	// while (waitpid(-1, &status, 0) > 0)
+	// 	;
 	// printf ("%d \n", WEXITSTATUS(status));
 	return (0);
 }

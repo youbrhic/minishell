@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 23:02:18 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/04/24 08:42:54 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/26 20:40:36 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ int	check_bultin(char *cmd)
 	return (0);
 }
 
-void	exec_bultin(char **args, char **env)
+void	exec_bultin(char **args, char ***env)
 {
+	remove_quotes(args);
 	if (!ft_strcmp(args[0], "echo"))
 		ft_echo(args);
 	else if (!ft_strcmp(args[0], "cd"))
@@ -60,11 +61,12 @@ void	exec_bultin(char **args, char **env)
 	else if (!ft_strcmp(args[0], "pwd"))
 		ft_pwd();
 	else if (!ft_strcmp(args[0], "env"))
-		ft_env(env);
+		ft_env(*env);
 	else if (!ft_strcmp(args[0], "exit"))
 		ft_exit();
 	else if (!ft_strcmp(args[0], "unset"))
-		ft_unset(args, env);
+		ft_unset(args, *env);
 	else if (!ft_strcmp(args[0], "export"))
 		ft_export(args, env);
+		
 }
