@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_bultin.c                                      :+:      :+:    :+:   */
+/*   ft_exec_bultin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -51,7 +51,7 @@ int	check_bultin(char *cmd)
 	return (0);
 }
 
-void	exec_bultin(char *cmd, char **env)
+void	ft_exec_bultin(char *cmd, char **env)
 {
 	char	*command;
 	char	*args;

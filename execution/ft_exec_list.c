@@ -1,15 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_list.c                                        :+:      :+:    :+:   */
+/*   ft_exec_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/21 15:01:51 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/23 00:05:28 by youbrhic         ###   ########.fr       */
+/*   Created: 2024/04/25 11:23:29 by youbrhic          #+#    #+#             */
+/*   Updated: 2024/04/25 14:30:59 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../minishell.h"
 
@@ -78,16 +77,20 @@ static int	ft_dup(int	*p_1, int *p_2, t_node *node, int i)
 
 static void	exec_node(t_node *lst, int *input, int *output, char **env)
 {
-	int n;
+	int	state;
 
-	if (lst->redirections
-		&& (n = open_file(lst->redirections, input, output) != 0))
-		exit(n);
-	if ((n = exec_cmd(lst->cmd, env)) != 0)
-		exit(n);
+	if (lst->redirections)
+	{
+		state = ft_open_file(lst->redirections, input, output);
+		if (state)
+			exit(state);
+	}
+	state = ft_exec_cmd(lst->cmd, env);
+	if (state)
+		exit(state);
 }
 
-int	exec_list(t_node *lst, char **env)
+int	ft_exec_list(t_node *lst, char **env)
 {
 	int			i;
 	int			pid;
@@ -105,14 +108,13 @@ int	exec_list(t_node *lst, char **env)
 			if (0 <= ft_dup(args.p_1, args.p_2, lst, i))
 				exec_node(lst, &args.input, &args.output, env);
 		}
+		else if (pid == -1)
+			return (-1);
 		(1) && (ft_close_fd(args.p_1, args.p_2, i), lst = lst->next);
 	}
 	while (waitpid(-1, &status, 0) > 0)
 		;
-	// printf ("%d \n", WEXITSTATUS(status));
-	return (0);
-	//;WEXITSTATUS(status)
-	while (waitpid(-1, &status, 0) > 0)
-			;
-	return (1);
+	return (WEXITSTATUS(status));
 }
+
+// printf ("%d \n", WEXITSTATUS(status));

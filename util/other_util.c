@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 08:21:21 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/20 03:34:34 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:48:30 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_redirection(char	*str)
 void	init_node(t_node **node)
 {
 	(*node)->cmd = ft_strndup("", 1);
-	(*node)->redirections = NULL;
+	(*node)->redirections = ft_strndup("", 1);
 	(*node)->next = NULL;
 }
 
@@ -43,4 +43,18 @@ int	get_size_mat(char **str)
 	while (str[++i])
 		count++;
 	return (count);
+}
+
+char	**free2d(char ***arr, int index)
+{
+	int	i;
+
+	i = 0;
+	while (index - i >= 0)
+	{
+		free((*arr)[index - i]);
+		i++;
+	}
+	free(*arr);
+	return (NULL);
 }

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   remove_quotes.c                                    :+:      :+:    :+:   */
+/*   ft_remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -77,7 +77,7 @@ static char *ft_remove(char *str)
 	return (free(str), new_str);
 }
 
-void	remove_quotes(char **token)
+void	ft_remove_quotes(char **token)
 {
 	int		i;
 

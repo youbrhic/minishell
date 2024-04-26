@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   open_file.c                                        :+:      :+:    :+:   */
+/*   ft_open_file.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/30 11:09:12 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/24 02:56:48 by youbrhic         ###   ########.fr       */
+/*   Created: 2024/04/25 11:58:11 by youbrhic          #+#    #+#             */
+/*   Updated: 2024/04/25 14:15:56 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	dup_io(int input, int output)
 	return (1);
 }
 
-static int	open_file_help(char *redirection, int *input, int *output)
+static int	ft_open_file_help(char *redirection, int *input, int *output)
 {
 	int		i;
 	char	**matr;
@@ -70,12 +70,16 @@ static int	open_file_help(char *redirection, int *input, int *output)
 	return (free_mat(&matr), 0);
 }
 
-int	open_file(char *redirection, int *input, int *output)
+int	ft_open_file(char *redirection, int *input, int *output)
 {
-	int		n;
+	int	state;
 
-	if ((n = open_file_help(redirection, input, output) != 0)
-		|| dup_io(*input, *output) < 0 || close_fd(*input, *output) < 0)
-		return (n);
+	state = ft_open_file_help(redirection, input, output);
+	if (state || dup_io(*input, *output) < 0 || close_fd(*input, *output) < 0)
+	{
+		if (state)
+			return (state);
+		return (-1);
+	}
 	return (0);
 }

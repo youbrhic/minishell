@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_node.c                                      :+:      :+:    :+:   */
+/*   ft_create_node.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 06:35:56 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/24 13:00:14 by youbrhic         ###   ########.fr       */
+/*   Created: 2024/04/25 16:47:47 by youbrhic          #+#    #+#             */
+/*   Updated: 2024/04/26 05:14:17 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,27 @@ static int	check_cmd_line(char **matr, int start, int end)
 	return (-1);
 }
 
+static char	*join_word(char *str1, char *str2, char *str3, int space)
+{
+	char 	*new_str;
+
+	if (space)
+	{
+		new_str = ft_strndup(" ", 1);
+		new_str = ft_strjoin(new_str, str2);
+	}
+	else
+		new_str = ft_strndup(str1, ft_strlen(str1));
+	if (str1)
+		free(str1);
+	if (!new_str)
+		return (NULL);
+	new_str = ft_strjoin(new_str, str2);
+	new_str = ft_strjoin(new_str, " ");
+	new_str = ft_strjoin(new_str, str3);
+	return (new_str);
+}
+
 static void set_node(t_node *node, char **matr, int start, int end)
 {
 	int		i;
@@ -35,19 +56,10 @@ static void set_node(t_node *node, char **matr, int start, int end)
 	{
 		if (is_redirection(matr[i]))
 		{
-			if (!node->redirections)
-			{
-				node->redirections = ft_strndup(matr[i], ft_strlen(matr[i]));
-				node->redirections = ft_strjoin(node->redirections, " ");
-				node->redirections = ft_strjoin(node->redirections, matr[i + 1]);
-			}
+			if (!ft_strlen(node->redirections))
+				node->redirections = join_word(node->redirections, matr[i], matr[i + 1], 0);
 			else
-			{
-				node->redirections = ft_strjoin(node->redirections, " ");
-				node->redirections = ft_strjoin(node->redirections, matr[i]);
-				node->redirections = ft_strjoin(node->redirections, " ");
-				node->redirections = ft_strjoin(node->redirections, matr[i + 1]);
-			}
+				node->redirections = join_word(node->redirections, matr[i], matr[i + 1], 1);
 			i++;
 		}
 		else 
@@ -55,15 +67,21 @@ static void set_node(t_node *node, char **matr, int start, int end)
 			if (!node->cmd)
 				node->cmd = ft_strndup(matr[i], ft_strlen(matr[i]));
 			else
-			{
-				node->cmd = ft_strjoin(node->cmd, " ");
-				node->cmd = ft_strjoin(node->cmd, matr[i]);
-			}
+				node->cmd = join_word(node->cmd, matr[i], "", 0);
 		}
+		if (!node->cmd || !node->redirections)
+			break ;
 	}
 }
 
-t_node	*create_node(char **matr, int start, int end)
+static t_node *get_val_node(t_node *node)
+{
+	if (!node->cmd || !node->redirections)
+		return (ft_lstclear(&node), NULL);
+	return (node);
+}
+
+t_node	*ft_create_node(char **matr, int start, int end)
 {
 	t_node	*node;
 	int		i;
@@ -83,9 +101,8 @@ t_node	*create_node(char **matr, int start, int end)
 				node->cmd = ft_strjoin(node->cmd, " ");
 			node->cmd = ft_strjoin(node->cmd, matr[i]);
 		}
-		return (node);
 	}
 	else
 		set_node(node, matr, start, end);
-	return (node);
+	return (get_val_node(node));
 }

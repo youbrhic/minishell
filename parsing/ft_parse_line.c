@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_line.c                                       :+:      :+:    :+:   */
+/*   ft_parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 04:27:39 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/24 03:04:15 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/24 16:42:32 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,12 @@ static void skip_hardoc(char **matr)
 		index_error = get_size_mat(matr);
 	while (matr[++i] && i < index_error)
 	{
-		if (!ft_strcmp(matr[i], "<<") && !is_oper(matr[i + 1]))
+		if (!ft_strcmp(matr[i], "<<") && !is_oper(matr[i + 1]) && (i + 1) < get_size_mat(matr))
 			ft_hardoc(matr[i + 1]);
 	}
 }
 
-int	parse_line(char **matr)
+int	ft_parse_line(char **matr)
 {
 	int		index_error;
 	char	*str_error;

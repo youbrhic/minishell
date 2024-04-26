@@ -30,7 +30,7 @@ void	check_fd2(int input, int output)
 		close(output);
 }
 
-void	open_file2(char *redirection, int *input, int *output)
+void	ft_ft_open_file2(char *redirection, int *input, int *output)
 {
 	int		i;
 	char	**matr;
@@ -176,7 +176,7 @@ int	ft_execute_lst(char *av, int *p_1, int *p_2, char **env)
 	i = 1;
 	word = ft_strndup(av, ft_strlen(av));
 	matr = ft_split_cmd(word);
-	lst = get_nodes(matr);
+	lst = ft_get_nodes(matr);
 	input = 0;
 	output = 1;
 	while (lst)
@@ -190,10 +190,10 @@ int	ft_execute_lst(char *av, int *p_1, int *p_2, char **env)
 			{
 				if (lst->redirections)
 				{
-					open_file2(lst->redirections, &input, &output);
+					ft_ft_open_file2(lst->redirections, &input, &output);
 					dup_io(input, output);
 				}
-				exec_cmd(lst->cmd, env);
+				ft_ft_exec_cmd(lst->cmd, env);
 			}
 			exit(1);
 		}
@@ -214,10 +214,10 @@ int	ft_execute_lst(char *av, int *p_1, int *p_2, char **env)
 // 	char	**matr;
 // 	t_node	*head;
 
-// 	//node = get_nodes(&av[1]);
+// 	//node = ft_get_nodes(&av[1]);
 // 	//affiche(node);
 // 	// matr = add_pipes(&av[1]);
-// 	// node = get_nodes(matr);
+// 	// node = ft_get_nodes(matr);
 // 	if (ac == 2)
 // 		ft_execute_lst(av[1], pipes1, pipes2, env);
 // }

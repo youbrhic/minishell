@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:56:37 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/20 03:35:38 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/25 11:47:12 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strndup(const char *s1, int n)
 	i = 0;
 	new = (char *)malloc(n + 1);
 	if (new == NULL)
-		ft_perror("malloc", -1);
+		return (NULL);
 	while (s1[i] && i < n)
 	{
 		new[i] = s1[i];
