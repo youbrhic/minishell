@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:20:22 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/04/26 20:43:07 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/26 21:05:10 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ void	ft_export(char **args, char ***env)
 			// 	printf("env[%d] = %s\n", j, env[j]);
 			// printf("------------------------\n");
 			add_env_kv(args[i], env);
-			for (int j = 0; (*env)[j]; j++)
+			for (int j = 0; (env)[j]; j++)
 				printf("env[%d] = %s\n", j, (*env)[j]);
 			i++;
 		}

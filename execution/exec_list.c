@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:01:51 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/26 20:41:17 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/26 21:05:22 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int	exec_list(t_node *lst, char ***env)
 	{
 		printf("bultin\n");
 		exec_bultin(ft_split_cmd(lst->cmd), env);
+		
 		return (0);
 	}
 
