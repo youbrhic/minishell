@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/26 20:36:21 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/26 20:46:56 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	main(int ac, char **av, char **env)
             	add_history(input);
 			input = add_space(input);
 			if (!input)
-				printf("syntaxe error \n");
+				printf("syntax error \n");
 			else
 			{
 				token = ft_split_cmd(input);
@@ -84,10 +84,7 @@ int	main(int ac, char **av, char **env)
 					{
 						head = get_nodes(token);
 						if (!head)
-						{
-							printf ("it's her \n");
-							exit(-1);
-						}
+							continue;
 						//affiche(head);
 						exec_list(head, &nenv);
 						// affiche(head);

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:09:14 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/24 08:12:57 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/24 15:18:06 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	get_index_dollar(char *str, int flag)
 					return (i);
 			}
 		}
-		else if (str[i] == '$')
+		else if (str[i] == '$' && (i + 1 < ft_strlen(str) && (is_alphanum(str[i + 1]) || str[i + 1] == '?')))
 			return (i);
 	}
 	return (-1);
@@ -51,6 +51,8 @@ static char	*ft_expenv(char *str, int *i, char *word, int index)
 		(*i)++;
 		free(tmp);
 	}
+	else if (str[*i] >= '0' && str[*i] <= '9')
+		(1) && (new_str = ft_strjoin(new_str, ""), (*i)++);
 	else
 	{
 		tmp = ft_strndup(&str[index + 1], *i - index - 1);
@@ -73,7 +75,7 @@ static char	*ft_strenv(char *str, int index)
 	new_str = ft_strndup("", 1);
 	new_str = ft_strjoin(new_str, tmp);
 	i = index;
-	while (str[++i] && !is_space(str[i]) && str[i] != '$')
+	while (str[++i] && !is_alphanum(str[i]) && str[i] != '?')
 		;
 	new_str = ft_expenv(str, &i, new_str, index);
 	index = i;
@@ -93,6 +95,8 @@ void	expand(char **token, int flag)
 	int		i;
 	int		j;
 
+	if (!token)
+		return ;
 	i = -1;
 	while (token[++i])
 	{
