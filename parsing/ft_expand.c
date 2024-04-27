@@ -32,7 +32,8 @@ static int	get_index_dollar(char *str, int flag)
 					return (i);
 			}
 		}
-		else if (str[i] == '$' && (i + 1 < ft_strlen(str) && (is_alphanum(str[i + 1]) || str[i + 1] == '?' || str[i + 1] == '_')))
+		else if (str[i] == '$' && (i + 1 < ft_strlen(str) && (is_alphanum(str[i + 1]) 
+			|| str[i + 1] == '?' || str[i + 1] == '_')))
 			return (i);
 	}
 	return (-1);
@@ -44,14 +45,7 @@ static char	*ft_expenv(char *str, int *i, char *word, int index)
 	char	*new_str;
 
 	new_str = ft_strndup(word, ft_strlen(word));
-	if (str[*i] == '?')
-	{
-		tmp = ft_itoa(g_exit_state);
-		new_str = ft_strjoin(new_str, tmp);
-		(*i)++;
-		free(tmp);
-	}
-	else if (str[*i] >= '0' && str[*i] <= '9')
+	if (str[*i] >= '0' && str[*i] <= '9')
 		(1) && (new_str = ft_strjoin(new_str, ""), (*i)++);
 	else if (str[*i] == '_')
 		(1) && (new_str = ft_strjoin(new_str, getenv("_")), (*i)++);
@@ -67,7 +61,20 @@ static char	*ft_expenv(char *str, int *i, char *word, int index)
 	return (free(word), new_str);
 }
 
-static char	*ft_strenv(char *str, int index)
+static char *add_rest_word(char *str, char *str2, int *i, int index)
+{
+	char	*new_str;
+	char	*tmp;
+
+	while (str[++(*i)])
+			;
+	new_str = ft_strndup(str2, ft_strlen(str2));
+	tmp = ft_strndup(&str[index], *i);
+	new_str = ft_strjoin(new_str, tmp);
+	return (free(tmp), free(str2), new_str);
+}
+
+static char	*ft_strenv(char *str, int index, int exit_status)
 {
 	int		i;
 	char	*tmp;
@@ -77,22 +84,23 @@ static char	*ft_strenv(char *str, int index)
 	new_str = ft_strndup("", 1);
 	new_str = ft_strjoin(new_str, tmp);
 	i = index;
-	while (str[++i] && is_alphanum(str[i]) && str[i] != '?' && str[i] != '_')
+	while (str[++i] && is_alphanum(str[i]) && (str[i] >= '9' || str[i] <= '0'))
 		;
-	new_str = ft_expenv(str, &i, new_str, index);
+	if (str[i] == '?')
+	{
+		free(tmp);
+		tmp = ft_itoa(exit_status);
+		(1) && (new_str = ft_strjoin(new_str, tmp), i++);
+	}
+	else
+		new_str = ft_expenv(str, &i, new_str, index);
 	index = i;
 	if (str[i])
-	{
-		while (str[++i])
-			;
-		free(tmp);
-		tmp = ft_strndup(&str[index], i);
-		new_str = ft_strjoin(new_str, tmp);
-	}
+		new_str = add_rest_word(str, new_str, &i, index);
 	return (free(str), free(tmp), new_str);
 }
 
-void	ft_expand(char **token, int flag)
+void	ft_expand(char **token, int flag, int exit_status)
 {
 	int		i;
 	int		j;
@@ -108,7 +116,7 @@ void	ft_expand(char **token, int flag)
 		else
 		{
 			j = get_index_dollar(token[i], flag);
-			token[i] = ft_strenv(token[i], j);
+			token[i] = ft_strenv(token[i], j, exit_status);
 			i--;
 		}
 	}

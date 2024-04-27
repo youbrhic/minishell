@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/26 20:30:48 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/27 11:47:12 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,52 +29,31 @@ static void	affiche(t_node *head)
 int	main(int ac, char **av, char **env)
 {
 	char	*input;
-	char	**token;
+	int		exit_status;
 	t_node	*head;
-	t_data	data;
-	int		i;
+	char	**new_env;
 
 	(void)ac;
 	(void)av;
-	(void)env;
-	data.exit_state = 0;
-	data.env = get_env(env);
-	// i = -1;
-	// while (data.env[++i])
-	// 	printf ("%s \n", data.env[i]);
+	exit_status = 0;
+	new_env = get_matr_copy(env);
 	while (1)
 	{
 		input = readline("minibash$ ");
 		if (!input)
 			exit(1);
 		else
+			add_history(input);
+		head = ft_create_list(input, &exit_status);
+		if (!head)
+			continue;
+		else
 		{
-			if (*input)
-            	add_history(input);
-			input = ft_add_space(input);
-			if (!input)
-				printf("minishell : syntax error unclosed quotes \n");
-			else
-			{
-				token = ft_split_cmd(input);
-				if (!token)
-					printf ("error");
-				else
-				{
-					if (ft_parse_line(token) != 258)
-					{
-						head = ft_get_nodes(token);
-						if (!head)
-							continue;
-						//affiche(head);
-						ft_exec_list(head, data.env);
-						ft_lstclear(&head);
-					}
-					free_mat(&token);
-				}
-			}
-			free(input);
+			//affiche(head);
+			exit_status = ft_execv_cmd(head, &env);
+			ft_lstclear(&head);
 		}
+		free(input);
 	}
 	clear_history();
 }

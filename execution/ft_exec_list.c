@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:01:51 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/26 21:28:17 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/28 00:00:11 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,13 @@ static int	ft_dup(int	*p_1, int *p_2, t_node *node, int i)
 	return (0);
 }
 
-static void	exec_node(t_node *lst, int *input, int *output, char **env)
+static void	exec_node(t_node *lst, int *input, int *output, char ***env)
 {
 	int	state;
 
 	if (lst->redirections)
 	{
-		state = ft_open_file(lst->redirections, input, output);
+		state = ft_open_file(lst->redirections, input, output, 1);
 		if (state)
 			exit(state);
 	}
@@ -90,7 +90,7 @@ static void	exec_node(t_node *lst, int *input, int *output, char **env)
 		exit(state);
 }
 
-int	ft_exec_list(t_node *lst, char **env)
+int	ft_exec_list(t_node *lst, char ***env)
 {
 	int			i;
 	int			pid;

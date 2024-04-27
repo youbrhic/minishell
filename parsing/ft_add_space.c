@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 12:02:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/25 12:02:27 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/27 04:47:39 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,5 @@ char	*ft_add_space(char *input)
 			new_input[i++] = ' ';
 	}
 	new_input[i] = '\0';
-	return (free(input), new_input);
+	return (new_input);
 }
