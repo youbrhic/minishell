@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:20:22 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/04/26 21:05:10 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/27 21:36:04 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ int parse_arg(char *arg)
 	}
 	return 1;
 }
-
 
 void	ft_export(char **args, char ***env)
 {

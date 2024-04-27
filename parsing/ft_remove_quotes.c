@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   remove_quotes.c                                    :+:      :+:    :+:   */
+/*   ft_remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:57:53 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/24 09:11:26 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/22 02:03:00 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	getindexqoute(char *str)
 	int		i;
 
 	i = -1;
-	while (str[++i])
+	while(str[++i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 			return (1);
@@ -25,7 +25,7 @@ static int	getindexqoute(char *str)
 	return (0);
 }
 
-static	char *ft_skipquote(char *str1, char *str2, int *index)
+static char *ft_skipquote(char *str1, char *str2, int *index)
 {
 	int		i;
 	char	*new_str;
@@ -42,7 +42,7 @@ static	char *ft_skipquote(char *str1, char *str2, int *index)
 	return (free(tmp), free(str2), new_str);
 }
 
-static char	*getwordquote(char *str, char *str2, int *i)
+static char *getwordquote(char *str, char *str2, int *i)
 {
 	char	*new_str;
 	char	*tmp;
@@ -59,11 +59,11 @@ static char	*getwordquote(char *str, char *str2, int *i)
 	return (free(tmp), free(str2), new_str);
 }
 
-static char	*ft_remove(char *str)
+static char *ft_remove(char *str)
 {
 	int		i;
 	char	*new_str;
-	// int		index;
+	int		index;
 
 	i = -1;
 	new_str = ft_strndup("", 1);
@@ -77,7 +77,7 @@ static char	*ft_remove(char *str)
 	return (free(str), new_str);
 }
 
-void	remove_quotes(char **token)
+void	ft_remove_quotes(char **token)
 {
 	int		i;
 
@@ -85,7 +85,7 @@ void	remove_quotes(char **token)
 	while (token[++i])
 	{
 		if (!getindexqoute(token[i]))
-			continue ;
+			continue;
 		else
 			token[i] = ft_remove(token[i]);
 	}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_space.c                                  :+:      :+:    :+:   */
+/*   ft_add_space.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/09 21:19:55 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/03/15 03:43:26 by youbrhic         ###   ########.fr       */
+/*   Created: 2024/04/25 12:02:24 by youbrhic          #+#    #+#             */
+/*   Updated: 2024/04/25 12:02:27 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	help_norm2(char *input, char *new_input, int *size, int *i)
 	return (n);
 }
 
-char	*add_space(char *input)
+char	*ft_add_space(char *input)
 {
 	char	*new_input;
 	int		size;

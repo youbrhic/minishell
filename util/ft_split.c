@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:10:31 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/02 21:05:33 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/26 19:50:14 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,6 @@ static int	count_words2(char const *s, char c)
 	return (cnt);
 }
 
-static char	**free2d(char **arr, int index)
-{
-	int	i;
-
-	i = 0;
-	while (index - i >= 0)
-	{
-		free(arr[index - i]);
-		i++;
-	}
-	free(arr);
-	return (NULL);
-}
-
 char	**ft_split(char const *s, char c)
 {
 	int		i;
@@ -68,7 +54,7 @@ char	**ft_split(char const *s, char c)
 			i++;
 		arr[index] = ft_strndup(s, i);
 		if (arr[index] == NULL)
-			return (free2d(arr, index));
+			return (free2d(&arr, index));
 		while (*s && *s != c)
 			s++;
 	}

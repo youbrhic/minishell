@@ -1,15 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_list.c                                        :+:      :+:    :+:   */
+/*   ft_exec_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:01:51 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/26 21:05:22 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/26 21:28:17 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../minishell.h"
 
@@ -23,7 +22,7 @@ static int	ft_close_fd(int	*p_1, int *p_2, int i)
 	if ((1 < i) && (i % 2 != 0))
 	{
 		if (close(p_2[0]) < 0)
-			return (perror("Error"), -1);
+			return (perror("Error gg"), -1);
 	}
 	return (0);
 }
@@ -78,46 +77,44 @@ static int	ft_dup(int	*p_1, int *p_2, t_node *node, int i)
 
 static void	exec_node(t_node *lst, int *input, int *output, char **env)
 {
-	int n;
+	int	state;
 
-	if (lst->redirections
-		&& (n = open_file(lst->redirections, input, output) != 0))
-		exit(n);
-	if ((n = exec_cmd(lst->cmd, env)) != 0)
-		exit(n);
+	if (lst->redirections)
+	{
+		state = ft_open_file(lst->redirections, input, output);
+		if (state)
+			exit(state);
+	}
+	state = ft_exec_cmd(lst->cmd, env);
+	if (state)
+		exit(state);
 }
 
-int	exec_list(t_node *lst, char ***env)
+int	ft_exec_list(t_node *lst, char **env)
 {
 	int			i;
 	int			pid;
 	t_argument	args;
 	int			status;
 
-	// bultin
-	if (lst->cmd && check_bultin(ft_split_cmd(lst->cmd)[0]))
+	(1) && (i = 0, args.input = 0, args.output = 1);
+	while (lst && ++i)
 	{
-		printf("bultin\n");
-		exec_bultin(ft_split_cmd(lst->cmd), env);
-		
-		return (0);
+		if ((ft_pipe(args.p_1, args.p_2, lst, i) < 0))
+			return (-1);
+		pid = fork();
+		if (pid == 0)
+		{
+			if (0 <= ft_dup(args.p_1, args.p_2, lst, i))
+				exec_node(lst, &args.input, &args.output, env);
+		}
+		else if (pid == -1)
+			return (-1);
+		(1) && (ft_close_fd(args.p_1, args.p_2, i), lst = lst->next);
 	}
-
-	// (1) && (i = 0, args.input = 0, args.output = 1);
-	// while (lst && ++i)
-	// {
-	// 	if ((ft_pipe(args.p_1, args.p_2, lst, i) < 0))
-	// 		return (-1);
-	// 	pid = fork();
-	// 	if (pid == 0)
-	// 	{
-	// 		if (0 <= ft_dup(args.p_1, args.p_2, lst, i))
-	// 			exec_node(lst, &args.input, &args.output, env);
-	// 	}
-	// 	(1) && (ft_close_fd(args.p_1, args.p_2, i), lst = lst->next);
-	// }
-	// while (waitpid(-1, &status, 0) > 0)
-	// 	;
-	// printf ("%d \n", WEXITSTATUS(status));
-	return (0);
+	while (waitpid(-1, &status, 0) > 0)
+		;
+	return (WEXITSTATUS(status));
 }
+
+// printf ("%d \n", WEXITSTATUS(status));

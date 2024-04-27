@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   ft_exec_cmd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/26 20:46:10 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/25 18:30:24 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,22 @@
 static char	*get_path_env(char **env)
 {
 	int		i;
-	// int		j;
+	int		j;
 	char	*path;
 
 	i = -1;
 	path = getenv("PATH");
-	if (!path)
+	if (!path || !env)
 		return ("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
 	return (path);
 }
 
 static char	**get_all_paths(char **env)
 {
-	char	**paths;
 	char	*path;
-	int		i;
+	char	**paths;
 
 	path = get_path_env(env);
-	i = -1;
-	while (++i < 5 && *path)
-		path++;
 	paths = ft_split(path, ':');
 	return (paths);
 }
@@ -42,8 +38,8 @@ static char	**get_all_paths(char **env)
 static char	*get_path_cmd(char *first_cmd, char **env)
 {
 	int		i;
-	char	**all_paths;
 	char	*tmp;
+	char	**all_paths;
 
 	all_paths = get_all_paths(env);
 	if (!all_paths || !first_cmd)
@@ -57,12 +53,14 @@ static char	*get_path_cmd(char *first_cmd, char **env)
 		tmp = ft_strjoin(tmp, first_cmd);
 		if (!access(tmp, F_OK | X_OK))
 			return (free_mat(&all_paths), tmp);
+		if (!tmp)
+			return (free_mat(&all_paths), NULL);
 		free(tmp);
 	}
 	return (free_mat(&all_paths), ft_strndup(first_cmd, ft_strlen(first_cmd)));
 }
 
-static void print_error(char *str)
+static void	print_error(char *str)
 {
 	if (str)
 	{
@@ -72,18 +70,17 @@ static void print_error(char *str)
 	}
 }
 
-int	exec_cmd(char *cmd, char **env)
+int	ft_exec_cmd(char *cmd, char **env)
 {
 	char	*path_cmd;
 	char	**all_cmd;
 	int		i;
 
 	all_cmd = ft_split_cmd(cmd);
-	remove_quotes(all_cmd);
 	if (!all_cmd)
 		return (perror("error"), errno);
-	remove_quotes(all_cmd);
 	i = -1;
+	ft_remove_quotes(all_cmd);
 	path_cmd = get_path_cmd(all_cmd[0], env);
 	if (execve(path_cmd, all_cmd, env) < 0)
 	{

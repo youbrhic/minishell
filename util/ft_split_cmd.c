@@ -49,20 +49,6 @@ static char const	*help_norm2(char const *s)
 	return (tmp);
 }
 
-static char	**free2d(char **arr, int index)
-{
-	int	i;
-
-	i = 0;
-	while (index - i >= 0)
-	{
-		free(arr[index - i]);
-		i++;
-	}
-	free(arr);
-	return (NULL);
-}
-
 char	**ft_split_cmd(char const *s)
 {
 	int		i;
@@ -73,7 +59,7 @@ char	**ft_split_cmd(char const *s)
 	tail_token = count_words(s);
 	index = -1;
 	arr = (char **)malloc((sizeof(char *)) * (tail_token + 1));
-	if (!arr || !s)
+	if (!arr)
 		return (NULL);
 	while (++index < tail_token)
 	{
@@ -83,7 +69,7 @@ char	**ft_split_cmd(char const *s)
 		help_norm1(s, &i);
 		arr[index] = ft_strndup(s, i);
 		if (arr[index] == NULL)
-			return (free2d(arr, index));
+			return (free2d(&arr, index));
 		s = help_norm2(s);
 	}
 	return (arr[index] = NULL, arr);

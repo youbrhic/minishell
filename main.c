@@ -3,49 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/26 20:46:56 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/26 20:30:48 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static void	affiche(t_node *head)
-// {
-// 	t_node	*tmp;
-
-// 	tmp = head;
-// 	while (tmp)
-// 	{
-// 		printf ("cmd : %s \n", tmp->cmd);
-// 		printf ("rederiction : %s \n", tmp->redirections);
-// 		tmp = tmp->next;
-// 		printf("------------------------\n");
-// 	}
-// }
-/*PATH=/Users/aait-bab/.docker/bin:/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.
-PWD=/Users/aait-bab/Desktop/minishell
-SHLVL=1
-_=/usr/bin/env*/
-
-char	**copy_env(char **env)
+static void	affiche(t_node *head)
 {
-	int		i;
-	char	**nenv;
+	t_node	*tmp;
 
-	i = 0;
-	while (env[i])
-		i++;
-	nenv = (char **)malloc(sizeof(char *) * (i + 1));
-	if (!nenv)
-		return (NULL);
-	i = -1;
-	while (env[++i])
-		nenv[i] = ft_strndup(env[i], ft_strlen(env[i]));
-	nenv[i] = NULL;
-	return (nenv);
+	tmp = head;
+	while (tmp)
+	{
+		printf ("cmd : %s \n", tmp->cmd);
+		printf ("rederiction : %s \n", tmp->redirections);
+		tmp = tmp->next;
+		printf("------------------------\n");
+	}
 }
 
 int	main(int ac, char **av, char **env)
@@ -53,12 +31,17 @@ int	main(int ac, char **av, char **env)
 	char	*input;
 	char	**token;
 	t_node	*head;
-	char	**nenv;
+	t_data	data;
 	int		i;
 
 	(void)ac;
 	(void)av;
-	nenv = copy_env(env);
+	(void)env;
+	data.exit_state = 0;
+	data.env = get_env(env);
+	// i = -1;
+	// while (data.env[++i])
+	// 	printf ("%s \n", data.env[i]);
 	while (1)
 	{
 		input = readline("minibash$ ");
@@ -68,9 +51,9 @@ int	main(int ac, char **av, char **env)
 		{
 			if (*input)
             	add_history(input);
-			input = add_space(input);
+			input = ft_add_space(input);
 			if (!input)
-				printf("syntax error \n");
+				printf("minishell : syntax error unclosed quotes \n");
 			else
 			{
 				token = ft_split_cmd(input);
@@ -78,17 +61,13 @@ int	main(int ac, char **av, char **env)
 					printf ("error");
 				else
 				{
-					expand(token, 1);
-					// remove_quotes(token);
-					if (parse_line(token) != 258)
+					if (ft_parse_line(token) != 258)
 					{
-						head = get_nodes(token);
+						head = ft_get_nodes(token);
 						if (!head)
 							continue;
 						//affiche(head);
-						exec_list(head, &nenv);
-						// affiche(head);
-						//exec_list(head, env);
+						ft_exec_list(head, data.env);
 						ft_lstclear(&head);
 					}
 					free_mat(&token);

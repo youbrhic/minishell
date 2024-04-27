@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_list.c                                      :+:      :+:    :+:   */
+/*   ft_create_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/24 11:52:35 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/24 12:48:48 by youbrhic         ###   ########.fr       */
+/*   Created: 2024/04/25 15:02:29 by youbrhic          #+#    #+#             */
+/*   Updated: 2024/04/26 05:15:52 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ static int	check_espace(char *str)
 		}
 		else
 		{
-			if (!is_space(str[i]))
+			if (is_space(str[i]))
 				return (1);
 		}
 	}
 	return (0);
 }
 
-static void print_error(char *str)
+static void	print_error(char *str)
 {
 	char	*error;
 
@@ -46,13 +46,13 @@ static void print_error(char *str)
 	free(error);
 }
 
-static int check_ambiguous(char **matr)
+static int	check_ambiguous(char **matr)
 {
 	int		i;
 
 	if (!matr || !matr[0])
-		return (0);
-	expand(matr, 1);
+		return (-1);
+	ft_expand(matr, 1);
 	i = -1;
 	while (matr[++i])
 	{
@@ -60,27 +60,31 @@ static int check_ambiguous(char **matr)
 			i++;
 		if (!is_oper(matr[i]))
 		{
-			if (check_espace(matr[i]))
+			if (check_espace(matr[i + 1]))
 				return (i);
 		}
 	}
 	return (-1);
 }
 
-t_node	*create_list(char **matr)
+t_node	*ft_create_list(char **matr)
 {
-	t_node *head;
+	t_node	*head;
 	char	**token_cmd;
 	int		index;
 
-	head = get_nodes(matr);
+	head = ft_get_nodes(matr);
 	if (!head)
 		return (NULL);
 	token_cmd = ft_split_cmd(head->redirections);
-	if ((index = check_ambiguous(token_cmd)) > 0)
-		return (free(token_cmd), print_error(matr[index + 1]), NULL);
-	free(head);
-	expand(matr, 1);
-	head = get_nodes(matr);
+	if (!token_cmd)
+		return (ft_lstclear(&head), NULL);
+	index = check_ambiguous(token_cmd);
+	if (index > 0)
+		return (ft_lstclear(&head), free_mat(&token_cmd),
+			print_error(matr[index + 1]), NULL);
+	ft_lstclear(&head);
+	ft_expand(matr, 1);
+	head = ft_get_nodes(matr);
 	return (head);
 }
