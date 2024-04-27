@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 11:58:11 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/25 14:15:56 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/27 11:33:16 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,16 @@ static int	ft_open_file_help(char *redirection, int *input, int *output)
 			break ;
 	}
 	if (i != get_size_mat(matr))
-		return (perror(matr[i]), free_mat(&matr), errno);
+		return (perror(matr[i]), free_mat(&matr), 1);
 	return (free_mat(&matr), 0);
 }
 
-int	ft_open_file(char *redirection, int *input, int *output)
+int	ft_open_file(char *redirection, int *input, int *output, int flag)
 {
 	int	state;
 
 	state = ft_open_file_help(redirection, input, output);
-	if (state || dup_io(*input, *output) < 0 || close_fd(*input, *output) < 0)
+	if (state || (flag && (dup_io(*input, *output) < 0 || close_fd(*input, *output) < 0)))
 	{
 		if (state)
 			return (state);

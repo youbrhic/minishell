@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:20:22 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/04/26 20:43:07 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/27 11:47:12 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,22 @@ void	print_export_env(char ***env)
 	}
 }
 
-int	get_env(char *key, char **env)
-{
-	int	i;
-	int	j;
+// int	get_matr_copy(char *key, char **env)
+// {
+// 	int	i;
+// 	int	j;
 
-	i = -1;
-	while (env[++i])
-	{
-		j = 0;
-		while (env[i][j] && env[i][j] != '=')
-			j++;
-		if (!ft_strncmp(key, env[i], j))
-			return (i);
-	}
-	return (0);
-}
+// 	i = -1;
+// 	while (env[++i])
+// 	{
+// 		j = 0;
+// 		while (env[i][j] && env[i][j] != '=')
+// 			j++;
+// 		if (!ft_strncmp(key, env[i], j))
+// 			return (i);
+// 	}
+// 	return (0);
+// }
 
 void	add_env_kv(char *arg, char ***env)
 {
@@ -98,9 +98,9 @@ void	add_env_kv(char *arg, char ***env)
 // 	value = ft_strchr(arg, '=') + 1;
 // 	tmp = ft_strjoin(key, "=");
 // 	tmp = ft_strjoin(tmp, value);
-// 	if (get_env(key, env))
+// 	if (get_matr_copy(key, env))
 // 	{
-// 		free(get_env(key, env));
+// 		free(get_matr_copy(key, env));
 // 		set_env(key, tmp, env);
 // 	}
 // 	else

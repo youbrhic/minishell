@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/26 19:52:54 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/27 11:50:48 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <libc.h>
 # include <errno.h>
 
-int		g_exit_state;
+int		g_exit_status;
 
 typedef struct s_node
 {
@@ -28,12 +28,6 @@ typedef struct s_node
 	char			*redirections;
 	struct s_node	*next;
 }				t_node;
-
-typedef struct s_data
-{
-	char	**env;
-	int		exit_state;
-}				t_data;
 
 typedef struct s_argument
 {
@@ -43,7 +37,6 @@ typedef struct s_argument
 	int		output;
 }				t_argument;
 
-
 void	free_mat(char ***mtr);
 void	ft_lstclear(t_node **lst);
 void	ft_lstadd_back(t_node **lst, t_node *new);
@@ -52,7 +45,7 @@ void	ft_remove_quotes(char **token);
 char	**ft_split(char const *s, char c);
 char	**ft_split_cmd(char const *s);
 char	**free2d(char ***arr, int index);
-char 	**get_env(char **env);
+char 	**get_matr_copy(char **env);
 char	*ft_strjoin(char *s1, char *s2);
 char	*ft_strndup(const char *s1, int n);
 char	*ft_itoa(int n);
@@ -65,8 +58,7 @@ int		get_size_mat(char **str);
 int		ft_lstsize(t_node *lst);
 int 	is_alphanum(char c);
 
-
-void	ft_expand(char **token, int flag);
+void	ft_expand(char **token, int flag, int exit_status);
 void	init_node(t_node **node);
 char	*ft_add_space(char *input);
 int		ft_parse_line(char **matr);
@@ -74,25 +66,23 @@ int		is_oper(char *str);
 int		is_redirection(char	*str);
 t_node	*ft_get_nodes(char **matr);
 t_node	*ft_create_node(char **matr, int start, int end);
-t_node	*ft_create_list(char **matr);
+t_node	*ft_create_list(char *input, int *exit_status);
 
 
 void    ft_hardoc(char *limiter);
-int		ft_exec_cmd(char *cmd, char **env);
-int		ft_exec_list(t_node *lst, char **env);
-int		ft_open_file(char *redirection, int *input, int *output);
-
-// bultin function
-void 	ft_exec_bultin(char *cmd, char **env);
-int		check_bultin(char *cmd);
-
+int		ft_exec_cmd(char *cmd, char ***env);
+int		ft_exec_list(t_node *lst, char ***env);
+int		ft_open_file(char *redirection, int *input, int *output, int flag);
+int		ft_execv_cmd(t_node *node, char ***env);
 
 /*--------------------bultin--------------------*/
 //-------------------------------------------------//
 
-void 	ft_echo(char *args);
+void 	ft_echo(char **args);
 void	ft_pwd();
-void	ft_cd(char *args);
+void	ft_cd(char **args);
 void	ft_env(char **env);
+void	ft_exec_bultin(char *cmd, char **env);
+int		check_bultin(char *cmd);
 
 #endif

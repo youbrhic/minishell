@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 11:23:29 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/25 14:30:59 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/27 03:56:18 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,13 @@ static int	ft_dup(int	*p_1, int *p_2, t_node *node, int i)
 	return (0);
 }
 
-static void	exec_node(t_node *lst, int *input, int *output, char **env)
+static void	exec_node(t_node *lst, int *input, int *output, char ***env)
 {
 	int	state;
 
 	if (lst->redirections)
 	{
-		state = ft_open_file(lst->redirections, input, output);
+		state = ft_open_file(lst->redirections, input, output, 1);
 		if (state)
 			exit(state);
 	}
@@ -90,7 +90,7 @@ static void	exec_node(t_node *lst, int *input, int *output, char **env)
 		exit(state);
 }
 
-int	ft_exec_list(t_node *lst, char **env)
+int	ft_exec_list(t_node *lst, char ***env)
 {
 	int			i;
 	int			pid;

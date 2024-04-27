@@ -53,25 +53,21 @@ int	check_bultin(char *cmd)
 
 void	ft_exec_bultin(char *cmd, char **env)
 {
-	char	*command;
-	char	*args;
-	
-	command = get_cmd(cmd);
-	args = get_args(cmd);
-	if (!ft_strcmp(command, "echo"))
-		ft_echo(args);
-	else if (!ft_strcmp(command, "pwd"))
-		ft_pwd();
-	else if (!ft_strcmp(command, "env"))
-		ft_env(env);
-	else if (!ft_strcmp(command, "cd"))
-	    ft_cd(args);
+
+
+	// if (!ft_strcmp(command, "echo"))
+	// 	ft_echo(args);
+
+	ft_pwd();
+	// else if (!ft_strcmp(command, "env"))
+	// 	ft_env(env);
+	// else if (!ft_strcmp(command, "cd"))
+	//     ft_cd(args);
 	// else if (!ft_strcmp(lst->cmd, "unset"))
 	//     ft_unset(lst->cmd);
 	// else if (!ft_strcmp(lst->cmd, "env"))
 	//     ft_env(env);
 	// else if (!ft_strcmp(lst->cmd, "exit"))
 	//     ft_exit();
-	free(command);
-	free(args);
+
 }

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 19:51:35 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/26 20:12:19 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/27 11:47:12 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char **get_newenv()
     return (new_env);
 }
 
-char **get_env(char **env)
+char **get_matr_copy(char **env)
 {
 	int		i;
 	char	**new_env;

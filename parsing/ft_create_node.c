@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:47:47 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/26 05:14:17 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/27 08:11:28 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,19 @@ static char	*join_word(char *str1, char *str2, char *str3, int space)
 {
 	char 	*new_str;
 
+	new_str = ft_strndup(str1, ft_strlen(str1));
 	if (space)
 	{
-		new_str = ft_strndup(" ", 1);
+		new_str = ft_strjoin(new_str, " ");
 		new_str = ft_strjoin(new_str, str2);
 	}
 	else
-		new_str = ft_strndup(str1, ft_strlen(str1));
-	if (str1)
-		free(str1);
+		new_str = ft_strndup(str2, ft_strlen(str2));
 	if (!new_str)
 		return (NULL);
-	new_str = ft_strjoin(new_str, str2);
 	new_str = ft_strjoin(new_str, " ");
 	new_str = ft_strjoin(new_str, str3);
-	return (new_str);
+	return (free(str1), new_str);
 }
 
 static void set_node(t_node *node, char **matr, int start, int end)

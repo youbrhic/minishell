@@ -6,15 +6,18 @@
 #    By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 14:12:01 by youbrhic          #+#    #+#              #
-#    Updated: 2024/04/26 20:04:55 by youbrhic         ###   ########.fr        #
+#    Updated: 2024/04/27 11:54:08 by youbrhic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-FILES = main.c execution/ft_exec_bultin.c execution/ft_hardoc.c      parsing/ft_create_list.c   parsing/ft_get_nodes.c     util/bultin_cmd.c          util/ft_split.c            util/libft_util.c \
-		execution/ft_exec_cmd.c    execution/ft_open_file.c   parsing/ft_create_node.c   parsing/ft_parse_line.c    util/env_util.c            util/ft_split_cmd.c        util/libft_util2.c \
-		execution/ft_exec_list.c   parsing/ft_add_space.c     parsing/ft_expand.c        parsing/ft_remove_quotes.c util/ft_itoa.c             util/ft_split_cmd_util.c   util/other_util.c \
+FILES = main.c butlin/ft_cd.c                  butlin/ft_unset.c               execution/ft_open_file.c        parsing/ft_parse_line.c         util/ft_split_cmd.c \
+butlin/ft_echo.c                execution/ft_excev_cmd.c        parsing/ft_add_space.c          parsing/ft_remove_quotes.c      util/ft_split_cmd_util.c\
+butlin/ft_env.c                 execution/ft_exec_bultin.c      parsing/ft_create_list.c                      util/libft_util.c\
+butlin/ft_exit.c                execution/ft_exec_cmd.c         parsing/ft_create_node.c        util/env_util.c                 util/libft_util2.c\
+butlin/ft_export.c              execution/ft_exec_list.c        parsing/ft_expand.c             util/ft_itoa.c                  util/other_util.c\
+butlin/ft_pwd.c                 execution/ft_hardoc.c           parsing/ft_get_nodes.c          util/ft_split.c  
 
 OBJS = $(FILES:.c=.o)
 

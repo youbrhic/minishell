@@ -6,29 +6,42 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 02:15:06 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/25 11:57:25 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/27 11:52:57 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	**malloc_matr1(char *str)
+static char	**malloc_matr1(char *str, int flag)
 {
 	char	**matr;
 
 	matr = malloc(sizeof(char *) * 2);
 	if (!matr)
-		ft_perror("malloc", -1);
+		return (NULL);
 	matr[0] = ft_strndup(str, ft_strlen(str));
+	if (!matr[0])
+		return (NULL);
 	matr[1] = NULL;
+	if (flag)
+		free (str);
 	return (matr);
 }
 
-void	ft_hardoc(char *limiter)
+static void ft_print_fd(int fd, char *str)
+{
+	if (fd < 0)
+		return ;
+	write(fd, str, ft_strlen(str));
+	write(fd, "\n", 1);	
+}
+
+void 	ft_hardoc(char *limiter)
 {
 	int		fd;
 	char	*input;
 	char	**matr;
+	char	*new_limiter;
 
 	if (!ft_strcmp(limiter, "hardoc"))
 		unlink("/tmp/hardoc");
@@ -38,14 +51,15 @@ void	ft_hardoc(char *limiter)
 	while (1)
 	{
 		input = readline(">");
-		if (!input || !ft_strcmp(input, limiter))
-			break ;
-		matr = malloc_matr1(input);
-		ft_expand(matr, 0);
-		write(fd, matr[0], ft_strlen(matr[0]));
-		write(fd, "\n", 1);
-		free(input);
+		if (!input || !ft_strcmp(input, new_limiter))
+			return ;
+		matr = malloc_matr1(input, 1);
+		if (!matr)
+			return ;
+		ft_expand(matr, 0, 0);
+		ft_print_fd(fd, matr[0]);
 		free_mat(&matr);
 	}
 	close(fd);
+	free (new_limiter);
 }
