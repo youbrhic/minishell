@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/27 09:05:36 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/28 02:22:26 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ static void	print_error(char *str)
 		write(2, ": command not found\n", 20);
 	}
 }
-
 
 int	ft_exec_cmd(char *cmd, char ***env)
 {

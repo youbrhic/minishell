@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_remove_quotes.c                                    :+:      :+:    :+:   */
+/*   ft_remove_quotes.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:57:53 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/22 02:03:00 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/28 14:08:57 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static char *ft_skipquote(char *str1, char *str2, int *index)
 		;
 	tmp = ft_strndup(&str1[i], *index - i);
 	new_str = ft_strjoin(new_str, tmp);
+	if (str1[*index] == c)
+		(*index)--;
 	return (free(tmp), free(str2), new_str);
 }
 
@@ -52,10 +54,10 @@ static char *getwordquote(char *str, char *str2, int *i)
 	nb = *i;
 	while (str[*i] && !is_quot(str[*i]))
 		(*i)++;
-	if (str[*i])
-		(*i)--;
 	tmp = ft_strndup(&str[nb], *i - nb + 1);
 	new_str = ft_strjoin(new_str, tmp);
+	if (str[*i])
+		(*i)--;
 	return (free(tmp), free(str2), new_str);
 }
 
@@ -67,10 +69,12 @@ static char *ft_remove(char *str)
 
 	i = -1;
 	new_str = ft_strndup("", 1);
+	if (!new_str)
+		return NULL;
 	while (str[++i])
 	{
 		if (!is_quot(str[i]))
-			new_str = getwordquote(str, new_str, &i);
+		new_str = getwordquote(str, new_str, &i);
 		else
 			new_str = ft_skipquote(str, new_str, &i);
 	}

@@ -12,6 +12,8 @@
 
 #include "../minishell.h"
 
+#include "../minishell.h"
+
 int	is_oper(char *str)
 {
 	return (!ft_strcmp(str, ">>") || !ft_strcmp(str, "<<")
@@ -47,7 +49,7 @@ static char *check_line(char **matr, int *check)
 	}
 	if (is_oper(matr[get_size_mat(matr) - 1]))
 	{
-		str = ft_strndup("bash: syntax error nearunexpected token `newline'", 49);
+		str = ft_strndup("minishell: syntax error nearunexpected token `newline'", 54);
 		*check = get_size_mat(matr);
 		return (str);
 	}
@@ -69,6 +71,7 @@ static void skip_hardoc(char **matr)
 		if (!ft_strcmp(matr[i], "<<") && !is_oper(matr[i + 1]) && (i + 1) < get_size_mat(matr))
 			ft_hardoc(matr[i + 1]);
 	}
+	free(str_error);
 }
 
 int	ft_parse_line(char **matr)
@@ -77,6 +80,7 @@ int	ft_parse_line(char **matr)
 	char	*str_error;
 
 	str_error = check_line(matr, &index_error);
+	printf ("%p \n", str_error);
 	if (!str_error)
 		return (258);
 	if (index_error != get_size_mat(matr) && ft_strcmp(str_error, ""))

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:05:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/27 11:11:34 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/28 02:15:01 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,8 @@ static int exec_b(t_node *node)
 int	ft_execv_cmd(t_node *node, char ***env)
 {
 	int		i;
-	char	**token;
 
-	token = ft_split_cmd(node->cmd);
-	if (ft_lstsize(node) == 1 && !ft_strcmp(token[0], "cd"))
+	if (ft_lstsize(node) == 1 && check_bultin(node->cmd))
 		return (exec_b(node));
 	else
 		return (ft_exec_list(node, env));

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 02:15:06 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/27 11:52:57 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/28 13:39:58 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void 	ft_hardoc(char *limiter)
 	int		fd;
 	char	*input;
 	char	**matr;
-	char	*new_limiter;
 
 	if (!ft_strcmp(limiter, "hardoc"))
 		unlink("/tmp/hardoc");
@@ -51,15 +50,18 @@ void 	ft_hardoc(char *limiter)
 	while (1)
 	{
 		input = readline(">");
-		if (!input || !ft_strcmp(input, new_limiter))
+		if (!input || !ft_strcmp(input, limiter))
+		{
+			free(input);
 			return ;
+		}
 		matr = malloc_matr1(input, 1);
 		if (!matr)
 			return ;
 		ft_expand(matr, 0, 0);
 		ft_print_fd(fd, matr[0]);
 		free_mat(&matr);
+		free(input);
 	}
 	close(fd);
-	free (new_limiter);
 }

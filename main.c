@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/27 11:47:12 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/28 13:50:39 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int	main(int ac, char **av, char **env)
 			continue;
 		else
 		{
-			//affiche(head);
-			exit_status = ft_execv_cmd(head, &env);
+			affiche(head);
+			//exit_status = ft_execv_cmd(head, &env);
 			ft_lstclear(&head);
 		}
 		free(input);

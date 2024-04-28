@@ -84,7 +84,7 @@ static char	*ft_strenv(char *str, int index, int exit_status)
 	new_str = ft_strndup("", 1);
 	new_str = ft_strjoin(new_str, tmp);
 	i = index;
-	while (str[++i] && is_alphanum(str[i]) && (str[i] >= '9' || str[i] <= '0'))
+	while (str[++i] && is_alphanum(str[i]) && (str[i] >= '9' || str[i] <= '0') && str[i] != '$')
 		;
 	if (str[i] == '?')
 	{

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 11:58:11 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/27 11:33:16 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/28 00:29:31 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static int	ft_open_file_help(char *redirection, int *input, int *output)
 
 	i = -1;
 	matr = ft_split_cmd(redirection);
+	ft_remove_quotes(matr);
 	while (matr[++i])
 	{
 		check_fd(*input, *output);

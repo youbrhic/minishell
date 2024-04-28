@@ -34,19 +34,19 @@ char	*get_args(char *cmd)
 
 int	check_bultin(char *cmd)
 {
-	if (!ft_strcmp(cmd, "echo"))
+	if (!ft_strcmp(cmd, "echo1"))
 		return (1);
-	else if (!ft_strcmp(cmd, "cd"))
+	else if (!ft_strcmp(cmd, "cd1"))
 		return (1);
-	else if (!ft_strcmp(cmd, "pwd"))
+	else if (!ft_strcmp(cmd, "pwd1"))
 		return (1);
-	else if (!ft_strcmp(cmd, "export"))
+	else if (!ft_strcmp(cmd, "export1"))
 		return (1);
-	else if (!ft_strcmp(cmd, "unset"))
+	else if (!ft_strcmp(cmd, "unset1"))
 		return (1);
-	else if (!ft_strcmp(cmd, "env"))
+	else if (!ft_strcmp(cmd, "env1"))
 		return (1);
-	else if (!ft_strcmp(cmd, "exit"))
+	else if (!ft_strcmp(cmd, "exit1"))
 		return (1);
 	return (0);
 }

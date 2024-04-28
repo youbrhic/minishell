@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:47:47 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/27 08:11:28 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/28 13:26:24 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static char	*join_word(char *str1, char *str2, char *str3, int space)
 {
 	char 	*new_str;
 
-	new_str = ft_strndup(str1, ft_strlen(str1));
 	if (space)
 	{
+		new_str = ft_strndup(str1, ft_strlen(str1));
 		new_str = ft_strjoin(new_str, " ");
 		new_str = ft_strjoin(new_str, str2);
 	}
@@ -54,7 +54,7 @@ static void set_node(t_node *node, char **matr, int start, int end)
 	{
 		if (is_redirection(matr[i]))
 		{
-			if (!ft_strlen(node->redirections))
+			if (!*node->redirections)
 				node->redirections = join_word(node->redirections, matr[i], matr[i + 1], 0);
 			else
 				node->redirections = join_word(node->redirections, matr[i], matr[i + 1], 1);
@@ -65,7 +65,7 @@ static void set_node(t_node *node, char **matr, int start, int end)
 			if (!node->cmd)
 				node->cmd = ft_strndup(matr[i], ft_strlen(matr[i]));
 			else
-				node->cmd = join_word(node->cmd, matr[i], "", 0);
+				node->cmd = join_word(node->cmd, matr[i], "", 1);
 		}
 		if (!node->cmd || !node->redirections)
 			break ;
