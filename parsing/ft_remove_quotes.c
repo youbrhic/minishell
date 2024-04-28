@@ -37,6 +37,8 @@ static char *ft_skipquote(char *str1, char *str2, int *index)
 	c = str1[*index];
 	while (str1[++(*index)] && str1[*index] != c)
 		;
+	if (str1[*index] == c)
+		(*index)--;
 	tmp = ft_strndup(&str1[i], *index - i);
 	new_str = ft_strjoin(new_str, tmp);
 	return (free(tmp), free(str2), new_str);
@@ -52,10 +54,10 @@ static char *getwordquote(char *str, char *str2, int *i)
 	nb = *i;
 	while (str[*i] && !is_quot(str[*i]))
 		(*i)++;
-	if (str[*i])
-		(*i)--;
 	tmp = ft_strndup(&str[nb], *i - nb + 1);
 	new_str = ft_strjoin(new_str, tmp);
+	if (str[*i])
+		(*i)--;
 	return (free(tmp), free(str2), new_str);
 }
 

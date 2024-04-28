@@ -6,17 +6,28 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:22:18 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/04/24 09:07:56 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/28 04:20:18 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_env(char **env)
+int	ft_env(char **args, char ***env)
 {
 	int	i;
 
 	i = -1;
-	while (env[++i])
-		printf("%s\n", env[i]);
+	if (args[1] && args[1][0] == '-' && args[1][1])
+	{
+		printf("Error: no option\n");
+		return (127);
+	}
+	if (args[1])
+	{
+		printf("Error: no argument\n");
+		return (1);
+	}
+	while ((*env)[++i])
+		printf("%s\n", (*env)[i]);
+	return (0);
 }

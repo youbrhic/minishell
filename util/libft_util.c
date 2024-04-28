@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:56:37 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/27 12:03:57 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/28 00:26:53 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,38 @@ int	ft_strcmp(const char *s1, const char *s2)
 		++i;
 	}
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	return (0);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (-1);
+	while (s1[i] != '\0' && s2[i] != '\0' && i < n)
+	{
+		if ((unsigned char)s1[i] != (unsigned char)s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		++i;
+	}
+	if (i == n)
+		return (0);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+int	ft_strchr(const char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+			return (1);
+		i++;
+	}
 	return (0);
 }
 

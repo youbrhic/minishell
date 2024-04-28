@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_excev_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:05:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/27 11:11:34 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/28 04:53:28 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char *get_first_cmd(char *str)
 	return (new_str);
 }
 
-static int exec_b(t_node *node)
+static int exec_b(t_node *node, char ***env)
 {
 	int		fdinput;
 	int		fdoutput;
@@ -44,13 +44,14 @@ static int exec_b(t_node *node)
 		if (output != 1 && (dup2(output, 1) < 0 || close(output) < 0 ))
 			return (1);
 	}
-	/*exec butln*/
-	ft_cd(ft_split_cmd(node->cmd));
+
+	state = ft_exec_bultin(ft_split_cmd(node->cmd), env);
+
 	if ( dup2(fdinput, 0) < 0 || dup2(fdoutput, 1) < 0 
 		|| (fdinput != 0 && close(fdinput) < 0) 
-			|| (fdoutput != 1 && close(fdoutput) < 0))
+		|| (fdoutput != 1 && close(fdoutput) < 0))
 		return (1);
-	return (0);
+	return (state);
 }
 
 int	ft_execv_cmd(t_node *node, char ***env)
@@ -59,8 +60,8 @@ int	ft_execv_cmd(t_node *node, char ***env)
 	char	**token;
 
 	token = ft_split_cmd(node->cmd);
-	if (ft_lstsize(node) == 1 && !ft_strcmp(token[0], "cd"))
-		return (exec_b(node));
+	if (ft_lstsize(node) == 1 && check_bultin(token[0]))
+		return (exec_b(node, env));
 	else
 		return (ft_exec_list(node, env));
 }

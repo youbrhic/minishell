@@ -51,23 +51,26 @@ int	check_bultin(char *cmd)
 	return (0);
 }
 
-void	ft_exec_bultin(char *cmd, char **env)
+int	ft_exec_bultin(char **args, char ***env)
 {
+	int	exit_state;
 
-
-	// if (!ft_strcmp(command, "echo"))
-	// 	ft_echo(args);
-
-	ft_pwd();
-	// else if (!ft_strcmp(command, "env"))
-	// 	ft_env(env);
-	// else if (!ft_strcmp(command, "cd"))
-	//     ft_cd(args);
-	// else if (!ft_strcmp(lst->cmd, "unset"))
-	//     ft_unset(lst->cmd);
-	// else if (!ft_strcmp(lst->cmd, "env"))
-	//     ft_env(env);
-	// else if (!ft_strcmp(lst->cmd, "exit"))
-	//     ft_exit();
-
+	ft_remove_quotes(args);
+	if (!ft_strcmp(args[0], "cd"))
+		exit_state = ft_cd(args, env);
+	else if (!ft_strcmp(args[0], "echo"))
+		exit_state = ft_echo(args);
+	else if (!ft_strcmp(args[0], "env"))
+		exit_state = ft_env(args, env);
+	else if (!ft_strcmp(args[0], "exit"))
+		ft_exit(args);
+	else if (!ft_strcmp(args[0], "pwd"))
+		exit_state = ft_pwd(args);
+	else if (!ft_strcmp(args[0], "unset"))
+		exit_state = ft_unset(args, env);
+	else if (!ft_strcmp(args[0], "export"))
+		exit_state = ft_export(args, env);
+	else
+		exit_state = 0;
+	return (exit_state);
 }

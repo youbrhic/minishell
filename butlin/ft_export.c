@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:20:22 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/04/28 00:00:19 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/28 05:09:09 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,11 +145,13 @@ int parse_arg(char *arg)
 	return 1;
 }
 
-void	ft_export(char **args, char ***env)
+int	ft_export(char **args, char ***env)
 {
 	int	i;
+	int	exit_status;
 
 	i = 1;
+	exit_status = 0;
 	if (!args[1])
 		print_export_env(env);
 	else
@@ -157,7 +159,7 @@ void	ft_export(char **args, char ***env)
 		while (args[i])
 		{
 			if (!parse_arg(args[i]))
-				return ;
+				return (exit_status);
 			// if (ft_strchr(args[i], '+='))
 			// 	update_env(args[i], env);
 			// else if (ft_strchr(args[i], '='))
@@ -166,10 +168,11 @@ void	ft_export(char **args, char ***env)
 			// for (int j = 0; env[j]; j++)
 			// 	printf("env[%d] = %s\n", j, env[j]);
 			// printf("------------------------\n");
-			add_env_kv(args[i], env);
-			for (int j = 0; (env)[j]; j++)
+			// add_env_kv(args[i], env);
+			for (int j = 0; (*env)[j]; j++)
 				printf("env[%d] = %s\n", j, (*env)[j]);
 			i++;
 		}
 	}
+	return (exit_status);
 }
