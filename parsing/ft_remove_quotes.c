@@ -37,6 +37,8 @@ static char *ft_skipquote(char *str1, char *str2, int *index)
 	c = str1[*index];
 	while (str1[++(*index)] && str1[*index] != c)
 		;
+	if (str1[*index] == c)
+		(*index)--;
 	tmp = ft_strndup(&str1[i], *index - i);
 	new_str = ft_strjoin(new_str, tmp);
 	if (str1[*index] == c)

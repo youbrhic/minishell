@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/28 03:33:58 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/28 14:18:19 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int		is_space(char c);
 int		get_size_mat(char **str);
 int		ft_lstsize(t_node *lst);
 int 	is_alphanum(char c);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 void	ft_expand(char **token, int flag, int exit_status);
 void	init_node(t_node **node);
@@ -68,7 +69,6 @@ t_node	*ft_get_nodes(char **matr);
 t_node	*ft_create_node(char **matr, int start, int end);
 t_node	*ft_create_list(char *input, int *exit_status);
 
-
 void    ft_hardoc(char *limiter);
 int		ft_exec_cmd(char *cmd, char ***env);
 int		ft_exec_list(t_node *lst, char ***env);
@@ -78,11 +78,15 @@ int		ft_execv_cmd(t_node *node, char ***env);
 /*--------------------bultin--------------------*/
 //-------------------------------------------------//
 
-void 	ft_echo(char **args);
-void	ft_pwd();
-void	ft_cd(char **args);
-void	ft_env(char **env);
-void	ft_exec_bultin(char *cmd, char **env);
+int		ft_cd(char **args, char ***env);
+int		ft_echo(char **args);
+int		ft_env(char **args, char ***env);
+void	ft_exit(char **args);
+int		ft_pwd(char **args);
+int		ft_unset(char **args, char ***env);
+int		ft_export(char **args, char ***env);
+
+int		ft_exec_bultin(char **args, char ***env);
 int		check_bultin(char *cmd);
 
 #endif

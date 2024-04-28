@@ -3,18 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:24:14 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/04/27 05:02:33 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/28 04:25:56 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_exit(void)
+static int	ft_isdigit(int c)
 {
+	return (c >= '0' && c <= '9');
+}
+
+static int	ft_isnumber(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		if (!ft_isdigit(str[i]))
+			return (0);
+	return (1);
+}
+
+static int	ft_atoi(char *str)
+{
+	int	i;
+	int	sign;
+	int	res;
+
+	i = 0;
+	sign = 1;
+	res = 0;
+	if (str[i] == '-')
+	{
+		sign = -1;
+		i++;
+	}
+	while (str[i])
+	{
+		res = res * 10 + str[i] - '0';
+		i++;
+	}
+	return (res * sign);
+}
+
+void	ft_exit(char **args)
+{
+	int	exit_state;
+
 	printf("exit\n");
-	exit(0);
+	if (!args[1])
+		exit (0);
+	else if (ft_isnumber(args[1]))
+	{
+		exit_state = (unsigned char)ft_atoi(args[1]);
+		exit (exit_state);
+	}
+	else
+	{
+		printf("Error: numeric argument required\n");
+		exit (255);
+	}
 }
 

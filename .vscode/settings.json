@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.csv": "json",
+        "minishell.h": "c"
+    }
+}
