@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:20:22 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/04/28 05:09:09 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/30 00:45:18 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	add_env_kv(char *arg, char ***env)
 		new_env[j] = ft_strndup((*env)[j], ft_strlen((*env)[j]));
 	new_env[j] = arg;
 	new_env[j + 1] = NULL;
-	free_mat(env);
+	free_mat(*env);
 	*env = new_env;
 }
 

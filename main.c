@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/28 13:50:39 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/30 05:39:52 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,24 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	exit_status = 0;
-	new_env = get_matr_copy(env);
+	(1) && (exit_status = 0, new_env = get_matr_copy(env), env = new_env);
 	while (1)
 	{
-		input = readline("minibash$ ");
+		input = readline("Minishell$ ");
 		if (!input)
 			exit(1);
-		else
+		if (*input)
 			add_history(input);
 		head = ft_create_list(input, &exit_status);
 		if (!head)
-			continue;
+			free(input);
 		else
 		{
-			affiche(head);
-			//exit_status = ft_execv_cmd(head, &env);
+			//affiche(head);
+			exit_status = ft_execv_cmd(head, &new_env);
 			ft_lstclear(&head);
+			free(input);
 		}
-		free(input);
 	}
 	clear_history();
 }

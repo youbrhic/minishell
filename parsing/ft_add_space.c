@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 12:02:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/27 04:47:39 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/30 00:53:47 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ static void	help_norm1(int *count, char *str, int *i)
 		while (str[*i] != c && str[*i])
 			(*i)++;
 		if (!str[*i])
+		{
+			write(2, "minishell: syntax error \n", 25);
 			*i = -1;
+		}
 	}
 }
 
@@ -97,7 +100,7 @@ char	*ft_add_space(char *input)
 
 	size = count_pipe_rederection(input);
 	if (size < 0)
-		return (free(input), NULL);
+		return (NULL);
 	new_input = malloc((2 * size) + ft_strlen(input) + 2);
 	if (!new_input)
 		return (free(input), NULL);

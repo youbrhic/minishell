@@ -6,23 +6,21 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:05:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/28 14:19:18 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/30 05:40:19 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char *get_first_cmd(char *str)
-{
-	int		size;
-	char	*new_str;
+// static int ft_open_file_b(char *redirection, int *input, int *output, int exit_status)
+// {
+// 	int	state;
 
-	size = 0;
-	while (str[size] && !is_space(str[size]))
-		size++;
-	new_str = ft_strndup(new_str, size);
-	return (new_str);
-}
+// 	state = ft_create_files(redirection, input, output, exit_status);
+// 	if (state)
+// 		return (1);
+// 	return (0);
+// }
 
 static int exec_b(t_node *node, char ***env)
 {
@@ -36,7 +34,7 @@ static int exec_b(t_node *node, char ***env)
 	if (ft_strcmp(node->redirections, ""))
 	{
 		(1) && (fdinput = dup(0) ,fdoutput = dup(1));
-		state = ft_open_file(node->redirections, &input, &output, 0);
+		state = ft_open_file(node->redirections, &input, &output, 1);
 		if (state)
 			return (state);
 		if (input && (dup2(input,0) < 0 || close(input) < 0))
@@ -46,7 +44,6 @@ static int exec_b(t_node *node, char ***env)
 	}
 
 	state = ft_exec_bultin(ft_split_cmd(node->cmd), env);
-
 	if ( dup2(fdinput, 0) < 0 || dup2(fdoutput, 1) < 0 
 		|| (fdinput != 0 && close(fdinput) < 0) 
 		|| (fdoutput != 1 && close(fdoutput) < 0))
@@ -60,8 +57,8 @@ int	ft_execv_cmd(t_node *node, char ***env)
 	char   **token;
 	
 	token = ft_split_cmd(node->cmd);
-	if (ft_lstsize(node) == 1 && check_bultin(token[0]))
-		return (exec_b(node, env));
-	else
-		return (ft_exec_list(node, env));
+	// if (ft_lstsize(node) == 1 && check_bultin(token[0]))
+	// 	return (free_mat(&token), exec_b(node, env));
+	// else
+		return (free_mat(token), ft_exec_list(node, env));
 }

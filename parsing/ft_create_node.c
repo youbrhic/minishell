@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:47:47 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/28 13:26:24 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/30 00:41:39 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ static void set_node(t_node *node, char **matr, int start, int end)
 		}
 		else 
 		{
-			if (!node->cmd)
-				node->cmd = ft_strndup(matr[i], ft_strlen(matr[i]));
+			if (!*node->cmd)
+				node->cmd = join_word(node->cmd, matr[i], "", 0);
 			else
 				node->cmd = join_word(node->cmd, matr[i], "", 1);
 		}

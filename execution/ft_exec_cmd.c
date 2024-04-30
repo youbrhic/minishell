@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/28 02:22:26 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/30 03:54:57 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ static char	*get_path_cmd(char *first_cmd, char **env)
 		tmp = ft_strjoin(tmp, "/");
 		tmp = ft_strjoin(tmp, first_cmd);
 		if (!access(tmp, F_OK | X_OK))
-			return (free_mat(&all_paths), tmp);
+			return (free_mat(all_paths), tmp);
 		if (!tmp)
-			return (free_mat(&all_paths), NULL);
+			return (free_mat(all_paths), NULL);
 		free(tmp);
 	}
-	return (free_mat(&all_paths), ft_strndup(first_cmd, ft_strlen(first_cmd)));
+	return (free_mat(all_paths), ft_strndup(first_cmd, ft_strlen(first_cmd)));
 }
 
 static void	print_error(char *str)
@@ -79,6 +79,8 @@ int	ft_exec_cmd(char *cmd, char ***env)
 	all_cmd = ft_split_cmd(cmd);
 	if (!all_cmd)
 		return (perror("error"), errno);
+	ft_remove_quotes(all_cmd);
+	ft_expand(all_cmd, 1, i);
 	i = -1;
 	ft_remove_quotes(all_cmd);
 	path_cmd = get_path_cmd(all_cmd[0], *env);
@@ -87,7 +89,7 @@ int	ft_exec_cmd(char *cmd, char ***env)
 		if (path_cmd)
 			free(path_cmd);
 		print_error(all_cmd[0]);
-		return (free_mat(&all_cmd), 127);
+		return (free_mat(all_cmd), 127);
 	}
-	return (free_mat(&all_cmd), free(path_cmd), 0);
+	return (free_mat(all_cmd), free(path_cmd), 0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:56:37 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/28 00:26:53 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/30 03:46:16 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,17 @@ int	ft_strlen(char *c)
 	return (i);
 }
 
-void	free_mat(char ***mtr)
+void	free_mat(char **mtr)
 {
 	int		i;
 
 	i = 0;
-	while ((*mtr)[i])
+	while (mtr[i])
 	{
-		free((*mtr)[i]);
+		free(mtr[i]);
 		i++;
 	}
-	free(*mtr);
+	free(mtr);
 }
 
 int	ft_strcmp(const char *s1, const char *s2)

@@ -6,18 +6,17 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 11:58:11 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/28 00:29:31 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/30 22:24:14 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	check_fd(int input, int output)
+static int 	check_fd(int fd1, int fd2)
 {
-	if (input != 0)
-		close(input);
-	if (output != 1)
-		close(output);
+	if (fd1 != fd2 && (close(fd1) < 0))
+		return (perror("Erorr close"), 0);
+	return (1);
 }
 
 static int	close_fd(int input, int output)
@@ -52,23 +51,21 @@ static int	ft_open_file_help(char *redirection, int *input, int *output)
 	i = -1;
 	matr = ft_split_cmd(redirection);
 	ft_remove_quotes(matr);
+	ft_expand(matr, 1, i);
 	while (matr[++i])
 	{
-		check_fd(*input, *output);
-		if (!ft_strcmp(matr[i], ">"))
+		if (!ft_strcmp(matr[i], ">") && check_fd(*output, 1))
 			*output = open(matr[++i], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		else if (!ft_strcmp(matr[i], "<"))
+		else if (!ft_strcmp(matr[i], "<") && check_fd(*input, 0))
 			*input = open(matr[++i], O_RDONLY);
-		else if (!ft_strcmp(matr[i], ">>"))
+		else if (!ft_strcmp(matr[i], ">>") && check_fd(*output, 1))
 			*output = open(matr[++i], O_CREAT | O_WRONLY | O_APPEND, 0644);
-		else if (!ft_strcmp(matr[i], "<<") && ++i)
-			*input = open("/tmp/hardoc", O_RDONLY);
+		else if (!ft_strcmp(matr[i], "<<") && check_fd(*input, 0))
+			(1) && (*input = open("/tmp/hardoc", O_RDONLY), ++i);
 		if (*input < 0 || *output < 0)
-			break ;
+			return (perror(matr[i]), free_mat(matr), 1);
 	}
-	if (i != get_size_mat(matr))
-		return (perror(matr[i]), free_mat(&matr), 1);
-	return (free_mat(&matr), 0);
+	return (free_mat(matr), 0);
 }
 
 int	ft_open_file(char *redirection, int *input, int *output, int flag)
