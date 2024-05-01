@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:20:22 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/04/30 00:45:18 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/01 01:50:13 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,114 +14,108 @@
 
 void	print_export_env(char ***env)
 {
-	char *v_qts;
-	int	f_occu;
-	int	i;
-	int	j;
-	int	k;
+	char	*key;
+	char	*value;
+	int		i;
+	int		j;
 
-	i = -1;
-	while ((*env)[++i])
+	i = 0;
+	while ((*env)[i])
 	{
 		j = 0;
-		k = 0;
-		f_occu = 0;
-		v_qts = malloc(ft_strlen((*env)[i]) + 3);
-		if (!v_qts)
-			return ;
-		while ((*env)[i][k])
+		while ((*env)[i][j] && (*env)[i][j] != '=')
+			j++;
+		key = ft_strndup((*env)[i], j);
+		if ((*env)[i][j] == '=')
 		{
-			v_qts[j] = (*env)[i][k];
-			if (v_qts[j] == '=' && f_occu == 0)
-			{
-				v_qts[j + 1] = '\"';
-				f_occu = 1;
-				j += 2;
-			}
-			else
-				j++;
-			k++;
+			value = ft_strdup((*env)[i] + j + 1);
+			printf("declare -x %s=\"%s\"\n", key, value);
+			free(value);
 		}
-		v_qts[j] = '\"';
-		v_qts[j + 1] = '\0';
-		printf("declare -x %s\n", v_qts);
-		free(v_qts);
+		else
+			printf("declare -x %s\n", key);
+		free(key);
+		i++;
 	}
 }
 
-// int	get_matr_copy(char *key, char **env)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	i = -1;
-// 	while (env[++i])
-// 	{
-// 		j = 0;
-// 		while (env[i][j] && env[i][j] != '=')
-// 			j++;
-// 		if (!ft_strncmp(key, env[i], j))
-// 			return (i);
-// 	}
-// 	return (0);
-// }
-
-void	add_env_kv(char *arg, char ***env)
+int	add_env_kv(char *arg, char ***env)
 {
-	char	**new_env;
-	int		j;
+	char	**n_env;
+	int		s_env;
+	int		index;
 
-	printf("size = %d\n", get_size_mat(*env));
-	new_env = (char **)malloc(sizeof(char *) * (get_size_mat(*env) + 2));
-	if (!new_env)
-		return ;
-	j = -1;
-	while ((*env)[++j])
-		new_env[j] = ft_strndup((*env)[j], ft_strlen((*env)[j]));
-	new_env[j] = arg;
-	new_env[j + 1] = NULL;
-	free_mat(*env);
-	*env = new_env;
+	index = chr_key_env(arg, *env);
+	if (index == -1)
+	{
+		s_env = size_env(*env);
+		n_env = new_env(*env, s_env + 2);
+		if (!n_env)
+			return (1);
+		n_env[s_env] = arg;
+		n_env[s_env + 1] = NULL;
+		// problem here of freeing the old env
+		// free_env(env);
+		*env = n_env;
+	}
+	else
+	{
+		(*env)[index] = arg;
+		return (0);
+	}
+	return (0);
 }
 
-// void	update_env(char *arg, char **env)
-// {
-// 	int		i;
-// 	char	*key;
-// 	char	*value;
-// 	char	*tmp;
+int	update_env_kv(char *arg, char ***env)
+{
+	int	index;
+	int	i;
 
-// 	i = 0;
-// 	while (arg[i] && arg[i] != '+')
-// 		i++;
-// 	key = ft_strndup(arg, i);
-// 	value = ft_strchr(arg, '=') + 1;
-// 	tmp = ft_strjoin(key, "=");
-// 	tmp = ft_strjoin(tmp, value);
-// 	if (get_matr_copy(key, env))
-// 	{
-// 		free(get_matr_copy(key, env));
-// 		set_env(key, tmp, env);
-// 	}
-// 	else
-// 		add_env_kv(tmp, env);
-// 	free(key);
-// 	free(tmp);
-// }
+	i = 0;
+	ft_remove_plus(&arg);
+	index = chr_key_env(arg, *env);
+	if (index == -1)
+	{
+		add_env_kv(arg, env);
+		return (0);
+	}
+	else
+	{
+		while ((*env)[index][i] && (*env)[index][i] != '=')
+			i++;
+		if ((*env)[index][i] == '=')
+			(*env)[index] = ft_strjoin((*env)[index], arg + i + 1);
+		else
+			(*env)[index] = ft_strjoin((*env)[index], arg + i);
+	}
+	return (0);
+}
 
-// void	add_env_k(char *arg, char **env)
-// {
-// 	char	*key;
-// 	char	*value;
-// 	char	*tmp;
+int add_env_k(char *arg, char ***env)
+{
+	char	**n_env;
+	int		s_env;
+	int		index;
 
-// 	key = ft_strjoin(arg, "=");
-// 	value = ft_strchr(arg, '=') + 1;
-// 	tmp = ft_strjoin(key, value);
-// 	add_env_k(tmp, env);
-// 	free(key);
-// 	free(tmp);
-// }
+	index = chr_key_env(arg, *env);
+	if (index == -1)
+	{
+		s_env = size_env(*env);
+		n_env = new_env(*env, s_env + 2);
+		if (!n_env)
+			return (1);
+		n_env[s_env] = arg;
+		n_env[s_env + 1] = NULL;
+		// problem here of freeing the old env
+		// free_env(env);
+		*env = n_env;
+	}
+	else
+	{
+		return (0);
+	}
+	return (0);
+}
 
 int	ft_isalpha(int c)
 {
@@ -140,9 +134,20 @@ int parse_arg(char *arg)
 	if (key[0] != '_' && !ft_isalpha(key[0]))
 	{
 		printf("minishell: export: `%s': not a valid identifier\n", arg);
-		return 0;
+		return (1);
 	}
-	return 1;
+	i = 0;
+	while (key[i])
+	{
+		if (!is_alphanum(key[i]) && key[i] != '_')
+		{
+			printf("minishell: export: `%s': not a valid identifier\n", arg);
+			return (1);		
+		}
+		i++;
+	}
+	free(key);
+	return (0);
 }
 
 int	ft_export(char **args, char ***env)
@@ -152,25 +157,30 @@ int	ft_export(char **args, char ***env)
 
 	i = 1;
 	exit_status = 0;
+	if (args[1] && args[1][0] == '-')
+	{
+		printf("no options\n");
+		return (2);
+	}
 	if (!args[1])
 		print_export_env(env);
 	else
 	{
 		while (args[i])
 		{
-			if (!parse_arg(args[i]))
-				return (exit_status);
-			// if (ft_strchr(args[i], '+='))
-			// 	update_env(args[i], env);
-			// else if (ft_strchr(args[i], '='))
-			// 	add_env_kv(args[i], env);
-			// else
-			// for (int j = 0; env[j]; j++)
-			// 	printf("env[%d] = %s\n", j, env[j]);
-			// printf("------------------------\n");
-			// add_env_kv(args[i], env);
-			for (int j = 0; (*env)[j]; j++)
-				printf("env[%d] = %s\n", j, (*env)[j]);
+			if (exit_status == 1)
+				parse_arg(args[i]);
+			else
+				exit_status = parse_arg(args[i]);
+			if (!exit_status)
+			{
+				if (ft_strexsit(args[i], "+="))
+					update_env_kv(args[i], env);
+				else if (ft_strchr(args[i], '='))
+					add_env_kv(args[i], env);
+				else
+					add_env_k(args[i], env);
+			}
 			i++;
 		}
 	}

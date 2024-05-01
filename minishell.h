@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/01 03:09:46 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/01 07:51:22 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,11 @@ char	**ft_split_cmd(char const *s);
 char	**free2d(char ***arr, int index);
 char 	**get_matr_copy(char **env);
 char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strdup(const char *s1);
 char	*ft_strndup(const char *s1, int n);
 char	*ft_itoa(int n);
 int		count_words(char const *s);
+int		ft_strchr(const char *s, int c);
 int		ft_strlen(char *c);
 int		ft_strcmp(const char *s1, const char *s2);
 int		is_quot(char c);
@@ -60,6 +62,7 @@ int		get_size_mat(char **str);
 int		ft_lstsize(t_node *lst);
 int 	is_alphanum(char c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		get_index_dollar(char *str, int flag);
 
 /*---------------------parsing--------------------------*/
 
@@ -86,13 +89,21 @@ int		ft_execv_cmd(t_node *node, char ***env, int exit_status);
 /*--------------------bultin--------------------*/
 //-------------------------------------------------//
 
+char	**new_env(char **env, int size);
+int		size_env(char **env);
+int		chr_key_env(char *key, char **env);
+void	free_env(char ***env);
+
 int		ft_cd(char **args, char ***env);
 int		ft_echo(char **args);
 int		ft_env(char **args, char ***env);
 void	ft_exit(char **args);
+void	ft_remove_plus(char **c);
 int		ft_pwd(char **args);
 int		ft_unset(char **args, char ***env);
 int		ft_export(char **args, char ***env);
+int		ft_strexsit(char *s, char *str);
+int		ft_isalpha(int c);
 
 int		ft_exec_bultin(char **args, char ***env);
 int		check_bultin(char *cmd);

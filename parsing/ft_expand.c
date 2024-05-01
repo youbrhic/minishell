@@ -6,40 +6,40 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:09:14 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/01 07:36:21 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/01 07:58:50 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	get_index_dollar(char *str, int flag)
-{
-	int		i;
+// static int	get_index_dollar(char *str, int flag)
+// {
+// 	int		i;
 
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == '\'' && flag)
-		{
-			while (str[i] && str[++i] != '\'')
-				;
-		}
-		else if (str[i] && str[i] == '\"')
-		{
-			while (str[i] && str[++i] != '\"')
-			{
-				if (str[i] == '$' && str[i + 1] != '\"'
-					&& !is_space(str[i + 1]))
-					return (i);
-			}
-		}
-		else if (str[i] == '$'
-			&& (i + 1 < ft_strlen(str) && (is_alphanum(str[i + 1])
-					|| str[i + 1] == '?' || str[i + 1] == '_')))
-			return (i);
-	}
-	return (-1);
-}
+// 	i = -1;
+// 	while (str[++i])
+// 	{
+// 		if (str[i] == '\'' && flag)
+// 		{
+// 			while (str[i] && str[++i] != '\'')
+// 				;
+// 		}
+// 		else if (str[i] && str[i] == '\"')
+// 		{
+// 			while (str[i] && str[++i] != '\"')
+// 			{
+// 				if (str[i] == '$' && str[i + 1] != '\"'
+// 					&& !is_space(str[i + 1]))
+// 					return (i);
+// 			}
+// 		}
+// 		else if (str[i] == '$'
+// 			&& (i + 1 < ft_strlen(str) && (is_alphanum(str[i + 1])
+// 					|| str[i + 1] == '?' || str[i + 1] == '_')))
+// 			return (i);
+// 	}
+// 	return (-1);
+// }
 
 static char	*ft_expenv(char *str, int *i, char *word, int index)
 {
@@ -96,8 +96,7 @@ static char	*ft_strenv(char *str, int index, int exit_status)
 	new_str = ft_strndup("", 1);
 	new_str = ft_strjoin(new_str, tmp);
 	i = index;
-	while (str[++i] && is_alphanum(str[i]) && (str[i + 1] > '9'
-			&& str[i + 1] < '0' && str[i] != '$'))
+	while (str[++i] && is_alphanum(str[i]))
 		;
 	if (str[i] == '?')
 	{

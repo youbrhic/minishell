@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:23:24 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/04/28 14:17:52 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/30 18:18:07 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,14 @@ int	ft_unset(char **args, char ***env)
 	{
 		j = -1;
 		len = ft_strlen(args[i]);
+		if (!ft_isalpha(args[i][0]) && args[i][0] != '_')
+		{
+			printf("Error: '%s' not a valid identifier\n", args[i]);
+			return (1);
+		}
 		while ((*env)[++j])
 		{
-			if (!ft_strncmp(args[i], (*env)[j], len) && (*env)[j][len] == '=')
+			if (!ft_strncmp(args[i], (*env)[j], len))
 			{
 				while ((*env)[j])
 				{
