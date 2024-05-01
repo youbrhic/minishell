@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:20:22 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/01 01:50:13 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/01 23:40:43 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	update_env_kv(char *arg, char ***env)
 	int	i;
 
 	i = 0;
+
 	ft_remove_plus(&arg);
 	index = chr_key_env(arg, *env);
 	if (index == -1)
@@ -133,15 +134,15 @@ int parse_arg(char *arg)
 	key = ft_strndup(arg, i);
 	if (key[0] != '_' && !ft_isalpha(key[0]))
 	{
-		printf("minishell: export: `%s': not a valid identifier\n", arg);
+		printf("minishell: export: `%s': not a valid identifier 1\n", arg);
 		return (1);
 	}
 	i = 0;
 	while (key[i])
 	{
-		if (!is_alphanum(key[i]) && key[i] != '_')
+		if (!is_alphanum(key[i]) && key[i] != '_' && key[i] != '+')
 		{
-			printf("minishell: export: `%s': not a valid identifier\n", arg);
+			printf("minishell: export: `%s': not a valid identifier 2\n", arg);
 			return (1);		
 		}
 		i++;
@@ -168,11 +169,7 @@ int	ft_export(char **args, char ***env)
 	{
 		while (args[i])
 		{
-			if (exit_status == 1)
-				parse_arg(args[i]);
-			else
-				exit_status = parse_arg(args[i]);
-			if (!exit_status)
+			if (!parse_arg(args[i]))
 			{
 				if (ft_strexsit(args[i], "+="))
 					update_env_kv(args[i], env);
@@ -181,6 +178,8 @@ int	ft_export(char **args, char ***env)
 				else
 					add_env_k(args[i], env);
 			}
+			else
+				exit_status = 1;
 			i++;
 		}
 	}

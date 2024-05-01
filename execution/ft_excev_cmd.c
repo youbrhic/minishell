@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:05:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/01 01:50:18 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/01 16:33:58 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,9 @@ static int exec_b(t_node *node, char ***env)
 		if (output != 1 && (dup2(output, 1) < 0 || close(output) < 0 ))
 			return (1);
 	}
-
 	state = ft_exec_bultin(ft_split_cmd(node->cmd), env);
-	if ( dup2(fdinput, 0) < 0 || dup2(fdoutput, 1) < 0 
-		|| (fdinput != 0 && close(fdinput) < 0) 
+	if ( dup2(fdinput, 0) < 0 || dup2(fdoutput, 1) < 0
+		|| (fdinput != 0 && close(fdinput) < 0)
 		|| (fdoutput != 1 && close(fdoutput) < 0))
 		return (1);
 	return (state);
@@ -57,8 +56,8 @@ int	ft_execv_cmd(t_node *node, char ***env)
 	int		i;
 
 	token = ft_split_cmd(node->cmd);
-	// if (ft_lstsize(node) == 1 && check_bultin(token[0]))
-	// 	return (free_mat(&token), exec_b(node, env));
-	// else
+	if (ft_lstsize(node) == 1 && check_bultin(token[0]))
+		return (free_mat(token), exec_b(node, env));
+	else
 		return (free_mat(token), ft_exec_list(node, env));
 }
