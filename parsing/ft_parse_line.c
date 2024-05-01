@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_parse_line.c                                       :+:      :+:    :+:   */
+/*   ft_parse_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 04:27:39 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/24 16:42:32 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/01 06:12:41 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void print_error(int flag)
+static void	print_error(int flag)
 {
 	if (flag)
-		write(2,"minishell : syntax error\n", 25);
+		write(2, "minishell : syntax error\n", 25);
 }
 
-static int check_line(char **matr, int flag)
+static int	check_line(char **matr, int flag)
 {
 	int		i;
 
@@ -37,7 +37,7 @@ static int check_line(char **matr, int flag)
 	return (-1);
 }
 
-static void skip_hardoc(char **matr)
+static void	skip_hardoc(char **matr)
 {
 	int		i;
 	int		index_error;
@@ -48,7 +48,8 @@ static void skip_hardoc(char **matr)
 		index_error = get_size_mat(matr);
 	while (matr[++i] && i < index_error)
 	{
-		if (!ft_strcmp(matr[i], "<<") && !is_oper(matr[i + 1]) && (i + 1) < get_size_mat(matr))
+		if (!ft_strcmp(matr[i], "<<") && !is_oper(matr[i + 1])
+			&& (i + 1) < get_size_mat(matr))
 			ft_hardoc(matr[i + 1]);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/30 05:38:35 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/01 03:09:46 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_argument
 	int		p_2[2];
 	int		input;
 	int		output;
+	int		exit_status;
 }				t_argument;
 
 /*--------------------utils--------------------------*/
@@ -43,7 +44,6 @@ void	free_mat(char **mtr);
 void	ft_lstclear(t_node **lst);
 void	ft_lstadd_back(t_node **lst, t_node *new);
 void	ft_perror(char *str, int ex);
-void	ft_remove_quotes(char **token);
 char	**ft_split(char const *s, char c);
 char	**ft_split_cmd(char const *s);
 char	**free2d(char ***arr, int index);
@@ -63,7 +63,8 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
 /*---------------------parsing--------------------------*/
 
-void	ft_expand(char **token, int flag, int exit_status);
+int		ft_expand(char **token, int flag, int exit_status);
+int		ft_remove_quotes(char **token);
 void	init_node(t_node **node);
 char	*ft_add_space(char *input);
 int		ft_parse_line(char **matr);
@@ -76,10 +77,11 @@ t_node	*ft_create_list(char *input, int *exit_status);
 /*--------------------execution------------------------*/
 
 void    ft_hardoc(char *limiter);
-int		ft_exec_cmd(char *cmd, char ***env);
-int		ft_exec_list(t_node *lst, char ***env);
-int		ft_open_file(char *redirection, int *input, int *output, int flag);
-int		ft_execv_cmd(t_node *node, char ***env);
+int		ft_exec_cmd(char *cmd, char ***env, int exit_status);
+int		ft_exec_list(t_node *lst, char ***env, int exit_status);
+int		ft_create_file(char *redirection, int *input, int *output, int exit_status);
+int		ft_open_file(char *redirection, int *input, int *output, int exit_status);
+int		ft_execv_cmd(t_node *node, char ***env, int exit_status);
 
 /*--------------------bultin--------------------*/
 //-------------------------------------------------//

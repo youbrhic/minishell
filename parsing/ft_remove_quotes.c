@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:57:53 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/30 04:46:34 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/01 06:11:46 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ static int	getindexqoute(char *str)
 	int		i;
 
 	i = -1;
-	while(str[++i])
+	while (str[++i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
-			return (1);
+			return (i);
 	}
-	return (0);
+	return (-1);
 }
 
-static char *ft_skipquote(char *str1, char *str2, int *index)
+static char	*ft_skipquote(char *str1, char *str2, int *index)
 {
 	int		i;
 	char	*new_str;
@@ -44,7 +44,7 @@ static char *ft_skipquote(char *str1, char *str2, int *index)
 	return (free(tmp), free(str2), new_str);
 }
 
-static char *getwordquote(char *str, char *str2, int *i)
+static char	*getwordquote(char *str, char *str2, int *i)
 {
 	char	*new_str;
 	char	*tmp;
@@ -59,7 +59,7 @@ static char *getwordquote(char *str, char *str2, int *i)
 	return (free(tmp), free(str2), new_str);
 }
 
-static char *ft_remove(char *str)
+static char	*ft_remove(char *str)
 {
 	int		i;
 	char	*new_str;
@@ -68,34 +68,34 @@ static char *ft_remove(char *str)
 	i = -1;
 	new_str = ft_strndup("", 1);
 	if (!new_str)
-		return NULL;
+		return (NULL);
 	while (str[++i])
 	{
 		if (!is_quot(str[i]))
 			new_str = getwordquote(str, new_str, &i);
 		else
 			new_str = ft_skipquote(str, new_str, &i);
+		if (!str[i])
+			break ;
 	}
 	return (free(str), new_str);
 }
 
-void	ft_remove_quotes(char **token)
+int	ft_remove_quotes(char **token)
 {
 	int		i;
 
 	i = -1;
 	while (token[++i])
 	{
-		if (!getindexqoute(token[i]))
-			continue;
+		if (getindexqoute(token[i]) < 0)
+			continue ;
 		else
 		{
 			token[i] = ft_remove(token[i]);
 			if (!token[i])
-			{
-				free_mat(&token[i + 1]);
-				break ;
-			}
+				return (free_mat(&token[i + 1]), 0);
 		}
 	}
+	return (1);
 }

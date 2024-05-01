@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:13:12 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/29 13:57:12 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/01 06:12:54 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	count_pipes(char **matr)
 	return (count);
 }
 
-static void add_node(t_node **head, t_node *new_node)
+static void	add_node(t_node **head, t_node *new_node)
 {
 	if (!new_node)
 	{

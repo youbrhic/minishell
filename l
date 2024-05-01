@@ -1,0 +1,10 @@
+Makefile
+butlin
+execution
+l
+main.c
+main.o
+minishell
+minishell.h
+parsing
+util
