@@ -55,7 +55,6 @@ int	ft_exec_bultin(char **args, char ***env)
 {
 	int	exit_state;
 
-	ft_remove_quotes(args);
 	if (!ft_strcmp(args[0], "cd"))
 		exit_state = ft_cd(args, env);
 	else if (!ft_strcmp(args[0], "echo"))

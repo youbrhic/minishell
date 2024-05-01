@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/01 01:50:39 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/01 07:37:41 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int ac, char **av, char **env)
 		else
 		{
 			//affiche(head);
-			exit_status = ft_execv_cmd(head, &new_env);
+			exit_status = ft_execv_cmd(head, &new_env, exit_status);
 			ft_lstclear(&head);
 			free(input);
 		}

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 16:47:47 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/30 00:41:39 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/01 06:16:24 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	check_cmd_line(char **matr, int start, int end)
 
 static char	*join_word(char *str1, char *str2, char *str3, int space)
 {
-	char 	*new_str;
+	char	*new_str;
 
 	if (space)
 	{
@@ -45,7 +45,7 @@ static char	*join_word(char *str1, char *str2, char *str3, int space)
 	return (free(str1), new_str);
 }
 
-static void set_node(t_node *node, char **matr, int start, int end)
+static void	set_node(t_node *node, char **matr, int start, int end)
 {
 	int		i;
 
@@ -55,12 +55,14 @@ static void set_node(t_node *node, char **matr, int start, int end)
 		if (is_redirection(matr[i]))
 		{
 			if (!*node->redirections)
-				node->redirections = join_word(node->redirections, matr[i], matr[i + 1], 0);
+				node->redirections = join_word(node->redirections,
+						matr[i], matr[i + 1], 0);
 			else
-				node->redirections = join_word(node->redirections, matr[i], matr[i + 1], 1);
+				node->redirections = join_word(node->redirections,
+						matr[i], matr[i + 1], 1);
 			i++;
 		}
-		else 
+		else
 		{
 			if (!*node->cmd)
 				node->cmd = join_word(node->cmd, matr[i], "", 0);
@@ -72,7 +74,7 @@ static void set_node(t_node *node, char **matr, int start, int end)
 	}
 }
 
-static t_node *get_val_node(t_node *node)
+static t_node	*get_val_node(t_node *node)
 {
 	if (!node->cmd || !node->redirections)
 		return (ft_lstclear(&node), NULL);

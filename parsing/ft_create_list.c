@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:02:29 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/30 04:31:49 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/01 06:14:38 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ static void	print_error(char *str)
 	free(error);
 }
 
-static t_node *ft_get_list(char **token, t_node *head, int exit_status)
+static t_node	*ft_get_list(char **token, t_node *head)
 {
-	t_node *new_head;
+	t_node	*new_head;
 
 	new_head = ft_get_nodes(token);
 	if (!new_head)
 		return (ft_lstclear(&head), NULL);
-	return (ft_lstclear(&head), new_head);	
+	return (ft_lstclear(&head), new_head);
 }
 
 t_node	*ft_create_list(char *input, int *exit_status)
@@ -81,6 +81,7 @@ t_node	*ft_create_list(char *input, int *exit_status)
 	head = ft_get_nodes(token_cmd);
 	if (!head)
 		return ((*exit_status = 1), free(new_input), free_mat(token_cmd), NULL);
-	head = ft_get_list(token_cmd, head, old_status);
+	head = ft_get_list(token_cmd, head);
+	*exit_status = old_status;
 	return (free(new_input), free_mat(token_cmd), head);
 }
