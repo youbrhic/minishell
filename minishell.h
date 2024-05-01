@@ -6,10 +6,9 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/01 23:46:28 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/01 23:55:09 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
