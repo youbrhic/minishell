@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/01 07:51:22 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/01 23:46:28 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int		get_size_mat(char **str);
 int		ft_lstsize(t_node *lst);
 int 	is_alphanum(char c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-int		get_index_dollar(char *str, int flag);
 
 /*---------------------parsing--------------------------*/
 

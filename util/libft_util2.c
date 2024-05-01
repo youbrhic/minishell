@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 07:24:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/01 07:51:02 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/01 23:46:41 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,33 +98,4 @@ int	ft_lstsize(t_node *lst)
 		temp = temp->next;
 	}
 	return (size);
-}
-
-int	get_index_dollar(char *str, int flag)
-{
-	int		i;
-
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == '\'' && flag)
-		{
-			while (str[i] && str[++i] != '\'')
-				;
-		}
-		else if (str[i] && str[i] == '\"')
-		{
-			while (str[i] && str[++i] != '\"')
-			{
-				if (str[i] == '$' && str[i + 1] != '\"'
-					&& !is_space(str[i + 1]))
-					return (i);
-			}
-		}
-		else if (str[i] == '$'
-			&& (i + 1 < ft_strlen(str) && (is_alphanum(str[i + 1])
-					|| str[i + 1] == '?' || str[i + 1] == '_')))
-			return (i);
-	}
-	return (-1);
 }
