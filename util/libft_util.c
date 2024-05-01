@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by ***********       #+#    #+#             */
-/*   Updated: 2024/04/30 19:11:28 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/01 01:50:32 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,17 @@ int	ft_strlen(char *c)
 	return (i);
 }
 
-void	free_mat(char ***mtr)
+void	free_mat(char **mtr)
 {
 	int		i;
 
 	i = 0;
-	while ((*mtr)[i])
+	while (mtr[i])
 	{
-		free((*mtr)[i]);
+		free(mtr[i]);
 		i++;
 	}
-	free(*mtr);
+	free(mtr);
 }
 
 int	ft_strcmp(const char *s1, const char *s2)

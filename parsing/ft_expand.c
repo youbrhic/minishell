@@ -117,6 +117,11 @@ void	ft_expand(char **token, int flag, int exit_status)
 		{
 			j = get_index_dollar(token[i], flag);
 			token[i] = ft_strenv(token[i], j, exit_status);
+			if (!token[i])
+			{
+				free_mat(&token[i + 1]);
+				break;
+			}
 			i--;
 		}
 	}

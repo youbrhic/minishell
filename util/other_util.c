@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 08:21:21 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/28 12:28:03 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/29 11:36:47 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,11 @@ char	**free2d(char ***arr, int index)
 	}
 	free(*arr);
 	return (NULL);
+}
+
+int	is_oper(char *str)
+{
+	return (!ft_strcmp(str, ">>") || !ft_strcmp(str, "<<")
+		|| !ft_strcmp(str, "|") || !ft_strcmp(str, "<")
+		|| !ft_strcmp(str, ">"));
 }
