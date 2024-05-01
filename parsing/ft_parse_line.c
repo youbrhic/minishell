@@ -80,7 +80,6 @@ int	ft_parse_line(char **matr)
 	char	*str_error;
 
 	str_error = check_line(matr, &index_error);
-	printf ("%p \n", str_error);
 	if (!str_error)
 		return (258);
 	if (index_error != get_size_mat(matr) && ft_strcmp(str_error, ""))

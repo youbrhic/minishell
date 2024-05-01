@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_excev_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:05:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/28 14:19:18 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/29 15:47:57 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ static int exec_b(t_node *node, char ***env)
 
 int	ft_execv_cmd(t_node *node, char ***env)
 {
+	char	**token;
 	int		i;
-	char   **token;
-	
+
 	token = ft_split_cmd(node->cmd);
 	if (ft_lstsize(node) == 1 && check_bultin(token[0]))
 		return (exec_b(node, env));

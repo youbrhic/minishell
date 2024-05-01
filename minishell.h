@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/28 14:18:19 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/04/30 19:11:06 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,20 @@ int		ft_exec_cmd(char *cmd, char ***env);
 int		ft_exec_list(t_node *lst, char ***env);
 int		ft_open_file(char *redirection, int *input, int *output, int flag);
 int		ft_execv_cmd(t_node *node, char ***env);
+int		ft_strchr(const char *s, int c);
+int		ft_strexsit(char *str, char *set);
+void	ft_remove_plus(char **c);
+int		ft_isalpha(int c);
+char	*ft_strdup(const char *s1);
+
 
 /*--------------------bultin--------------------*/
 //-------------------------------------------------//
+
+char	**new_env(char **env, int size);
+int		size_env(char **env);
+int		chr_key_env(char *key, char **env);
+void	free_env(char ***env);
 
 int		ft_cd(char **args, char ***env);
 int		ft_echo(char **args);

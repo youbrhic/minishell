@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+         #
+#    By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 14:12:01 by youbrhic          #+#    #+#              #
-#    Updated: 2024/04/28 14:18:14 by youbrhic         ###   ########.fr        #
+#    Updated: 2024/04/29 19:12:25 by aait-bab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ butlin/ft_echo.c                execution/ft_excev_cmd.c        parsing/ft_add_s
 butlin/ft_env.c                 execution/ft_exec_bultin.c      parsing/ft_create_list.c                      util/libft_util.c\
 butlin/ft_exit.c                execution/ft_exec_cmd.c         parsing/ft_create_node.c        util/env_util.c                 util/libft_util2.c\
 butlin/ft_export.c              execution/ft_exec_list.c        parsing/ft_expand.c             util/ft_itoa.c                  util/other_util.c\
-butlin/ft_pwd.c                 execution/ft_hardoc.c           parsing/ft_get_nodes.c          util/ft_split.c  
+butlin/ft_pwd.c                 execution/ft_hardoc.c           parsing/ft_get_nodes.c          util/ft_split.c  util/export_tools.c
 
 OBJS = $(FILES:.c=.o)
 

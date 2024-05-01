@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:22:18 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/04/28 04:20:18 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/04/30 18:16:41 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ int	ft_env(char **args, char ***env)
 		return (1);
 	}
 	while ((*env)[++i])
-		printf("%s\n", (*env)[i]);
+	{
+		if (ft_strchr((*env)[i], '='))
+			printf("%s\n", (*env)[i]);
+	}
 	return (0);
 }
