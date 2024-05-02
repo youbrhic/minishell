@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:20:22 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/01 23:53:43 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/02 01:45:21 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,16 @@ int	add_env_kv(char *arg, char ***env)
 	if (index == -1)
 	{
 		s_env = size_env(*env);
-		n_env = new_env(*env, s_env + 2);
-		if (!n_env)
-			return (1);
-		n_env[s_env] = arg;
-		n_env[s_env + 1] = NULL;
+		// n_env = new_env(*env, s_env + 2);
+		// if (!n_env)
+		// 	return (1);
+		printf("s_env = %d\n", s_env);
+		printf("arg = %s\n", arg);
+		(*env)[s_env] = arg;
+		(*env)[s_env + 1] = NULL;
 		// problem here of freeing the old env
 		// free_env(env);
-		*env = n_env;
+		// *env = n_env;
 	}
 	else
 	{

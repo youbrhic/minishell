@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:05:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/01 23:54:32 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/02 01:46:16 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int ft_open_file_b(char *redirection, int *input, int *output, int exit_s
 	return (0);
 }
 
-static int exec_b(t_node *node, char ***env, int exit_status)
+static	int exec_b(t_node *node, char ***env, int exit_status)
 {
 	int		fdinput;
 	int		fdoutput;
@@ -51,19 +51,19 @@ static int exec_b(t_node *node, char ***env, int exit_status)
 		|| (fdinput != 0 && close(fdinput) < 0) 
 		|| (fdoutput != 1 && close(fdoutput) < 0))
 		return (1);
-	return (free_mat(token), state);
+	return ( state);
 }
 
 int	ft_execv_cmd(t_node *node, char ***env, int exit_status)
 {
-	char	**token;
+	char	**tokens;
 	int		i;
 
-	token = ft_split_cmd(node->cmd);
-	ft_expand(token, 1, exit_status);
-	ft_remove_quotes(token);
-	if (ft_lstsize(node) == 1 && check_bultin(token[0]))
-		return (free_mat(token), exec_b(node, env, exit_status));
+	tokens = ft_split_cmd(node->cmd);
+	ft_expand(tokens, 1, exit_status);
+	ft_remove_quotes(tokens);
+	if (ft_lstsize(node) == 1 && check_bultin(tokens[0]))
+		return (free_mat(tokens), exec_b(node, env, exit_status));
 	else
-		return (free_mat(token), ft_exec_list(node, env, exit_status));
+		return (free_mat(tokens), ft_exec_list(node, env, exit_status));
 }
