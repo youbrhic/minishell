@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:20:22 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/01 23:53:43 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/02 11:18:17 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	update_env_kv(char *arg, char ***env)
 
 	i = 0;
 
-	ft_remove_plus(&arg);
+	// ft_remove_plus(&arg);
 	index = chr_key_env(arg, *env);
 	if (index == -1)
 	{
@@ -108,7 +108,7 @@ int add_env_k(char *arg, char ***env)
 		n_env[s_env] = arg;
 		n_env[s_env + 1] = NULL;
 		// problem here of freeing the old env
-		// free_env(env);
+		// free_env(*env);
 		*env = n_env;
 	}
 	else
@@ -134,7 +134,7 @@ int parse_arg(char *arg)
 	key = ft_strndup(arg, i);
 	if (key[0] != '_' && !ft_isalpha(key[0]))
 	{
-		printf("minishell: export: `%s': not a valid identifier 1\n", arg);
+		write(2 , "minishell: export:': not a valid identifier 1\n", 46);
 		return (1);
 	}
 	i = 0;
@@ -142,7 +142,7 @@ int parse_arg(char *arg)
 	{
 		if (!is_alphanum(key[i]) && key[i] != '_' && key[i] != '+')
 		{
-			printf("minishell: export: `%s': not a valid identifier 2\n", arg);
+			write(2 , "minishell: export:': not a valid identifier 1\n", 46);
 			return (1);		
 		}
 		i++;

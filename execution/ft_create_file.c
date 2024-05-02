@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 03:02:51 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/01 05:32:26 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/02 09:35:50 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int 	check_fd(int fd1, int fd2)
 	return (1);
 }
 
-static int check_ambiguous(char **matr, int exit_status)
+static int check_ambiguous(char **matr, int exit_status, char **env)
 {
     char    **copy;
     int     i;
@@ -47,7 +47,7 @@ static int check_ambiguous(char **matr, int exit_status)
     copy = get_matr_copy(matr);
     if (!copy)
         return (1);
-    if (!ft_expand(copy, 1, exit_status))
+    if (!ft_expand(copy, 1, exit_status, env))
         return (free_mat(copy), 1);
     i = -1;
     while (copy[++i])
@@ -58,19 +58,19 @@ static int check_ambiguous(char **matr, int exit_status)
 				return (free_mat(copy), print_error(matr[i + 1]), 1);
         }
     }
-	if (!ft_remove_quotes(matr) || !ft_expand(matr, 1, exit_status))
+	if (!ft_remove_quotes(matr) || !ft_expand(matr, 1, exit_status, env))
 		return (free_mat(copy), 1);
 	return (free_mat(copy), 0);
 }
 
-int	ft_create_file(char *redirection, int *input, int *output, int exit_status)
+int	ft_create_file(char *redirection, int *input, int *output, int exit_status, char **env)
 {
 	int		i;
 	char	**matr;
 
 	i = -1;
 	matr = ft_split_cmd(redirection);
-	if (check_ambiguous(matr, exit_status))
+	if (check_ambiguous(matr, exit_status, env))
 		return (free_mat(matr), 1);
 	while (matr[++i])
 	{

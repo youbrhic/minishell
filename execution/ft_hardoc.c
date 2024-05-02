@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 02:15:06 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/30 03:59:19 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/02 09:36:51 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void 	ft_hardoc(char *limiter)
 		matr = malloc_matr1(input, 1);
 		if (!matr)
 			return ;
-		ft_expand(matr, 0, 0);
 		ft_print_fd(fd, matr[0]);
 		free_mat(matr);
 	}

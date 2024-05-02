@@ -6,31 +6,20 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/01 06:01:54 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/02 11:34:20 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-static char	*get_path_env(char **env)
-{
-	int		i;
-	int		j;
-	char	*path;
-
-	i = -1;
-	path = getenv("PATH");
-	if (!path || !env)
-		return ("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.");
-	return (path);
-}
 
 static char	**get_all_paths(char **env)
 {
 	char	*path;
 	char	**paths;
 
-	path = get_path_env(env);
+	path = ft_getenv("PATH", env);
+	if (!path)
+		return (NULL);
 	paths = ft_split(path, ':');
 	return (paths);
 }
@@ -78,11 +67,15 @@ int	ft_exec_cmd(char *cmd, char ***env, int exit_status)
 
 	all_cmd = ft_split_cmd(cmd);
 	if (!all_cmd)
-		return (perror("error"), errno);
-	ft_expand(all_cmd, 1, exit_status);
+		return (perror("error"), 1);
+	ft_expand(all_cmd, 1, exit_status, *env);
 	ft_remove_quotes(all_cmd);
 	i = -1;
 	path_cmd = get_path_cmd(all_cmd[0], *env);
+	if (!path_cmd)
+		print_error(all_cmd[0]);
+	if (check_bultin(all_cmd[0]))
+		return(ft_exec_bultin(ft_split_cmd(cmd), env));
 	if (execve(path_cmd, all_cmd, *env) < 0)
 	{
 		if (path_cmd)

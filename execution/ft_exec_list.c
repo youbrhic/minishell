@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:01:51 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/01 06:24:12 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/02 10:22:07 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ static int	ft_close_fd(int	*p_1, int *p_2, int i)
 	if (i % 2 == 0)
 	{
 		if (close(p_1[0]) < 0)
-			return (perror("Error"), -1);
+			return (perror("close Error"), -1);
 	}
 	if ((1 < i) && (i % 2 != 0))
 	{
 		if (close(p_2[0]) < 0)
-			return (perror("Error gg"), -1);
+			return (perror("close Error"), -1);
 	}
 	return (0);
 }
@@ -30,22 +30,22 @@ static int	ft_close_fd(int	*p_1, int *p_2, int i)
 static int	ft_pipe(int	*p_1, int *p_2, t_node *node, int i)
 {
 	if ((i == 1) && node->next && ((pipe(p_1) < 0)))
-		return (perror("Error"), -1);
+		return (perror("pipe Error"), -1);
 	else if (1 < i)
 	{
 		if (!node->next)
 		{
 			if ((i % 2 == 0) && ((close(p_1[1]) < 0)))
-				return (perror("Error"), -1);
+				return (perror("pipe Error"), -1);
 			else if (i % 2 != 0 && ((close(p_2[1]) < 0)))
-				return (perror("Error"), -1);
+				return (perror("pipe Error"), -1);
 		}
 		else if ((i % 2 == 0) && \
 			((close(p_1[1]) < 0) || (pipe(p_2) < 0)))
-			return (perror("Error"), -1);
+			return (perror("pipe Error"), -1);
 		else if ((i % 2 != 0) && \
 			((close(p_2[1]) < 0) || (pipe(p_1) < 0)))
-			return (perror("Error"), -1);
+			return (perror("pipe Error"), -1);
 	}
 	return (0);
 }
@@ -54,23 +54,23 @@ static int	ft_dup(int	*p_1, int *p_2, t_node *node, int i)
 {
 	if ((i == 1) && node->next && (((dup2(p_1[1], 1) < 0)
 				|| (close(p_1[0]) < 0))))
-		return (perror("Error"), -1);
+		return (perror("dup Error"), -1);
 	else if (1 < i)
 	{
 		if (!node->next)
 		{
 			if ((i % 2 == 0) && ((dup2(p_1[0], 0) < 0)))
-				return (perror("Error"), -1);
+				return (perror("dup Error"), -1);
 			else if (i % 2 != 0 && ((dup2(p_2[0], 0) < 0)))
-				return (perror("Error"), -1);
+				return (perror("dup Error"), -1);
 		}
 		else if ((i % 2 == 0) && ((dup2(p_1[0], 0) < 0)
 				|| (close(p_1[0]) < 0) || (dup2(p_2[1], 1) < 0)
 				|| close(p_2[0]) < 0))
-			return (perror("Error"), -1);
+			return (perror("dup Error"), -1);
 		else if ((i % 2 != 0) && ((dup2(p_2[0], 0) < 0) || (close(p_2[0]) < 0)
 				|| (dup2(p_1[1], 1) < 0) || (close(p_1[0]) < 0)))
-			return (perror("Error"), -1);
+			return (perror("dup Error"), -1);
 	}
 	return (0);
 }
@@ -81,13 +81,14 @@ static void	exec_node(t_node *lst, t_argument args, char ***env)
 
 	if (lst->redirections)
 	{
-		state = ft_open_file(lst->redirections, &args.input, &args.output, args.exit_status);
+		state = ft_open_file(lst->redirections, &args.input, &args.output, args.exit_status, *env);
 		if (state)
 			exit(state);
 	}
 	state = ft_exec_cmd(lst->cmd, env, args.exit_status);
 	if (state)
 		exit(state);
+	exit(0);
 }
 
 int	ft_exec_list(t_node *lst, char ***env, int exit_status)
