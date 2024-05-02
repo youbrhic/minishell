@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:09:14 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/01 23:46:05 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/02 09:35:04 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	get_index_dollar(char *str, int flag)
 	return (-1);
 }
 
-static char	*ft_expenv(char *str, int *i, char *word, int index)
+static char	*ft_expenv(char *str, int *i, char *word, int index, char **env)
 {
 	char	*tmp;
 	char	*new_str;
@@ -54,12 +54,12 @@ static char	*ft_expenv(char *str, int *i, char *word, int index)
 	if (str[*i] >= '0' && str[*i] <= '9')
 		(1) && (new_str = ft_strjoin(new_str, ""), (*i)++);
 	else if (str[*i] == '_')
-		(1) && (new_str = ft_strjoin(new_str, getenv("_")), (*i)++);
+		(1) && (new_str = ft_strjoin(new_str, ft_getenv("_", env)), (*i)++);
 	else
 	{
 		tmp = ft_strndup(&str[index + 1], *i - index - 1);
-		if (getenv(tmp))
-			new_str = ft_strjoin(new_str, getenv(tmp));
+		if (ft_getenv(tmp, env))
+			new_str = ft_strjoin(new_str, ft_getenv(tmp, env));
 		else
 			new_str = ft_strjoin(new_str, "");
 		free(tmp);
@@ -84,7 +84,7 @@ static char	*add_rest_word(char *str, char *str2, int *i, int index)
 	return (free(tmp), free(str2), new_str);
 }
 
-static char	*ft_strenv(char *str, int index, int exit_status)
+static char	*ft_strenv(char *str, int index, int exit_status, char **env)
 {
 	int		i;
 	char	*tmp;
@@ -105,14 +105,14 @@ static char	*ft_strenv(char *str, int index, int exit_status)
 			new_str = ft_strjoin(new_str, tmp), i++);
 	}
 	else
-		new_str = ft_expenv(str, &i, new_str, index);
+		new_str = ft_expenv(str, &i, new_str, index, env);
 	index = i;
 	if (str[i])
 		new_str = add_rest_word(str, new_str, &i, index);
 	return (free(str), free(tmp), new_str);
 }
 
-int	ft_expand(char **token, int flag, int exit_status)
+int	ft_expand(char **token, int flag, int exit_status, char **env)
 {
 	int		i;
 	int		j;
@@ -128,7 +128,7 @@ int	ft_expand(char **token, int flag, int exit_status)
 		else
 		{
 			j = get_index_dollar(token[i], flag);
-			token[i] = ft_strenv(token[i], j, exit_status);
+			token[i] = ft_strenv(token[i], j, exit_status, env);
 			if (!token[i])
 				return (free_mat(&token[i + 1]), 0);
 			i--;

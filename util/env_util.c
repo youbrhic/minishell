@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_util.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 19:51:35 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/30 18:12:48 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/02 09:49:32 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,28 @@ char **get_matr_copy(char **env)
 	}
 	new_env[i] = NULL;
 	return (new_env);
+}
+
+// void	ft_setenv(char ***env, char *name, char *val)
+// {
+// 	int		i;
+
+// 	i = -1;
+// 	while ((*env)[++i])
+// 	{
+// 		if (!ft_strncmp((*env)[0], ))
+// 	}
+// }
+
+char	*ft_getenv(char *str, char **env)
+{
+	int		i;
+
+	i = -1;
+	while (env[++i])
+	{
+		if (!ft_strncmp(env[i], str, ft_strlen(str)))
+			return (&env[i][ft_strlen(str) + 1]);
+	}
+	return (NULL);
 }
