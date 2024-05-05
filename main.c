@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/02 17:00:27 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/05 16:48:45 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,32 @@ static void	affiche(t_node *head)
 	}
 }
 
+static void	handle_fun(int sig)
+{
+	int		pid;
+
+	pid = waitpid(-1, NULL, 0);
+	if (pid <= 0)
+	{
+		g_cld_proc = 1;
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	else
+	{
+		g_cld_proc = 128 + sig;
+		write(1, "\n", 1);
+	}
+}
+
+static void	ft_signals()
+{
+	signal(SIGINT, handle_fun);
+	signal(SIGQUIT, SIG_IGN);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	char	*input;
@@ -35,12 +61,16 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	(1) && (exit_status = 0, copy_env = get_matr_copy(env));
+	(1) && (exit_status = 0, copy_env = get_matr_copy(env), rl_catch_signals = 0);
+	ft_signals();
 	while (1)
 	{
 		input = readline("Minishell$ ");
 		if (!input)
-			exit(1);
+		{
+			write(1, "exit\n", 5);
+			exit(0);
+		}
 		if (*input)
 			add_history(input);
 		head = ft_create_list(input, &exit_status);
@@ -48,7 +78,6 @@ int	main(int ac, char **av, char **env)
 			free(input);
 		else
 		{
-			//affiche(head);
 			exit_status = ft_execv_cmd(head, &copy_env, exit_status);
 			ft_lstclear(&head);
 			free(input);

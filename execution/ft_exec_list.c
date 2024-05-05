@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:01:51 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/02 10:22:07 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/05 16:47:23 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,21 @@ static int	ft_dup(int	*p_1, int *p_2, t_node *node, int i)
 	return (0);
 }
 
+void ft_handler(int sig)
+{
+	if (sig == SIGQUIT)
+	{
+		write(1, "quite\n", 18);
+		exit(131);
+	}
+}
+
+void	f(int sig)
+{
+	printf ("Exit \n");
+	exit(128 + sig);	
+}
+
 static void	exec_node(t_node *lst, t_argument args, char ***env)
 {
 	int	state;
@@ -104,13 +119,11 @@ int	ft_exec_list(t_node *lst, char ***env, int exit_status)
 		if ((ft_pipe(args.p_1, args.p_2, lst, i) < 0))
 			return (-1);
 		pid = fork();
+		if (pid == -1)
+			return (perror("fork"), 1);
 		if (pid == 0)
-		{
 			if (0 <= ft_dup(args.p_1, args.p_2, lst, i))
 				exec_node(lst, args, env);
-		}
-		else if (pid == -1)
-			return (-1);
 		(1) && (ft_close_fd(args.p_1, args.p_2, i), lst = lst->next);
 	}
 	while (waitpid(-1, &status, 0) > 0)

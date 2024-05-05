@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/02 00:24:03 by aait-bab         ###   ########.fr       */
-=======
-/*   Updated: 2024/05/02 11:12:15 by youbrhic         ###   ########.fr       */
->>>>>>> 5e264bec34545c0e8b66ebb4f41ac087ac11752a
+/*   Updated: 2024/05/04 13:59:32 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +18,8 @@
 # include <readline/history.h>
 # include <libc.h>
 # include <errno.h>
+
+int		g_cld_proc;
 
 typedef struct s_node
 {
@@ -45,6 +43,7 @@ void	free_mat(char **mtr);
 void	ft_lstclear(t_node **lst);
 void	ft_lstadd_back(t_node **lst, t_node *new);
 void	ft_perror(char *str, int ex);
+void	ft_setenv(char *par, char *val, char **env, int flag);
 char	**ft_split(char const *s, char c);
 char	**ft_split_cmd(char const *s);
 char	**free2d(char ***arr, int index);
@@ -71,7 +70,7 @@ int		ft_expand(char **token, int flag, int exit_status, char **env);
 int		ft_remove_quotes(char **token);
 void	init_node(t_node **node);
 char	*ft_add_space(char *input);
-int		ft_parse_line(char **matr);
+int		ft_parse_line(char **matr, int exit_status);
 int		is_oper(char *str);
 int		is_redirection(char	*str);
 t_node	*ft_get_nodes(char **matr);
@@ -88,7 +87,6 @@ int		ft_open_file(char *redirection, int *input, int *output, int exit_status, c
 int		ft_execv_cmd(t_node *node, char ***env, int exit_status);
 
 /*--------------------bultin--------------------*/
-//-------------------------------------------------//
 
 char	**new_env(char **env, int size);
 int		size_env(char **env);

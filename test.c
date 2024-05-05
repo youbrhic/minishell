@@ -1,10 +1,7 @@
 #include <libc.h>
-#include "minishell.h"
+#include <readline/readline.h>
 
-
-
-int main(int ac, char **av, char **env)
+int main()
 {
-	int		i;
-
+    printf ("%d \n", wait(NULL));
 }

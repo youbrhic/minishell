@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 03:02:51 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/02 09:35:50 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/05 16:52:10 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int check_ambiguous(char **matr, int exit_status, char **env)
 				return (free_mat(copy), print_error(matr[i + 1]), 1);
         }
     }
-	if (!ft_remove_quotes(matr) || !ft_expand(matr, 1, exit_status, env))
+	if (!ft_expand(matr, 1, exit_status, env) || !ft_remove_quotes(matr))
 		return (free_mat(copy), 1);
 	return (free_mat(copy), 0);
 }
@@ -70,6 +70,8 @@ int	ft_create_file(char *redirection, int *input, int *output, int exit_status, 
 
 	i = -1;
 	matr = ft_split_cmd(redirection);
+	if (!matr)
+		return (1);
 	if (check_ambiguous(matr, exit_status, env))
 		return (free_mat(matr), 1);
 	while (matr[++i])

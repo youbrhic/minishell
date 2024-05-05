@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_excev_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:05:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/02 16:09:57 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/05 15:23:32 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_execv_cmd(t_node *node, char ***env, int exit_status)
 	if (ft_lstsize(node) == 1 && check_bultin(token[0]))
 	{
 		state = exec_b(node, token, env, exit_status);
-		return (state);
+		return (free_mat(token), state);
 	}
 	else
 		return (free_mat(token), ft_exec_list(node, env, exit_status));
