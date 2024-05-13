@@ -6,13 +6,13 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:20:22 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/08 17:05:17 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/13 23:05:35 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	print_export_env(char ***env)
+static void	printf_var_env(char *str)
 {
 	int		i;
 	int		j;
@@ -42,11 +42,12 @@ void	print_export_env(char ***env)
 
 void	add_env_kv(char *arg, char ***env)
 {
-	char	**n_env;
+	int		i;
 	int		s_env;
+	char	**n_env;
 	int		index;
 
-	index = chr_key_env(arg, *env);
+	(1) && (i = 0, index = chr_key_env(arg, *env));
 	if (index == -1)
 	{
 		(1) && (s_env = size_env(*env)), (new_env(*env, &n_env, s_env + 2));
@@ -109,7 +110,7 @@ void	execute_export(char **args, char ***env, int i)
 		add_env_kv(args[i], env);
 }
 
-int	ft_export(char **args, char ***env)
+int		ft_export(char **args, char ***env)
 {
 	int	i;
 	int	exit_status;

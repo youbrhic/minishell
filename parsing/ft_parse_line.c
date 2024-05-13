@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 04:27:39 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/01 07:37:32 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/04 13:29:27 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,20 @@ static void	skip_hardoc(char **matr)
 	}
 }
 
-int	ft_parse_line(char **matr)
+int	ft_parse_line(char **matr, int exit_status)
 {
 	int		index_error;
 
 	if (!matr || !*matr)
-		return (258);
+		return (exit_status);
 	index_error = check_line(matr, 0);
 	if (index_error == -1)
 		return (skip_hardoc(matr), 0);
 	else
 	{
 		if (index_error != get_size_mat(matr))
-			return (skip_hardoc(matr), check_line(matr, 1), 258);
-		else
 			return (check_line(matr, 1), skip_hardoc(matr), 258);
+		else
+			return (skip_hardoc(matr), check_line(matr, 1), 258);
 	}
 }

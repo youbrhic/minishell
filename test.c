@@ -1,5 +1,5 @@
 #include <libc.h>
-#include "minishell.h"
+#include <readline/readline.h>
 
 int	ft_strexsit(char *s, char *str)
 {

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 19:51:35 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/02 09:49:32 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/12 05:32:35 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,40 @@ char	*ft_getenv(char *str, char **env)
 	int		i;
 
 	i = -1;
+	if (!str)
+		return (NULL);
 	while (env[++i])
 	{
-		if (!ft_strncmp(env[i], str, ft_strlen(str)))
+		if (!ft_strncmp(env[i], str, ft_strlen(str)) 
+			&& env[i][ft_strlen(str)] == '=')
 			return (&env[i][ft_strlen(str) + 1]);
 	}
 	return (NULL);
+}
+
+void	ft_setenv(char *par, char *val, char **env, int flag)
+{
+	int		i;
+	char	*tmp;
+
+	i = -1;
+	while (env[++i])
+	{
+		if (!ft_strncmp(env[i], par, ft_strlen(par)))
+		{
+			if (flag)
+				tmp = ft_strdup(env[i]);
+			else
+				(1) && (tmp = ft_strdup(par), tmp = ft_strjoin(tmp, "="));
+			tmp = ft_strjoin(tmp, val);
+			if (!tmp)
+				write(2, "failed to add a value in env \n", 30);
+			else
+			{
+				free(env[i]);
+				env[i] = tmp;
+			}
+			break;
+		}
+	}
 }

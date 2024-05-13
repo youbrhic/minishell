@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:09:14 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/02 09:35:04 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/12 05:46:14 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ static char	*ft_expenv(char *str, int *i, char *word, int index, char **env)
 	new_str = ft_strndup(word, ft_strlen(word));
 	if (!new_str)
 		return (free(word), NULL);
-	if (str[*i] >= '0' && str[*i] <= '9')
-		(1) && (new_str = ft_strjoin(new_str, ""), (*i)++);
-	else if (str[*i] == '_')
+	if (str[*i] == '_' && str[*i + 1] != '_' && !is_alphanum(str[*i + 1]))
 		(1) && (new_str = ft_strjoin(new_str, ft_getenv("_", env)), (*i)++);
 	else
 	{
@@ -93,11 +91,10 @@ static char	*ft_strenv(char *str, int index, int exit_status, char **env)
 	tmp = ft_strndup(str, index);
 	if (!tmp)
 		return (NULL);
-	new_str = ft_strndup("", 1);
-	new_str = ft_strjoin(new_str, tmp);
-	i = index;
-	while (str[++i] && is_alphanum(str[i]))
-		;
+	(1) && (new_str = ft_strndup("", 1), new_str = ft_strjoin(new_str, tmp));
+	i = index + 1;
+	while (str[i] && (is_alphanum(str[i]) || str[i] == '_'))
+		i++;
 	if (str[i] == '?')
 	{
 		free(tmp);
@@ -109,28 +106,27 @@ static char	*ft_strenv(char *str, int index, int exit_status, char **env)
 	index = i;
 	if (str[i])
 		new_str = add_rest_word(str, new_str, &i, index);
-	return (free(str), free(tmp), new_str);
+	return (free(tmp), new_str);
 }
 
 int	ft_expand(char **token, int flag, int exit_status, char **env)
 {
 	int		i;
-	int		j;
+	char	*tmp;
 
 	if (!token)
 		return (0);
 	i = -1;
 	while (token[++i])
 	{
-		if ((i > 0 && !ft_strcmp(token[i - 1], "<<") && flag)
-			|| get_index_dollar(token[i], flag) < 0)
-			continue ;
-		else
+		if (!((i > 0 && !ft_strcmp(token[i - 1], "<<") && flag)
+			|| get_index_dollar(token[i], flag) < 0))
 		{
-			j = get_index_dollar(token[i], flag);
-			token[i] = ft_strenv(token[i], j, exit_status, env);
+			tmp = ft_strenv(token[i], get_index_dollar(token[i], flag), exit_status, env);
 			if (!token[i])
-				return (free_mat(&token[i + 1]), 0);
+				return (perror("Error"), 0);
+			free(token[i]);
+			token[i] = tmp;
 			i--;
 		}
 	}

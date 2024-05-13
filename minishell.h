@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/09 00:38:42 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/13 23:01:03 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <readline/history.h>
 # include <libc.h>
 # include <errno.h>
+
+int		g_cld_proc;
 
 typedef struct s_node
 {
@@ -41,6 +43,8 @@ void	free_mat(char **mtr);
 void	ft_lstclear(t_node **lst);
 void	ft_lstadd_back(t_node **lst, t_node *new);
 void	ft_perror(char *str, int ex);
+void	ft_setenv(char *par, char *val, char **env, int flag);
+int    	ft_add_skiper(char **token);
 char	**ft_split(char const *s, char c);
 char	**ft_split_cmd(char const *s);
 char	**free2d(char ***arr, int index);
@@ -67,8 +71,9 @@ void	ft_putstr_fd(char *s, int fd);
 int		ft_expand(char **token, int flag, int exit_status, char **env);
 int		ft_remove_quotes(char **token);
 void	init_node(t_node **node);
+char	**ft_token_cmds(char *cmds, char **env, int exit_status);
 char	*ft_add_space(char *input);
-int		ft_parse_line(char **matr);
+int		ft_parse_line(char **matr, int exit_status);
 int		is_oper(char *str);
 int		is_redirection(char	*str);
 t_node	*ft_get_nodes(char **matr);
@@ -80,12 +85,11 @@ t_node	*ft_create_list(char *input, int *exit_status);
 void    ft_hardoc(char *limiter);
 int		ft_exec_cmd(char *cmd, char ***env, int exit_status);
 int		ft_exec_list(t_node *lst, char ***env, int exit_status);
-int		ft_create_file(char *redirection, int *input, int *output, int exit_status, char **env);
-int		ft_open_file(char *redirection, int *input, int *output, int exit_status, char **env);
+int		ft_create_file(char *redirection, t_argument *arg, int exit_status, char **env);
+int		ft_open_file(char *redirection, t_argument arg, int exit_status, char **env);
 int		ft_execv_cmd(t_node *node, char ***env, int exit_status);
 
 /*--------------------bultin--------------------*/
-//-------------------------------------------------//
 
 void	new_env(char **env, char ***n_env, int size);
 int		size_env(char **env);
