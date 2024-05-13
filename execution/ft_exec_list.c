@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:01:51 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/05 16:47:23 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/13 01:36:32 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,28 +75,13 @@ static int	ft_dup(int	*p_1, int *p_2, t_node *node, int i)
 	return (0);
 }
 
-void ft_handler(int sig)
-{
-	if (sig == SIGQUIT)
-	{
-		write(1, "quite\n", 18);
-		exit(131);
-	}
-}
-
-void	f(int sig)
-{
-	printf ("Exit \n");
-	exit(128 + sig);	
-}
-
 static void	exec_node(t_node *lst, t_argument args, char ***env)
 {
 	int	state;
 
 	if (lst->redirections)
 	{
-		state = ft_open_file(lst->redirections, &args.input, &args.output, args.exit_status, *env);
+		state = ft_open_file(lst->redirections, args, args.exit_status, *env);
 		if (state)
 			exit(state);
 	}
@@ -113,7 +98,8 @@ int	ft_exec_list(t_node *lst, char ***env, int exit_status)
 	t_argument	args;
 	int			status;
 
-	(1) && (i = 0, args.input = 0, args.output = 1, args.exit_status = exit_status);
+	(1) && (i = 0, args.input = 0, args.output = 1,
+		args.exit_status = exit_status);
 	while (lst && ++i)
 	{
 		if ((ft_pipe(args.p_1, args.p_2, lst, i) < 0))
@@ -126,7 +112,7 @@ int	ft_exec_list(t_node *lst, char ***env, int exit_status)
 				exec_node(lst, args, env);
 		(1) && (ft_close_fd(args.p_1, args.p_2, i), lst = lst->next);
 	}
-	while (waitpid(-1, &status, 0) > 0)
+	while (waitpid(0, &status, 0) > 0)
 		;
 	return (WEXITSTATUS(status));
 }

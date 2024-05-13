@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 19:51:35 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/03 19:18:06 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/12 05:32:35 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ char	*ft_getenv(char *str, char **env)
 		return (NULL);
 	while (env[++i])
 	{
-		if (!ft_strncmp(env[i], str, ft_strlen(str)))
+		if (!ft_strncmp(env[i], str, ft_strlen(str)) 
+			&& env[i][ft_strlen(str)] == '=')
 			return (&env[i][ft_strlen(str) + 1]);
 	}
 	return (NULL);

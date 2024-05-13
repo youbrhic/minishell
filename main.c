@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/05 16:48:45 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/11 23:17:45 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,11 @@ static void	affiche(t_node *head)
 
 static void	handle_fun(int sig)
 {
-	int		pid;
-
-	pid = waitpid(-1, NULL, 0);
-	if (pid <= 0)
-	{
 		g_cld_proc = 1;
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-	}
-	else
-	{
-		g_cld_proc = 128 + sig;
-		write(1, "\n", 1);
-	}
 }
 
 static void	ft_signals()

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 11:58:11 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/02 09:37:12 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/13 01:36:58 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,13 @@ static int	dup_io(int input, int output)
 	return (1);
 }
 
-int	ft_open_file(char *redirection, int *input, int *output, int exit_status, char **env)
+int	ft_open_file(char *redirection, t_argument arg, int exit_status, char **env)
 {
 	int	state;
 
-	state = ft_create_file(redirection, input, output, exit_status, env);
-	if (state || (dup_io(*input, *output) < 0 || close_fd(*input, *output) < 0))
+	state = ft_create_file(redirection, &arg, exit_status, env);
+	if (state || (dup_io(arg.input, arg.output) < 0
+			|| close_fd(arg.input, arg.output) < 0))
 	{
 		if (state)
 			return (state);

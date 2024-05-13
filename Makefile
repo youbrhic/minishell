@@ -6,7 +6,7 @@
 #    By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 14:12:01 by youbrhic          #+#    #+#              #
-#    Updated: 2024/05/05 11:47:44 by youbrhic         ###   ########.fr        #
+#    Updated: 2024/05/12 03:10:21 by youbrhic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ FILES = main.c butlin/ft_cd.c                  parsing/ft_create_list.c \
 		execution/ft_exec_list.c        util/ft_split_cmd_util.c \
 		execution/ft_hardoc.c           util/libft_util.c \
 		execution/ft_open_file.c        util/libft_util2.c \
-		parsing/ft_add_space.c          util/other_util.c
+		parsing/ft_add_space.c          util/other_util.c parsing/ft_token_cmds.c util/util5.c
 
 OBJS = $(FILES:.c=.o)
 
@@ -34,7 +34,7 @@ RM = rm -f
 
 INCLUDE = minishell.h
 
-CC = gcc  -g #-fsanitize=address
+CC = gcc  -g -fsanitize=address
 
 CFLAGS =# -Wall -Wextra -Werror #-fsanitize=address
 

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:02:29 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/05 16:33:21 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/13 01:47:44 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_node	*ft_create_list(char *input, int *exit_status)
 	old_status = *exit_status;
 	new_input = ft_add_space(input);
 	if (!new_input)
-		return (NULL);
+		return (*exit_status = 258, NULL);
 	token_cmd = ft_split_cmd(new_input);
 	if (!token_cmd)
 		return ((*exit_status = 1), free(new_input), NULL);
@@ -82,7 +82,8 @@ t_node	*ft_create_list(char *input, int *exit_status)
 		return (free(new_input), free_mat(token_cmd), NULL);
 	head = ft_get_nodes(token_cmd);
 	if (!head)
-		return ((*exit_status = old_status), free(new_input), free_mat(token_cmd), NULL);
+		return ((*exit_status = old_status), free(new_input),
+			free_mat(token_cmd), NULL);
 	head = ft_get_list(token_cmd, head);
 	*exit_status = old_status;
 	return (free(new_input), free_mat(token_cmd), head);

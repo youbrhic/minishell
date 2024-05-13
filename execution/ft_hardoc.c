@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 02:15:06 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/03 15:29:35 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/13 01:37:41 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ static char	**malloc_matr1(char *str, int flag)
 	return (matr);
 }
 
-static void ft_print_fd(int fd, char *str)
+static void	ft_print_fd(int fd, char *str)
 {
 	if (fd < 0)
 		return ;
 	write(fd, str, ft_strlen(str));
-	write(fd, "\n", 1);	
+	write(fd, "\n", 1);
 }
 
-void 	ft_hardoc(char *limiter)
+void	ft_hardoc(char *limiter)
 {
 	int		fd;
 	char	*input;
