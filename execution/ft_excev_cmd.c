@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:05:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/02 16:09:57 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/02 22:54:24 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int ft_open_file_b(char *redirection, int *input, int *output, int exit_s
 	return (0);
 }
 
-static int exec_b(t_node *node, char **token, char ***env, int exit_status)
+int exec_b(t_node *node, char **token, char ***env, int exit_status)
 {
 	int		fdinput;
 	int		fdoutput;
@@ -60,10 +60,9 @@ int	ft_execv_cmd(t_node *node, char ***env, int exit_status)
 	ft_expand(token, 1, exit_status, *env);
 	ft_remove_quotes(token);
 	if (ft_lstsize(node) == 1 && check_bultin(token[0]))
-	{
 		state = exec_b(node, token, env, exit_status);
-		return (state);
-	}
 	else
-		return (free_mat(token), ft_exec_list(node, env, exit_status));
+		ft_exec_list(node, env, exit_status);
+	free_mat(token);
+	return (state);
 }

@@ -6,11 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/02 00:24:03 by aait-bab         ###   ########.fr       */
-=======
-/*   Updated: 2024/05/02 11:12:15 by youbrhic         ###   ########.fr       */
->>>>>>> 5e264bec34545c0e8b66ebb4f41ac087ac11752a
+/*   Updated: 2024/05/09 00:38:42 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +60,7 @@ int		get_size_mat(char **str);
 int		ft_lstsize(t_node *lst);
 int 	is_alphanum(char c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+void	ft_putstr_fd(char *s, int fd);
 
 /*---------------------parsing--------------------------*/
 
@@ -90,7 +87,7 @@ int		ft_execv_cmd(t_node *node, char ***env, int exit_status);
 /*--------------------bultin--------------------*/
 //-------------------------------------------------//
 
-char	**new_env(char **env, int size);
+void	new_env(char **env, char ***n_env, int size);
 int		size_env(char **env);
 int		chr_key_env(char *key, char **env);
 void	free_env(char ***env);
@@ -99,10 +96,14 @@ int		ft_cd(char **args, char ***env);
 int		ft_echo(char **args);
 int		ft_env(char **args, char ***env);
 void	ft_exit(char **args);
-void	ft_remove_plus(char **c);
+char	*ft_remove_plus(char *c);
 int		ft_pwd(char **args);
 int		ft_unset(char **args, char ***env);
+
 int		ft_export(char **args, char ***env);
+void	add_env_kv(char *arg, char ***env);
+int		parse_arg(char *arg);
+
 int		ft_strexsit(char *s, char *str);
 int		ft_isalpha(int c);
 

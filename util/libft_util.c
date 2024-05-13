@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:56:37 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/01 07:40:31 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:59:38 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	ft_strcmp(const char *s1, const char *s2)
 		++i;
 	}
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-	return (0);
 }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
@@ -122,7 +121,11 @@ int	ft_strexsit(char *s, char *str)
 				j++;
 			}
 			if (!str[j])
+			{
+				if (s[i - 3] == '=')
+					return (0);
 				return (1);
+			}
 		}
 		i++;
 	}
@@ -150,4 +153,11 @@ char	*ft_strdup(const char *s1)
 	}
 	new[i] = '\0';
 	return (new);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (!s)
+		return ;
+	write(fd, s, ft_strlen(s));
 }

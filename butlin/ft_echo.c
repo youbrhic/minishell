@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:19:20 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/04/28 04:49:03 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/08 17:17:50 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ int	ft_echo(char **args)
 	while (args[i])
 	{
 		j = 0;
-		printf("%s", args[i]);
+		ft_putstr_fd(args[i], 1);
 		if (args[i + 1])
-			printf(" ");
+			ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (!no_nl)
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 	return (0);
 }

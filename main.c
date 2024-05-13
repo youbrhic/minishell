@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/02 17:00:27 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/12 14:12:37 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,12 @@ int	main(int ac, char **av, char **env)
 			free(input);
 		else
 		{
-			//affiche(head);
+			// affiche(head);
 			exit_status = ft_execv_cmd(head, &copy_env, exit_status);
 			ft_lstclear(&head);
 			free(input);
 		}
 	}
+	free_mat(copy_env);
 	clear_history();
 }

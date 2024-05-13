@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+         #
+#    By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 14:12:01 by youbrhic          #+#    #+#              #
-#    Updated: 2024/05/01 07:45:43 by youbrhic         ###   ########.fr        #
+#    Updated: 2024/05/08 17:08:05 by aait-bab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 FILES = main.c butlin/ft_cd.c                  parsing/ft_create_list.c \
 		butlin/ft_echo.c                parsing/ft_create_node.c \
-		butlin/ft_env.c                 parsing/ft_expand.c \
+		butlin/ft_env.c                 parsing/ft_expand.c parsing/ft_parse_export.c\
 		butlin/ft_exit.c                parsing/ft_get_nodes.c \
  		butlin/ft_export.c              parsing/ft_parse_line.c \
 		butlin/ft_pwd.c                 parsing/ft_remove_quotes.c \
@@ -34,7 +34,7 @@ RM = rm -f
 
 INCLUDE = minishell.h
 
-CC = gcc  -g #-fsanitize=address
+CC = gcc  #-g -fsanitize=address
 
 CFLAGS =# -Wall -Wextra -Werror #-fsanitize=address
 

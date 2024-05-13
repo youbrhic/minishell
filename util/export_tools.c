@@ -6,26 +6,28 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:23:25 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/04/29 19:57:06 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/08 16:42:54 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 
-char	**new_env(char **env, int size)
+void	new_env(char **env, char ***n_env, int size)
 {
-	char	**new_env;
 	int		i;
 
-	new_env = (char **)malloc(sizeof(char *) * (size));
-	if (!new_env)
-		return (NULL);
+	*n_env = (char **)malloc(sizeof(char *) * (size));
+	if (!*n_env)
+		return ;
 	i = -1;
 	while (env[++i])
-		new_env[i] = ft_strndup(env[i], ft_strlen(env[i]));
-	new_env[i] = NULL;
-	return (new_env);
+	{
+		(*n_env)[i] = ft_strndup(env[i], ft_strlen(env[i]));
+		if (!(*n_env)[i])
+			return ;
+	}
+	(*n_env)[i] = NULL;
 }
 
 int	size_env(char **env)
@@ -49,7 +51,7 @@ void	free_env(char ***env)
 	*env = NULL;
 }
 
-void	ft_remove_plus(char **c)
+char	*ft_remove_plus(char *c)
 {
 	int		i;
 	int		j;
@@ -57,34 +59,38 @@ void	ft_remove_plus(char **c)
 
 	i = 0;
 	j = 0;
-	new = (char *)malloc(ft_strlen(*c) + 1);
+	new = (char *)malloc(ft_strlen(c) + 1);
 	if (!new)
-		return ;
-	while ((*c)[i])
+		return (NULL);
+	while (c[i])
 	{
-		if ((*c)[i] == '+')
+		if (c[i] == '+')
 			i++;
-		new[j] = (*c)[i];
+		new[j] = c[i];
 		i++;
 		j++;
 	}
 	new[j] = '\0';
-	free(*c);
-	*c = new;
+	free(c);
+	return (new);
 }
 
 int	chr_key_env(char *key, char **env)
 {
 	int	i;
 	int	j;
+	int	k;
 
 	i = -1;
+	k = 0;
+	while (key[k] && key[k] != '=')
+		k++;
 	while (env[++i])
 	{
 		j = 0;
 		while (env[i][j] && env[i][j] != '=')
 			j++;
-		if (!ft_strncmp(key, env[i], j))
+		if (!ft_strncmp(key, env[i], k))
 			return (i);
 	}
 	return (-1);
