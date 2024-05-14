@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:23:24 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/13 22:59:42 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/14 00:22:30 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	ft_unset(char **args, char ***env)
 {
 	int	i;
 	int	j;
-	int	len;
 	int	ret;
 
 	(1) && (i = 0, ret = valid_args(args));
@@ -52,10 +51,9 @@ int	ft_unset(char **args, char ***env)
 	while (args[++i])
 	{
 		j = -1;
-		len = ft_strlen(args[i]);
 		while ((*env)[++j])
 		{
-			if (!ft_strncmp(args[i], (*env)[j], len))
+			if (!ft_strcmp(args[i], (*env)[j]))
 			{
 				free((*env)[j]);
 				while ((*env)[j])

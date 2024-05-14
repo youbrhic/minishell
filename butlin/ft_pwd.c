@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:23:03 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/08 17:21:27 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/14 00:59:28 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_pwd(char **args)
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 	{
-		ft_putstr_fd("Error: getcwd failed\n", 2);
+		ft_putstr_fd(strerror(errno), 2);
 		return (1);
 	}
 	if (args[1] && (args[1][0] == '-' && args[1][1]))

@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:21:27 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/13 14:29:57 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/14 01:01:51 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	update_env(char ***env, char *oldpwd)
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 	{
-		ft_putstr_fd("Error: getcwd failed\n", 2);
+		ft_putstr_fd(strerror(errno), 2);
 		return (1);
 	}
 	add_env_kv(ft_strjoin(ft_strdup("OLDPWD="), oldpwd), env);
@@ -37,7 +37,7 @@ int	ft_cd(char **path, char ***env)
 	oldpwd = getcwd(NULL, 0);
 	if (!oldpwd)
 	{
-		ft_putstr_fd("Error: getcwd failed\n", 2);
+		ft_putstr_fd(strerror(errno), 2);
 		return (1);
 	}
 	if (path[1] && path[1][0] == '-' && path[1][1])

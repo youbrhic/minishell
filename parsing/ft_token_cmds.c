@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_token_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 00:09:02 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/13 01:53:18 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/14 00:07:45 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	**re_split(char **token)
 	if (get_size_mat(first_cmd) > 1)
 	{
 		if (get_size_mat(token) == 1)
-			return (free_mat(token), first_cmd);
+			return (free_mat(token), free_mat(first_cmd), first_cmd);
 		free(token[0]);
 		(1) && (token[0] = first_cmd[0], tmp = ft_strdup(""), i = 0);
 		while (first_cmd[++i])
@@ -32,11 +32,11 @@ static char	**re_split(char **token)
 				tmp = ft_strjoin(tmp, " "));
 		tmp = ft_strjoin(tmp, token[1]);
 		if (!tmp)
-			return (free_mat(token), NULL);
+			return (free_mat(token), free_mat(first_cmd), NULL);
 		free(token[1]);
 		token[1] = tmp;
 	}
-	return (token);
+	return (free_mat(first_cmd), token);
 }
 
 static int	count_empty_str(char **token)

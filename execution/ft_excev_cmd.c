@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:05:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/13 23:00:08 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/13 23:10:02 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	ft_execv_cmd(t_node *node, char ***env, int exit_status)
 	if (!token)
 		return (perror("memory problem"), 0);
 	if (ft_lstsize(node) == 1 && check_bultin(token[0]))
+	{
 		state = exec_b(node, token, env, exit_status);
 		return (free_mat(token), state);
 	}
