@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/13 01:35:57 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/14 01:01:54 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static int	print_error(char *str, int err)
 	int		i;
 
 	write(2, "minishell :", 11);
+	write(2, str, ft_strlen(str));
 	i = -1;
 	while (str[++i])
 		if (str[i] == '/')
