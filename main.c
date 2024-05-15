@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/11 23:17:45 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/15 14:15:25 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,41 @@ static void	affiche(t_node *head)
 
 static void	handle_fun(int sig)
 {
+	int		pid;
+
+	pid = wait(NULL);
+	if (pid <= 0)
+	{
 		g_cld_proc = 1;
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
+	}
+	else
+	{
+		g_cld_proc = sig + 128;
+		write(1, "\n", 1);
+	}
+}
+
+static void handle_quite(int sig)
+{
+	int		pid;
+
+	pid = wait(NULL);
+	if (pid > 0)
+	{
+		write(1, "Quit: 3", 8);
+		write(1, "\n", 1);
+		g_cld_proc = sig + 128;
+	}
 }
 
 static void	ft_signals()
 {
 	signal(SIGINT, handle_fun);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, handle_quite);
 }
 
 int	main(int ac, char **av, char **env)
@@ -67,10 +91,12 @@ int	main(int ac, char **av, char **env)
 			free(input);
 		else
 		{
+			// affiche(head);
 			exit_status = ft_execv_cmd(head, &copy_env, exit_status);
 			ft_lstclear(&head);
 			free(input);
 		}
 	}
+	free_mat(copy_env);
 	clear_history();
 }

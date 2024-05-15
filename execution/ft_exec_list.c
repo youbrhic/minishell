@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:01:51 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/13 01:36:32 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/15 15:32:50 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	ft_exec_list(t_node *lst, char ***env, int exit_status)
 			return (-1);
 		pid = fork();
 		if (pid == -1)
-			return (perror("fork"), 1);
+			return (perror("fork"), kill(0, SIGINT), 1);
 		if (pid == 0)
 			if (0 <= ft_dup(args.p_1, args.p_2, lst, i))
 				exec_node(lst, args, env);

@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:24:14 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/04/28 04:25:56 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/14 01:03:13 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_exit(char **args)
 {
 	int	exit_state;
 
-	printf("exit\n");
+	ft_putstr_fd("exit\n", 1);
 	if (!args[1])
 		exit (0);
 	else if (ft_isnumber(args[1]))
@@ -64,7 +64,7 @@ void	ft_exit(char **args)
 	}
 	else
 	{
-		printf("Error: numeric argument required\n");
+		ft_putstr_fd("Error: numeric argument required\n", 1);
 		exit (255);
 	}
 }

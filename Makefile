@@ -6,7 +6,7 @@
 #    By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 14:12:01 by youbrhic          #+#    #+#              #
-#    Updated: 2024/05/12 03:10:21 by youbrhic         ###   ########.fr        #
+#    Updated: 2024/05/14 04:38:06 by youbrhic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 FILES = main.c butlin/ft_cd.c                  parsing/ft_create_list.c \
 		butlin/ft_echo.c                parsing/ft_create_node.c \
-		butlin/ft_env.c                 parsing/ft_expand.c \
+		butlin/ft_env.c                 parsing/ft_expand.c parsing/parse_export.c\
 		butlin/ft_exit.c                parsing/ft_get_nodes.c \
  		butlin/ft_export.c              parsing/ft_parse_line.c \
 		butlin/ft_pwd.c                 parsing/ft_remove_quotes.c \

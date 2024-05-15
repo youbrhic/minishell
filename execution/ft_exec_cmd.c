@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/14 01:01:54 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/15 10:00:48 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	print_error(char *str, int err)
 	while (str[++i])
 		if (str[i] == '/')
 			break ;
-	if (err == 2 || !ft_strcmp(str, ".") || !ft_strcmp(str, ".."))
+	if (err == 2 )
 	{
 		if (i == ft_strlen(str))
 			return (write(2, ": command not found \n", 21), 127);
@@ -75,7 +75,7 @@ int	ft_exec_cmd(char *cmd, char ***env, int exit_status)
 	char	**all_cmd;
 	int		state;
 
-	all_cmd = ft_token_cmds(cmd, *env, exit_status);
+	all_cmd = ft_token_cmds(cmd, *env, exit_status, 1);
 	if (!all_cmd)
 		return (perror("error"), 1);
 	if (!*all_cmd)

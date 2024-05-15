@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/12 23:57:19 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/14 04:35:08 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,14 @@ int		get_size_mat(char **str);
 int		ft_lstsize(t_node *lst);
 int 	is_alphanum(char c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+void	ft_putstr_fd(char *s, int fd);
 
 /*---------------------parsing--------------------------*/
 
 int		ft_expand(char **token, int flag, int exit_status, char **env);
 int		ft_remove_quotes(char **token);
 void	init_node(t_node **node);
-char	**ft_token_cmds(char *cmds, char **env, int exit_status);
+char	**ft_token_cmds(char *cmds, char **env, int exit_status, int flag);
 char	*ft_add_space(char *input);
 int		ft_parse_line(char **matr, int exit_status);
 int		is_oper(char *str);
@@ -90,7 +91,7 @@ int		ft_execv_cmd(t_node *node, char ***env, int exit_status);
 
 /*--------------------bultin--------------------*/
 
-char	**new_env(char **env, int size);
+void	new_env(char **env, char ***n_env, int size);
 int		size_env(char **env);
 int		chr_key_env(char *key, char **env);
 void	free_env(char ***env);
@@ -99,10 +100,14 @@ int		ft_cd(char **args, char ***env);
 int		ft_echo(char **args);
 int		ft_env(char **args, char ***env);
 void	ft_exit(char **args);
-void	ft_remove_plus(char **c);
+char	*ft_remove_plus(char *c);
 int		ft_pwd(char **args);
 int		ft_unset(char **args, char ***env);
+
 int		ft_export(char **args, char ***env);
+void	add_env_kv(char *arg, char ***env);
+int		parse_arg(char *arg);
+
 int		ft_strexsit(char *s, char *str);
 int		ft_isalpha(int c);
 
