@@ -6,11 +6,23 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:09:14 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/15 15:14:30 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/17 04:42:47 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static int check_expand(char *str, int i, int flag)
+{
+	if (flag)
+	{
+		return ((i + 1 < ft_strlen(str) && (is_alphanum(str[i + 1])
+						|| str[i + 1] == '?' || str[i + 1] == '_')));
+	}
+	else
+		return ((i + 1 < ft_strlen(str) && str[i] == '\\' && str[i + 1] == '\''));
+	return (0);
+}
 
 static int	get_index_dollar(char *str, int flag)
 {
@@ -19,62 +31,42 @@ static int	get_index_dollar(char *str, int flag)
 	i = -1;
 	while (str[++i])
 	{
-		if (str[i] == '\'' && flag)
-			while (str[i] && str[++i] != '\'')
+		if (check_expand(str, i, 0) && flag)
+			while (str[++i] && !check_expand(str, i, 0))
 				;
-		else if (str[i] && str[i] == '\"')
-		{
-			while (str[i] && str[++i] != '\"')
-			{
-				if (str[i] == '$' && str[i + 1] != '\"'
-					&& !is_space(str[i + 1]))
-					return (i);
-			}
-		}
-		else if (str[i] == '$'
-			&& (i + 1 < ft_strlen(str) && (is_alphanum(str[i + 1])
-					|| str[i + 1] == '?' || str[i + 1] == '_' 
-					|| (i + 3 < ft_strlen(str) && str[i + 1] == '\\' && is_quot(str[i + 2]) && str[i + 3]))))
+		else if (str[i] == '$' && check_expand(str, i, 1))
 			return (i);
 	}
 	return (-1);
 }
 
-static char *get_str_env(char *str, int index_d, char **env, int exit_status)
+static char *get_str_env(char *str, int *index_d, char **env, int exit_status)
 {
 	char 	*str_env;
 	char	*tmp;
 	int		i;
+	int		size;
 
-	i = index_d + 1;
-	while (str[i] && (is_alphanum(str[i]) || str[i] == '_'))
-		i++;
-	if (i + 2 < ft_strlen(str) && str[i] == '\\' && is_quot(str[i + 1]) && str[i + 2])
-		i += 2;
-	else if (str[i] == '?' && i == index_d + 1)
+	i = *index_d;
+	size = 0;
+	while (str[++i] && (is_alphanum(str[i]) || str[i] == '_'))
+		size++;
+	if (str[i] == '?' && i == *index_d + 1)
+	{
+		(*index_d) += 2;
 		return (ft_itoa(exit_status));
-	tmp = ft_strndup(&str[index_d + 1], i);
+	}
+	if ((i + 2 < ft_strlen(str) && str[i] == '\\' && is_quot(str[i + 2]) && str[i + 3]))
+		return ((*index_d) += 2, ft_strdup(""));
+	else if (str[i])
+		size--;
+	tmp = ft_strndup(&str[*index_d + 1], size + 1);
 	if (!tmp)
 		return (NULL);
 	str_env = ft_getenv(tmp, env);
 	if (!str_env)
 		str_env = "";
-	return (free(tmp), ft_strdup(str_env));
-}
-
-static char *get_rest_str(char *str, int index_d)
-{
-	char *rest_str;
-	int		i;
-
-	i = index_d + 1;
-	while (str[i] && (is_alphanum(str[i]) || str[i] == '_'))
-		i++;
-	if ((i + 3 < ft_strlen(str) && str[i] == '$' &&  str[i + 1] == '\\'
-			&& is_quot(str[i + 2]) && str[i + 3]) || (str[i] == '?' && i == index_d + 1))
-		i++;
-	rest_str = ft_strdup(&str[index_d + i]);
-	return (rest_str);
+	return (free(tmp), (*index_d = i), ft_strdup(str_env));
 }
 
 static char *ft_str_expand(char *str, int index_d, char **env, int exit_status)
@@ -85,17 +77,18 @@ static char *ft_str_expand(char *str, int index_d, char **env, int exit_status)
 	new_str = ft_strndup(str, index_d);
 	if (!new_str)
 		return (NULL);
-	tmp = get_str_env(str, index_d, env, exit_status);
+	tmp = get_str_env(str, &index_d, env, exit_status);
 	if (!tmp)
 		return (free(new_str), NULL);
 	new_str = ft_strjoin(new_str, tmp);
 	if (!new_str)
 		return (free(tmp), NULL);
-	tmp = get_rest_str(str, index_d);
+	free(tmp);
+	tmp = ft_strdup(&str[index_d]);
 	if (!tmp)
 		return (free(new_str), NULL);
 	new_str = ft_strjoin(new_str, tmp);
-	return(new_str);
+	return(free(tmp), new_str);
 }
 
 int	ft_expand(char **token, int flag, int exit_status, char **env)
@@ -115,6 +108,7 @@ int	ft_expand(char **token, int flag, int exit_status, char **env)
 				return (0);
 			free(token[i]);
 			token[i] = tmp;
+			i--;
 		}
 	}
 	return (1);

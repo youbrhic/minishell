@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 00:09:02 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/15 11:29:46 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/17 02:38:18 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	count_empty_str(char **token)
 	nbempty_str = 0;
 	while (token[++i])
 	{
-		if (!*token[i] || (ft_strlen(token[i]) == 2 && is_quot(token[i][0]) && is_quot(token[i][1])))
+		if (!*token[i])
 			nbempty_str++;
 	}
 	return (nbempty_str);
@@ -70,7 +70,7 @@ static char	**skip_empty_strs(char **token)
 	(1) && (i = -1, j = -1);
 	while (token[++i])
 	{
-		if (*token[i] && !(ft_strlen(token[i]) == 2 && is_quot(token[i][0]) && is_quot(token[i][1])))
+		if (*token[i])
 		{
 			tmp = ft_strdup(token[i]);
 			if (!tmp)
@@ -93,14 +93,12 @@ char	**ft_token_cmds(char *cmds, char **env, int exit_status, int flag)
 		return (NULL);
 	if (!ft_add_skiper(token) || !ft_expand(token, flag, exit_status, env))
 		return (free_mat(token), NULL);
-	if (!token)
-		return (NULL);
 	token = re_split(token);
 	if (!token)
 		return (NULL);
-	token = skip_empty_strs(token);
 	if (flag && !ft_remove_quotes(token))
 		return (free_mat(token), NULL);
+	token = skip_empty_strs(token);
 	if (!token)
 		return (NULL);
 	return (token);
