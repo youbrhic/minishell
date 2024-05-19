@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 04:27:39 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/19 04:21:40 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/19 10:42:37 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static int	skip_hardoc(char **matr, char **env, int exit_status)
 {
 	int		i;
 	int		index_error;
+	int		state;
 
 	i = -1;
 	index_error = check_line(matr, 0);
@@ -50,9 +51,9 @@ static int	skip_hardoc(char **matr, char **env, int exit_status)
 	{
 		if (!ft_strcmp(matr[i], "<<") && !is_oper(matr[i + 1])
 			&& (i + 1) < get_size_mat(matr))
-			return (ft_hardoc(&matr[i + 1], env, exit_status));
+			state = ft_hardoc(&matr[i + 1], env, exit_status);
 	}
-	return (0);
+	return (state);
 }
 
 int	ft_parse_line(char **matr, char **env, int exit_status)

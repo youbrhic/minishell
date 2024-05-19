@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 23:26:27 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/19 04:52:56 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/19 10:46:35 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	write_hardoc(char *file, char *limiter, char **env, int exit_status)
 	if (quotes_in_str(limiter) >= 0)
 		(1) && (flag = 1,
 			new_limter = expand_remove_str(limiter, env, exit_status, 2));
+	printf ("%s \n",new_limter);
 	while (1)
 	{
 		input = readline(">");

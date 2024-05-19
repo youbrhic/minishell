@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:56:37 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/08 16:59:38 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/19 11:12:06 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,14 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	ft_strncmp(const char *s1, const char *s2, int n)
 {
 	size_t	i;
 
 	i = 0;
 	if (!s1 || !s2)
+		return (-1);
+	if (n < 0)
 		return (-1);
 	while (s1[i] != '\0' && s2[i] != '\0' && i < n)
 	{

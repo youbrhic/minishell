@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/19 05:39:37 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/19 11:12:17 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int		is_space(char c);
 int		get_size_mat(char **str);
 int		ft_lstsize(t_node *lst);
 int 	is_alphanum(char c);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strncmp(const char *s1, const char *s2, int n);
 void	ft_putstr_fd(char *s, int fd);
 
 /*---------------------parsing--------------------------*/

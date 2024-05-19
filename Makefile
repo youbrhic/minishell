@@ -6,7 +6,7 @@
 #    By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 14:12:01 by youbrhic          #+#    #+#              #
-#    Updated: 2024/05/19 02:42:19 by youbrhic         ###   ########.fr        #
+#    Updated: 2024/05/19 10:56:58 by youbrhic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ RM = rm -f
 
 INCLUDE = minishell.h
 
-CC = gcc  -g #-fsanitize=address
+CC = gcc  -g -fsanitize=address
 
 CFLAGS = #-Wall -Wextra -Werror #-fsanitize=address
 

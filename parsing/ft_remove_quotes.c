@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:57:53 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/19 09:03:48 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/19 11:20:14 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ static char	*ft_remove(char *str)
 			new_str = ft_skipquote(str, new_str, &i);
 		else
 			new_str = getword(str, new_str, &i);
+		if (str[i] == '\0')
+			break ;
 	}
 	return (new_str);
 }
@@ -91,11 +93,13 @@ int	ft_remove_quotes(char **token)
 {
 	int		i;
 	char	*tmp;
+	int		nb;
 
 	i = -1;
 	while (token[++i])
 	{
-		if (getindexqoute(token[i]) >= 0 && (i - 1 >= 0 && ft_strcmp(token[i - 1], "<<")))
+		if (getindexqoute(token[i]) >= 0 && (i == 0
+			|| (i - 1 >= 0 && ft_strcmp(token[i - 1], "<<"))))
 		{
 			tmp = ft_remove(token[i]);
 			if (!tmp)
