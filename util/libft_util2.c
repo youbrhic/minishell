@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_util2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 07:24:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/13 23:00:32 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/19 02:31:54 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ static void	del(void *p)
 		free(node->redirections);
 }
 
-void	ft_lstclear(t_node **lst)
+int	ft_lstclear(t_node **lst)
 {
 	t_node	*l;
 
 	if (!lst || !(*lst))
-		return ;
+		return (0);
 	while (*lst)
 	{
 		l = (*lst)->next;
@@ -81,6 +81,7 @@ void	ft_lstclear(t_node **lst)
 		*lst = l;
 	}
 	*lst = NULL;
+	return (1);
 }
 
 int	ft_lstsize(t_node *lst)

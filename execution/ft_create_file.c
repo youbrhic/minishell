@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 03:02:51 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/13 01:30:14 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/18 23:39:51 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,9 @@ int	ft_create_file(char *redirection, t_argument *arg,
 		else if (!ft_strcmp(matr[i], ">>") && check_fd(arg->output, 1))
 			arg->output = open(matr[++i], O_CREAT | O_WRONLY | O_APPEND, 0644);
 		else if (!ft_strcmp(matr[i], "<<") && check_fd(arg->input, 0))
-			(1) && (arg->input = open("/tmp/hardoc", O_RDONLY), ++i);
-		if (arg->input < 0 || arg->output < 0)
+			(1) && (arg->input = open(matr[i + 1], O_RDONLY),
+				unlink(matr[i + 1]), ++i);
+		if ((arg->input < 0 || arg->output < 0))
 			return (write(2, "minishell :", 12),
 				perror(matr[i]), free_mat(matr), 1);
 	}

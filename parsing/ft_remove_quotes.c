@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:57:53 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/17 04:51:35 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/19 01:58:26 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*ft_skipquote(char *str1, char *str2, int *index)
 	tmp = ft_strndup(&str1[i], *index - i);
 	new_str = ft_strjoin(new_str, tmp);
 	if (*index + 1 < ft_strlen(str1)
-		&& str1[*index] == '\\' && str1[*index + 1] == c)
+		&& str1[*index] == '\\' && is_quot(str1[i + 1]))
 		(*index)--;
 	return (free(tmp), free(str2), new_str);
 }
@@ -78,12 +78,10 @@ static char	*ft_remove(char *str)
 		return (NULL);
 	while (str[++i])
 	{
-		if (!(i + 1 < ft_strlen(str) && str[i] == '\\' && is_quot(str[i + 1])))
-			new_str = getwordquote(str, new_str, &i);
-		else
+		if ((i + 1 < ft_strlen(str) && str[i] == '\\' && is_quot(str[i + 1])))
 			new_str = ft_skipquote(str, new_str, &i);
-		if (!str[i])
-			break ;
+		else
+			new_str = getwordquote(str, new_str, &i);
 	}
 	return (new_str);
 }

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 00:09:02 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/17 02:38:18 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/17 23:50:18 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,10 @@ char	**ft_token_cmds(char *cmds, char **env, int exit_status, int flag)
 	token = re_split(token);
 	if (!token)
 		return (NULL);
-	if (flag && !ft_remove_quotes(token))
-		return (free_mat(token), NULL);
 	token = skip_empty_strs(token);
 	if (!token)
 		return (NULL);
+	if (flag && !ft_remove_quotes(token))
+		return (free_mat(token), NULL);
 	return (token);
 }

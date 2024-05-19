@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 12:02:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/01 06:13:19 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/19 02:31:32 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char	*ft_add_space(char *input)
 		return (NULL);
 	new_input = malloc((2 * size) + ft_strlen(input) + 2);
 	if (!new_input)
-		return (free(input), NULL);
+		return (free(input), input = NULL);
 	size = -1;
 	i = 0;
 	while (input[++size])
@@ -114,5 +114,5 @@ char	*ft_add_space(char *input)
 			new_input[i++] = ' ';
 	}
 	new_input[i] = '\0';
-	return (new_input);
+	return (free(input), input = NULL, new_input);
 }

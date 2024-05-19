@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 08:21:21 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/29 11:36:47 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/19 00:55:24 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	**free2d(char ***arr, int index)
 	int	i;
 
 	i = 0;
-	while (index - i >= 0)
+	while (index - i > 0)
 	{
 		free((*arr)[index - i]);
 		i++;

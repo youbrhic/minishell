@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 03:21:11 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/15 08:24:57 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/18 23:27:06 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,3 +80,22 @@ int    ft_add_skiper(char **token)
     return (1);
 }
 
+int quotes_in_str(char *str)
+{
+    int     i;
+
+    i = 0;
+    while (str[i])
+    {
+        if (is_quot(str[i]))
+            return (i);
+		i++;
+    }
+	return (-1);
+}
+
+void write_fd(int fd, char *str)
+{
+	write(fd, str, ft_strlen(str));
+	write(fd, "\n", 1);
+}

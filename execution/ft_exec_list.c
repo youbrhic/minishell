@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:01:51 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/17 01:32:54 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/19 04:32:00 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,19 +96,17 @@ int	ft_exec_list(t_node *lst, char ***env, int exit_status)
 	int			i;
 	int			pid;
 	t_argument	args;
-	int			status;
 	int			pid_f;
-	int			size;
+	int			status;
 
-	size = ft_lstsize(lst);
 	(1) && (i = 0, args.input = 0, args.output = 1,
-		args.exit_status = exit_status);
+		args.exit_status = exit_status, args.size = ft_lstsize(lst));
 	while (lst && ++i)
 	{
 		if ((ft_pipe(args.p_1, args.p_2, lst, i) < 0))
 			return (1);
 		pid = fork();
-		if (pid > 0 && i == size)
+		if (pid > 0 && i == args.size)
 			pid_f = pid;
 		if (pid == -1)
 			return (perror("fork"), kill(0, SIGINT), 1);
@@ -117,8 +115,6 @@ int	ft_exec_list(t_node *lst, char ***env, int exit_status)
 				exec_node(lst, args, env);
 		(1) && (ft_close_fd(args.p_1, args.p_2, i), lst = lst->next);
 	}
-	waitpid(pid_f, &status, 0);
-	while (wait(NULL) > 0)
-		;
-	return (WEXITSTATUS(status));
+	status = ft_wait(pid_f);
+	return (status);
 }

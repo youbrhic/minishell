@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:02:29 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/13 01:47:44 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/19 04:22:53 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static t_node	*ft_get_list(char **token, t_node *head)
 	return (ft_lstclear(&head), new_head);
 }
 
-t_node	*ft_create_list(char *input, int *exit_status)
+t_node	*ft_create_list(char *input, char **env, int *exit_status)
 {
 	t_node	*head;
 	char	**token_cmd;
@@ -70,15 +70,14 @@ t_node	*ft_create_list(char *input, int *exit_status)
 
 	if (g_cld_proc)
 		(1) && (*exit_status = g_cld_proc, g_cld_proc = 0);
-	old_status = *exit_status;
-	new_input = ft_add_space(input);
+	(1) && (old_status = *exit_status, new_input = ft_add_space(input));
 	if (!new_input)
 		return (*exit_status = 258, NULL);
 	token_cmd = ft_split_cmd(new_input);
 	if (!token_cmd)
 		return ((*exit_status = 1), free(new_input), NULL);
-	*exit_status = ft_parse_line(token_cmd, *exit_status);
-	if (*exit_status == 258)
+	*exit_status = ft_parse_line(token_cmd, env, *exit_status);
+	if (*exit_status == 258 || *exit_status == 1)
 		return (free(new_input), free_mat(token_cmd), NULL);
 	head = ft_get_nodes(token_cmd);
 	if (!head)

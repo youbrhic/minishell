@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:24:14 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/14 01:03:13 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/19 01:26:17 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	ft_isnumber(char *str)
 	return (1);
 }
 
-static int	ft_atoi(char *str)
+int	ft_atoi(char *str)
 {
 	int	i;
 	int	sign;
