@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 08:07:59 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/19 06:02:24 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/19 23:24:28 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ static void handle_heredoc(int sig)
 	pid = wait(NULL);
 	if (pid <= 0)
 	{
-		g_cld_proc = 1;
 		write(1, "\n", 1);
+		exit(1);
 	}
 	else
-		exit(1);
+		g_cld_proc = 1;
 }
 
 void    ft_signal_heredoc()

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 02:15:06 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/19 10:45:57 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/19 23:28:49 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	ft_hardoc(char **limiter, char **env, int exit_status)
 	char	*file;
 	char	*tmp;
 
+	rl_catch_signals = 1;
+	ft_signal_heredoc();
 	file = get_file_hardoc();
 	if (!file)
 		return (1);
@@ -72,5 +74,6 @@ int	ft_hardoc(char **limiter, char **env, int exit_status)
 	free(*limiter);
 	free(file);
 	*limiter = tmp;
+	ft_signals();
 	return (0);
 }
