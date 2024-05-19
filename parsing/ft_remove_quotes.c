@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:57:53 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/19 01:58:26 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/19 09:03:48 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,25 @@ static char	*ft_skipquote(char *str1, char *str2, int *index)
 	int		i;
 	char	*new_str;
 	char	*tmp;
+	int		size;
 	char	c;
 
 	new_str = ft_strndup(str2, ft_strlen(str2));
 	(*index)++;
 	i = *index + 1;
 	c = str1[*index];
+	size = 0; 
 	while (str1[++(*index)] && !(*index + 1 < ft_strlen(str1)
 			&& str1[*index] == '\\' && str1[*index + 1] == c))
-		;
-	tmp = ft_strndup(&str1[i], *index - i);
+		size++;
+	tmp = ft_strndup(&str1[i], size);
 	new_str = ft_strjoin(new_str, tmp);
-	if (*index + 1 < ft_strlen(str1)
-		&& str1[*index] == '\\' && is_quot(str1[i + 1]))
-		(*index)--;
+	if (str1[*index])
+		(*index)++;
 	return (free(tmp), free(str2), new_str);
 }
 
-static char	*getwordquote(char *str, char *str2, int *i)
+static char	*getword(char *str, char *str2, int *i)
 {
 	char	*new_str;
 	char	*tmp;
@@ -81,7 +82,7 @@ static char	*ft_remove(char *str)
 		if ((i + 1 < ft_strlen(str) && str[i] == '\\' && is_quot(str[i + 1])))
 			new_str = ft_skipquote(str, new_str, &i);
 		else
-			new_str = getwordquote(str, new_str, &i);
+			new_str = getword(str, new_str, &i);
 	}
 	return (new_str);
 }
