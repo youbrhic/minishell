@@ -6,13 +6,13 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 02:15:06 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/19 23:28:49 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 02:01:14 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	create_heredoc(char *limiter, char *file, char **env, int exit_status)
+int	create_heredoc(char *limiter, char *file, char **env, int exit_status)
 {
 	int		pid;
 	int		status;
@@ -21,12 +21,12 @@ void	create_heredoc(char *limiter, char *file, char **env, int exit_status)
 	if (pid < 0)
 	{
 		perror("pid");
-		return ;
+		return (1);
 	}
 	else if (pid == 0)
 		write_hardoc(file, limiter, env, exit_status);
-	wait(NULL);
-	ft_signal_heredoc();
+	waitpid(pid, &status, 0);
+	return (WEXITSTATUS(status));
 }
 
 int	unlinek_heredocs(void)
@@ -61,13 +61,14 @@ int	ft_hardoc(char **limiter, char **env, int exit_status)
 	int		fd;
 	char	*file;
 	char	*tmp;
+	int		state;
 
 	rl_catch_signals = 1;
 	ft_signal_heredoc();
 	file = get_file_hardoc();
 	if (!file)
 		return (1);
-	create_heredoc(*limiter, file, env, exit_status);
+	state = create_heredoc(*limiter, file, env, exit_status);
 	tmp = ft_strdup(file);
 	if (!tmp)
 		return (1);
@@ -75,5 +76,8 @@ int	ft_hardoc(char **limiter, char **env, int exit_status)
 	free(file);
 	*limiter = tmp;
 	ft_signals();
+	rl_catch_signals = 0;
+	if (g_cld_proc == 1)
+		return (1);
 	return (0);
 }

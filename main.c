@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/19 05:38:40 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 02:16:44 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static void	affiche(t_node *head)
 	}
 }
 
-static int init_shell(char **env, char ***copy_env, t_term ter , int exit_status)
+static int	init_shell(char **env, char ***copy_env,
+	struct termios ter, int exit_status)
 {
 	char	*shelvl;
 	char	*nb;
@@ -41,24 +42,28 @@ static int init_shell(char **env, char ***copy_env, t_term ter , int exit_status
 			return (perror("memmory problem"), free_mat(*copy_env), 0);
 		nb = ft_itoa(ft_atoi(shelvl) + 1);
 		if (!nb)
-			return (free(shelvl), free_mat(*copy_env), perror("memmory problem"), 0);
+			return (free(shelvl), free_mat(*copy_env),
+				perror("memmory problem"), 0);
 		ft_setenv("SHLVL", nb, copy_env, 0);
 		free(nb);
 		free(shelvl);
 	}
 	if (tcgetattr(STDIN_FILENO, &ter))
 		return (perror("ter"), 0);
-	exit_status = 0; 
+	exit_status = 0;
 	rl_catch_signals = 0;
 	return (1);
 }
 
-static void clean_shell(t_node *head, char **copy_env, char *input, int exit_status)
+static void	clean_shell(t_node *head, char **copy_env,
+	char *input, int exit_status)
 {
 	unlinek_heredocs();
 	if (copy_env)
 		free_mat(copy_env);
-	if (!input)
+	if (input)
+		free(input);
+	else
 		write(1, "exit\n", 5);
 	rl_clear_history();
 	exit(exit_status);
@@ -66,10 +71,11 @@ static void clean_shell(t_node *head, char **copy_env, char *input, int exit_sta
 
 int	main(int ac, char **av, char **env)
 {
-	char	*input;
-	int		exit_status;
-	char	**copy_env;
-	t_node	*head;
+	char			*input;
+	int				exit_status;
+	char			**copy_env;
+	t_node			*head;
+	struct termios	ter;
 
 	(void)ac;
 	(void)av;
@@ -78,8 +84,8 @@ int	main(int ac, char **av, char **env)
 	ft_signals();
 	while (1)
 	{
-		(1) && (input = readline("Minishell$ "));
-		if (!input)
+		input = readline("Minishell$ ");
+		if (!input || !isatty(STDIN_FILENO))
 			clean_shell(head, copy_env, input, 0);
 		if (*input)
 			add_history(input);

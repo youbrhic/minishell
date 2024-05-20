@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 08:07:59 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/19 23:24:28 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 02:39:31 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	handle_int(int sig)
 	}
 }
 
-static void handle_quite(int sig)
+static void	handle_quite(int sig)
 {
 	int		pid;
 
@@ -45,15 +45,15 @@ static void handle_quite(int sig)
 	}
 }
 
-void	ft_signals()
+void	ft_signals(void)
 {
 	signal(SIGINT, handle_int);
 	signal(SIGQUIT, handle_quite);
 }
 
-static void handle_heredoc(int sig)
+static void	handle_heredoc(int sig)
 {
-    int     pid;
+	int		pid;
 
 	(void)sig;
 	pid = wait(NULL);
@@ -66,7 +66,7 @@ static void handle_heredoc(int sig)
 		g_cld_proc = 1;
 }
 
-void    ft_signal_heredoc()
+void	ft_signal_heredoc(void)
 {
-    signal(SIGINT, handle_heredoc);
+	signal(SIGINT, handle_heredoc);
 }

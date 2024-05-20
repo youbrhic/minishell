@@ -6,12 +6,11 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 04:13:18 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/20 04:13:37 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 02:25:27 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 static int	len(long n)
 {

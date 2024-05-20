@@ -6,12 +6,11 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:23:25 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/18 01:58:21 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 02:25:09 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 void	new_env(char **env, char ***n_env, int size)
 {
@@ -58,8 +57,8 @@ char	*ft_remove_plus(char *c)
 	char	*new;
 	int		f_oc;
 
-	(1) && (f_oc = 0 ,i = 0, j = 0);
-	new = (char *)malloc(ft_strlen(c) + 1);
+	(1) && (f_oc = 0, i = 0, j = 0);
+	new = (char *) malloc(ft_strlen(c) + 1);
 	if (!new)
 		return (NULL);
 	while (c[i])
@@ -98,4 +97,3 @@ int	chr_key_env(char *key, char **env)
 	}
 	return (-1);
 }
-

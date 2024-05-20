@@ -6,21 +6,22 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:09:14 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/17 04:42:47 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 02:45:09 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int check_expand(char *str, int i, int flag)
+static int	check_expand(char *str, int i, int flag)
 {
 	if (flag)
 	{
 		return ((i + 1 < ft_strlen(str) && (is_alphanum(str[i + 1])
-						|| str[i + 1] == '?' || str[i + 1] == '_')));
+					|| str[i + 1] == '?' || str[i + 1] == '_')));
 	}
 	else
-		return ((i + 1 < ft_strlen(str) && str[i] == '\\' && str[i + 1] == '\''));
+		return ((i + 1 < ft_strlen(str)
+				&& str[i] == '\\' && str[i + 1] == '\''));
 	return (0);
 }
 
@@ -40,9 +41,9 @@ static int	get_index_dollar(char *str, int flag)
 	return (-1);
 }
 
-static char *get_str_env(char *str, int *index_d, char **env, int exit_status)
+static char	*get_str_env(char *str, int *index_d, char **env, int exit_status)
 {
-	char 	*str_env;
+	char	*str_env;
 	char	*tmp;
 	int		i;
 	int		size;
@@ -52,11 +53,9 @@ static char *get_str_env(char *str, int *index_d, char **env, int exit_status)
 	while (str[++i] && (is_alphanum(str[i]) || str[i] == '_'))
 		size++;
 	if (str[i] == '?' && i == *index_d + 1)
-	{
-		(*index_d) += 2;
-		return (ft_itoa(exit_status));
-	}
-	if ((i + 2 < ft_strlen(str) && str[i] == '\\' && is_quot(str[i + 2]) && str[i + 3]))
+		return (((*index_d) += 2), ft_itoa(exit_status));
+	if ((i + 2 < ft_strlen(str) && str[i] == '\\'
+			&& is_quot(str[i + 2]) && str[i + 3]))
 		return ((*index_d) += 2, ft_strdup(""));
 	else if (str[i])
 		size--;
@@ -69,7 +68,7 @@ static char *get_str_env(char *str, int *index_d, char **env, int exit_status)
 	return (free(tmp), (*index_d = i), ft_strdup(str_env));
 }
 
-static char *ft_str_expand(char *str, int index_d, char **env, int exit_status)
+static char	*ft_str_expand(char *str, int index_d, char **env, int exit_status)
 {
 	char	*tmp;
 	char	*new_str;
@@ -88,7 +87,7 @@ static char *ft_str_expand(char *str, int index_d, char **env, int exit_status)
 	if (!tmp)
 		return (free(new_str), NULL);
 	new_str = ft_strjoin(new_str, tmp);
-	return(free(tmp), new_str);
+	return (free(tmp), new_str);
 }
 
 int	ft_expand(char **token, int flag, int exit_status, char **env)
@@ -96,14 +95,14 @@ int	ft_expand(char **token, int flag, int exit_status, char **env)
 	int		i;
 	char	*tmp;
 
-	i  = -1;
+	i = -1;
 	while (token[++i])
 	{
-		if (get_index_dollar(token[i], flag) >= 0 
+		if (get_index_dollar(token[i], flag) >= 0
 			&& !(i > 0 && !ft_strcmp(token[i - 1], "<<")))
 		{
 			tmp = ft_str_expand(token[i],
-				get_index_dollar(token[i], flag), env, exit_status);
+					get_index_dollar(token[i], flag), env, exit_status);
 			if (!tmp)
 				return (0);
 			free(token[i]);

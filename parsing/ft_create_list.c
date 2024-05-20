@@ -6,11 +6,18 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:02:29 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/19 04:22:53 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 02:29:45 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	init_node(t_node **node)
+{
+	(*node)->cmd = ft_strndup("", 1);
+	(*node)->redirections = ft_strndup("", 1);
+	(*node)->next = NULL;
+}
 
 static int	check_espace(char *str)
 {

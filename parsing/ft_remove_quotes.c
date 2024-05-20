@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:57:53 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/19 11:20:14 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 02:40:42 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*ft_skipquote(char *str1, char *str2, int *index)
 	(*index)++;
 	i = *index + 1;
 	c = str1[*index];
-	size = 0; 
+	size = 0;
 	while (str1[++(*index)] && !(*index + 1 < ft_strlen(str1)
 			&& str1[*index] == '\\' && str1[*index + 1] == c))
 		size++;
@@ -99,7 +99,7 @@ int	ft_remove_quotes(char **token)
 	while (token[++i])
 	{
 		if (getindexqoute(token[i]) >= 0 && (i == 0
-			|| (i - 1 >= 0 && ft_strcmp(token[i - 1], "<<"))))
+				|| (i - 1 >= 0 && ft_strcmp(token[i - 1], "<<"))))
 		{
 			tmp = ft_remove(token[i]);
 			if (!tmp)
