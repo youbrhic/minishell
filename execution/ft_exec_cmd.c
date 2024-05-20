@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 05:46:47 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 12:10:19 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*get_path_cmd(char *first_cmd, char **env)
 	return (free_mat(all_paths), ft_strndup(first_cmd, ft_strlen(first_cmd)));
 }
 
-static int	print_error(char *str, int err)
+static int	print_error(char *str, char *path_cmd, int err)
 {
 	int		i;
 
@@ -59,7 +59,11 @@ static int	print_error(char *str, int err)
 	while (str[++i] && str[i] != '/')
 		;
 	if (err == 13)
+	{
+		if (access(path_cmd, X_OK))
+			return (write(2, ": command not found \n", 21), 127);
 		return (write(2, ": Permission denied\n", 20), 126);
+	}
 	else
 	{
 		if (i == ft_strlen(str))
@@ -81,13 +85,13 @@ int	ft_exec_cmd(char *cmd, char ***env, int exit_status)
 		return (free_mat(all_cmd), 0);
 	path_cmd = get_path_cmd(all_cmd[0], *env);
 	if (!path_cmd)
-		return (state = print_error(all_cmd[0], errno),
+		return (state = print_error(all_cmd[0], path_cmd, errno),
 			free_mat(all_cmd), state);
 	if (check_bultin(all_cmd[0]))
 		return (state = ft_exec_bultin(all_cmd, env),
 			free_mat(all_cmd), free(path_cmd), state);
 	if (execve(path_cmd, all_cmd, *env) < 0)
-		return (state = print_error(all_cmd[0], errno),
+		return (state = print_error(all_cmd[0], path_cmd, errno),
 			free_mat(all_cmd), free(path_cmd), state);
 	return (free_mat(all_cmd), free(path_cmd), 0);
 }

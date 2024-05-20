@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:21:27 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/14 01:01:51 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/20 11:39:09 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	update_env(char ***env, char *oldpwd)
 	if (!pwd)
 	{
 		ft_putstr_fd(strerror(errno), 2);
+		puts(""); //need newline
 		return (1);
 	}
 	add_env_kv(ft_strjoin(ft_strdup("OLDPWD="), oldpwd), env);
@@ -38,6 +39,7 @@ int	ft_cd(char **path, char ***env)
 	if (!oldpwd)
 	{
 		ft_putstr_fd(strerror(errno), 2);
+		puts(""); //need newline
 		return (1);
 	}
 	if (path[1] && path[1][0] == '-' && path[1][1])

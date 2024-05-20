@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 04:27:39 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 03:17:25 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 11:57:18 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static int	skip_hardoc(char **matr, char **env, int exit_status)
 	int		state;
 
 	i = -1;
+	state = 0;
 	index_error = check_line(matr, 0);
 	if (index_error == -1)
 		index_error = get_size_mat(matr);
