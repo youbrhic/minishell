@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 01:13:12 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/01 06:12:54 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 03:41:08 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static void	add_node(t_node **head, t_node *new_node)
 static void	set_list(char **matr, t_node **head, int end, int start)
 {
 	int		nb_pipes;
-	t_node	*tmp;
 
 	nb_pipes = count_pipes(matr);
 	while (nb_pipes-- > 0 && matr[++end])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_bultin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 23:02:18 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/02 17:00:37 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/20 03:40:20 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	ft_exec_bultin(char **args, char ***env)
 {
 	int	exit_state;
 
+	exit_state = 0;
 	if (!ft_strcmp(args[0], "cd"))
 		exit_state = ft_cd(args, env);
 	else if (!ft_strcmp(args[0], "echo"))
@@ -69,7 +70,5 @@ int	ft_exec_bultin(char **args, char ***env)
 		exit_state = ft_unset(args, env);
 	else if (!ft_strcmp(args[0], "export"))
 		exit_state = ft_export(args, env);
-	else
-		exit_state = 0;
 	return (exit_state);
 }

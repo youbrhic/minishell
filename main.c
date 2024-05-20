@@ -6,28 +6,14 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 02:16:44 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 03:38:12 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	affiche(t_node *head)
-{
-	t_node	*tmp;
-
-	tmp = head;
-	while (tmp)
-	{
-		printf ("cmd : %s \n", tmp->cmd);
-		printf ("rederiction : %s \n", tmp->redirections);
-		tmp = tmp->next;
-		printf("------------------------\n");
-	}
-}
-
 static int	init_shell(char **env, char ***copy_env,
-	struct termios ter, int exit_status)
+	struct termios *ter, int *exit_status)
 {
 	char	*shelvl;
 	char	*nb;
@@ -48,14 +34,14 @@ static int	init_shell(char **env, char ***copy_env,
 		free(nb);
 		free(shelvl);
 	}
-	if (tcgetattr(STDIN_FILENO, &ter))
+	if (tcgetattr(STDIN_FILENO, ter))
 		return (perror("ter"), 0);
-	exit_status = 0;
+	*exit_status = 0;
 	rl_catch_signals = 0;
 	return (1);
 }
 
-static void	clean_shell(t_node *head, char **copy_env,
+static void	clean_shell(char **copy_env,
 	char *input, int exit_status)
 {
 	unlinek_heredocs();
@@ -79,19 +65,21 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	if (!init_shell(env, &copy_env, ter, exit_status))
+	if (!init_shell(env, &copy_env, &ter, &exit_status))
 		exit(1);
 	ft_signals();
 	while (1)
 	{
 		input = readline("Minishell$ ");
 		if (!input || !isatty(STDIN_FILENO))
-			clean_shell(head, copy_env, input, 0);
+			clean_shell(copy_env, input, 0);
 		if (*input)
 			add_history(input);
 		head = ft_create_list(input, copy_env, &exit_status);
 		if (head)
 			(1) && (exit_status = ft_execv_cmd(head, &copy_env, exit_status),
 				ft_lstclear(&head));
+		if (tcsetattr(STDIN_FILENO, TCSANOW, &ter) != 0)
+    		perror("tcsetattr");
 	}
 }

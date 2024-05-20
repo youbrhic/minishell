@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:02:29 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 02:29:45 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 03:38:39 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,45 +17,6 @@ void	init_node(t_node **node)
 	(*node)->cmd = ft_strndup("", 1);
 	(*node)->redirections = ft_strndup("", 1);
 	(*node)->next = NULL;
-}
-
-static int	check_espace(char *str)
-{
-	int		i;
-	char	c;
-
-	i = -1;
-	if (!str)
-		return (1);
-	while (str[++i])
-	{
-		if (str[i] == '\"' || str[i] == '\'')
-		{
-			c = str[i];
-			while (str[++i] && str[i] != c)
-				;
-		}
-		else
-		{
-			if (is_space(str[i]))
-				return (1);
-		}
-	}
-	return (0);
-}
-
-static void	print_error(char *str)
-{
-	char	*error;
-
-	error = ft_strndup("minishell :", 11);
-	error = ft_strjoin(error, str);
-	error = ft_strjoin(error, ": ambiguous redirect");
-	if (!error)
-		return ;
-	write(2, error, ft_strlen(error));
-	write(2, "\n", 1);
-	free(error);
 }
 
 static t_node	*ft_get_list(char **token, t_node *head)

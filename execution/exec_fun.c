@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 23:26:27 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 02:45:39 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 02:50:21 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static char	*expand_remove_str(char *str, char **env, int exit_status, int flag)
 	char	**matr;
 	char	*tmp;
 
+	if (!str)
+		return (NULL);
 	matr = malloc(sizeof(char *) * 2);
 	if (!matr)
 		return (str);

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:56:37 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 02:27:41 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 03:42:45 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 int	ft_strncmp(const char *s1, const char *s2, int n)
 {
-	size_t	i;
+	int		i;
 
 	i = 0;
 	if (!s1 || !s2)

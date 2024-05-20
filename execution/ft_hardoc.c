@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 02:15:06 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 02:01:14 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 03:41:22 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	unlinek_heredocs(void)
 
 int	ft_hardoc(char **limiter, char **env, int exit_status)
 {
-	int		fd;
 	char	*file;
 	char	*tmp;
 	int		state;

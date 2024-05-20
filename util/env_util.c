@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 19:51:35 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 02:23:36 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 03:39:17 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ static char	**get_newenv(void)
 
 char	**get_env(char **env)
 {
-	char	**new_env;
-
 	if (!env || !env[0])
 		return (get_newenv());
 	return (get_matr_copy(env));

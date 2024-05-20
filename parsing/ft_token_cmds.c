@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 00:09:02 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/17 23:50:18 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 03:42:04 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ static char	**skip_empty_strs(char **token)
 char	**ft_token_cmds(char *cmds, char **env, int exit_status, int flag)
 {
 	char	**token;
-	char	**expand_strs;
-	char	*tmp;
 
 	token = ft_split_cmd(cmds);
 	if (!token)

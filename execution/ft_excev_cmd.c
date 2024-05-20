@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:05:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/19 00:00:03 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 03:38:50 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static int	exec_b(t_node *node, char **token, char ***env, int exit_status)
 int	ft_execv_cmd(t_node *node, char ***env, int exit_status)
 {
 	char	**token;
-	int		i;
 	int		state;
 
 	token = ft_token_cmds(node->cmd, *env, exit_status, 1);
