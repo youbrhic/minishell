@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 08:07:59 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 02:39:31 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:01:09 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,5 @@ static void	handle_heredoc(int sig)
 void	ft_signal_heredoc(void)
 {
 	signal(SIGINT, handle_heredoc);
+	signal(SIGQUIT, SIG_IGN);
 }

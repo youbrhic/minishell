@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:09:14 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 12:50:12 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:13:31 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,16 @@ int	ft_expand(char **token, int flag, int exit_status, char **env)
 {
 	int		i;
 	char	*tmp;
+	int		old_index;
 
 	i = -1;
+	old_index= 0;
 	while (token[++i])
 	{
-		if (get_index_dollar(token[i], flag) >= 0
+		if (get_index_dollar(token[i], flag) >= old_index
 			&& !(i > 0 && !ft_strcmp(token[i - 1], "<<")))
 		{
+			old_index = get_index_dollar(token[i], flag);
 			tmp = ft_str_expand(token[i],
 					get_index_dollar(token[i], flag), env, exit_status);
 			if (!tmp)

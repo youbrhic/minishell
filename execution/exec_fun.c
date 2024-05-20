@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 23:26:27 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 11:02:23 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 14:14:48 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,13 @@ void	write_hardoc(char *file, char *limiter, char **env, int exit_status)
 	while (1)
 	{
 		input = readline(">");
-		input = expand_remove_str(input, env, exit_status, flag);
 		if (!input || !ft_strcmp(input, limiter))
 		{
 			if (input)
 				free(input);
 			exit(0);
 		}
+		input = expand_remove_str(input, env, exit_status, flag);
 		write_fd(fd, input);
 		free(input);
 	}
