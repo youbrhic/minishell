@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 19:51:35 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 03:39:17 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 06:18:59 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*ft_getenv(char *str, char **env)
 	return (NULL);
 }
 
-void	ft_setenv(char *par, char *val, char ***env, int flag)
+void	ft_setenv(char *par, char *val, char ***env)
 {
 	int		i;
 	char	*tmp;
@@ -93,10 +93,7 @@ void	ft_setenv(char *par, char *val, char ***env, int flag)
 		if (!ft_strncmp((*env)[i], par, ft_strlen(par))
 			&& (*env)[i][ft_strlen(par)] == '=')
 		{
-			if (flag)
-				tmp = ft_strdup((*env)[i]);
-			else
-				(1) && (tmp = ft_strdup(par), tmp = ft_strjoin(tmp, "="));
+			(1) && (tmp = ft_strdup(par), tmp = ft_strjoin(tmp, "="));
 			tmp = ft_strjoin(tmp, val);
 			if (tmp)
 			{

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 23:26:27 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 05:48:43 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 11:02:23 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ static char	*expand_remove_str(char *str, char **env, int exit_status, int flag)
 	char	**matr;
 	char	*tmp;
 
-	if (!str)
-		return (NULL);
 	matr = malloc(sizeof(char *) * 2);
 	if (!matr)
 		return (str);
@@ -83,7 +81,6 @@ void	write_hardoc(char *file, char *limiter, char **env, int exit_status)
 {
 	char	*input;
 	int		flag;
-	char	*new_limter;
 	int		fd;
 
 	flag = 1;
@@ -91,8 +88,8 @@ void	write_hardoc(char *file, char *limiter, char **env, int exit_status)
 	if (fd < 0)
 		return ;
 	if (quotes_in_str(limiter) >= 0)
-		(1) && (flag = 1,
-			new_limter = expand_remove_str(limiter, env, exit_status, 2));
+		(1) && (flag = 0,
+			limiter = expand_remove_str(limiter, env, exit_status, 2));
 	while (1)
 	{
 		input = readline(">");
@@ -104,5 +101,6 @@ void	write_hardoc(char *file, char *limiter, char **env, int exit_status)
 			exit(0);
 		}
 		write_fd(fd, input);
+		free(input);
 	}
 }

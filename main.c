@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 04:50:50 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 10:38:33 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	init_shell(char **env, char ***copy_env,
 		if (!nb)
 			return (free(shelvl), free_mat(*copy_env),
 				perror("memmory problem"), 0);
-		ft_setenv("SHLVL", nb, copy_env, 0);
+		ft_setenv("SHLVL", nb, copy_env);
 		free(nb);
 		free(shelvl);
 	}
@@ -71,7 +71,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		input = readline("Minishell$ ");
-		if (!input)
+		if (!input || !isatty(STDIN_FILENO))
 			clean_shell(copy_env, input, 0);
 		if (*input)
 			add_history(input);
@@ -80,6 +80,6 @@ int	main(int ac, char **av, char **env)
 			(1) && (exit_status = ft_execv_cmd(head, &copy_env, exit_status),
 				ft_lstclear(&head));
 		if (tcsetattr(STDIN_FILENO, TCSANOW, &ter) != 0)
-    		perror("tcsetattr");
+			clean_shell(copy_env, input, exit_status);
 	}
 }

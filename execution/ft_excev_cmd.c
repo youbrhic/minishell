@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:05:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 03:38:50 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 06:19:18 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ int	ft_execv_cmd(t_node *node, char ***env, int exit_status)
 	if (!token)
 		return (perror("memory problem"), 0);
 	if (get_size_mat(token) - 1 > 0 && *token[get_size_mat(token) - 1])
-		ft_setenv("_", token[get_size_mat(token) - 1], env, 0);
+		ft_setenv("_", token[get_size_mat(token) - 1], env);
+	else if (get_size_mat(token) == 1)
+		ft_setenv("_", token[0], env);
 	if (ft_lstsize(node) == 1 && check_bultin(token[0]))
 	{
 		state = exec_b(node, token, env, exit_status);

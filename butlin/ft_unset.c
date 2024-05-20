@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:23:24 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/16 11:23:54 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 11:15:25 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ int	valid_arg(char *arg)
 	int	i;
 
 	i = 0;
+	if (arg[0] >= '0' && arg[0] <= '9')
+	{
+		ft_putstr_fd("Error: '", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd("' not a valid identifier\n", 2);
+		return (0);
+	}
 	while (arg[i])
 	{
 		if (!is_alphanum(arg[i]) && arg[i] != '_')

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 04:13:32 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 06:19:09 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_argument
 void	free_mat(char **mtr);
 void	ft_lstadd_back(t_node **lst, t_node *new);
 void	ft_perror(char *str, int ex);
-void	ft_setenv(char *par, char *val, char ***env, int flag);
+void	ft_setenv(char *par, char *val, char ***env);
 void	write_fd(int fd, char *str);
 void	ft_putstr_fd(char *s, int fd);
 char	**ft_split(char const *s, char c);

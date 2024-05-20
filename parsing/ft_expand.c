@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:09:14 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 02:45:09 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 11:26:11 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,6 @@ static char	*get_str_env(char *str, int *index_d, char **env, int exit_status)
 		size++;
 	if (str[i] == '?' && i == *index_d + 1)
 		return (((*index_d) += 2), ft_itoa(exit_status));
-	if ((i + 2 < ft_strlen(str) && str[i] == '\\'
-			&& is_quot(str[i + 2]) && str[i + 3]))
-		return ((*index_d) += 2, ft_strdup(""));
 	else if (str[i])
 		size--;
 	tmp = ft_strndup(&str[*index_d + 1], size + 1);
