@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 23:26:27 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 02:50:21 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 05:48:43 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,8 @@ static char	*expand_remove_str(char *str, char **env, int exit_status, int flag)
 			return (free_mat(matr), str);
 	}
 	else if (flag == 2)
-	{
 		if (!ft_add_skiper(matr) || !ft_remove_quotes(matr))
 			return (free_mat(matr), str);
-	}
 	tmp = ft_strdup(matr[0]);
 	if (!tmp)
 		return (str);

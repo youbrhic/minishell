@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 03:38:12 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 04:50:50 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		input = readline("Minishell$ ");
-		if (!input || !isatty(STDIN_FILENO))
+		if (!input)
 			clean_shell(copy_env, input, 0);
 		if (*input)
 			add_history(input);

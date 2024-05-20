@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:19:20 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/08 17:17:50 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/20 04:20:34 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	check_multi_n(char *arg)
 	i = 1;
 	while (arg[i] == 'n')
 		i++;
-	if (arg[i] == '\0' && arg[0] == '-')
+	if (arg[i] == '\0' && arg[0] == '-' && ft_strlen(arg) > 1)
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/19 00:53:44 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 05:46:47 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*get_path_cmd(char *first_cmd, char **env)
 	return (free_mat(all_paths), ft_strndup(first_cmd, ft_strlen(first_cmd)));
 }
 
-static int	print_error(char *str, char **env, int err)
+static int	print_error(char *str, int err)
 {
 	int		i;
 
@@ -59,22 +59,12 @@ static int	print_error(char *str, char **env, int err)
 	while (str[++i] && str[i] != '/')
 		;
 	if (err == 13)
-	{
-		if (opendir(str))
-		{
-			if (ft_getenv("PATH", env))
-				return (write(2, ": command not found \n", 21), 127);
-			else
-				return (write(2, ": is a directory \n", 21), 126);
-		}
-		else
-			return (perror(str), 126);
-	}
+		return (write(2, ": Permission denied\n", 20), 126);
 	else
 	{
 		if (i == ft_strlen(str))
 			return (write(2, ": command not found \n", 21), 127);
-		return (perror(str), 127);
+		return (perror(""), 127);
 	}
 }
 
@@ -91,13 +81,13 @@ int	ft_exec_cmd(char *cmd, char ***env, int exit_status)
 		return (free_mat(all_cmd), 0);
 	path_cmd = get_path_cmd(all_cmd[0], *env);
 	if (!path_cmd)
-		return (state = print_error(all_cmd[0], *env, errno),
+		return (state = print_error(all_cmd[0], errno),
 			free_mat(all_cmd), state);
 	if (check_bultin(all_cmd[0]))
 		return (state = ft_exec_bultin(all_cmd, env),
 			free_mat(all_cmd), free(path_cmd), state);
 	if (execve(path_cmd, all_cmd, *env) < 0)
-		return (state = print_error(all_cmd[0], *env, errno),
+		return (state = print_error(all_cmd[0], errno),
 			free_mat(all_cmd), free(path_cmd), state);
 	return (free_mat(all_cmd), free(path_cmd), 0);
 }

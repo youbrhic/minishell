@@ -6,6 +6,7 @@ CHECK FOR echo "'$PATH'"''""
 
 exit 1 = (too many arg)
 
+echo - "ayssf" =========> excute without \n ??
 
 
 ./minishell 45 4 5 4 5 6 (check ===> "bash: 4: No such file or directory")
