@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 14:52:55 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/21 06:16:05 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	clean_shell(char **copy_env,
 	if (input)
 		free(input);
 	else
-		write(1, "exit\n", 5);
+		write(2, "exit\n", 5);
 	rl_clear_history();
 	exit(exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 15:33:17 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/21 06:18:35 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	new_env(char **env, char ***n_env, int size);
 void	free_env(char ***env);
 void	add_env_kv(char *arg, char ***env);
 char	*ft_remove_plus(char *c);
-int		ft_exit(char **args);
+int		ft_exit(char **args, char **env, int flag);
 int		chr_key_env(char *key, char **env);
 int		ft_cd(char **args, char ***env);
 int		size_env(char **env);
@@ -120,7 +120,7 @@ int		ft_export(char **args, char ***env);
 int		parse_arg(char *arg);
 int		ft_strexsit(char *s, char *str);
 int		ft_isalpha(int c);
-int		ft_exec_bultin(char **args, char ***env);
+int		ft_exec_bultin(char **args, char ***env, int flag);
 int		check_bultin(char *cmd);
 
 /*-----------------------signals--------------------*/

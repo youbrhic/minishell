@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:05:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 14:50:32 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/21 06:18:41 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	exec_b(t_node *node, char **token, char ***env, int exit_status)
 				|| close(arg.output) < 0))
 			return (1);
 	}
-	state = ft_exec_bultin(token, env);
+	state = ft_exec_bultin(token, env, 1);
 	if (dup2(fdinput, 0) < 0 || dup2(fdoutput, 1) < 0
 		|| (fdinput != 0 && close(fdinput) < 0)
 		|| (fdoutput != 1 && close(fdoutput) < 0))

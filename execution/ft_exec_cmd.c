@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 12:10:19 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/21 06:18:10 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	ft_exec_cmd(char *cmd, char ***env, int exit_status)
 		return (state = print_error(all_cmd[0], path_cmd, errno),
 			free_mat(all_cmd), state);
 	if (check_bultin(all_cmd[0]))
-		return (state = ft_exec_bultin(all_cmd, env),
+		return (state = ft_exec_bultin(all_cmd, env, 0),
 			free_mat(all_cmd), free(path_cmd), state);
 	if (execve(path_cmd, all_cmd, *env) < 0)
 		return (state = print_error(all_cmd[0], path_cmd, errno),
