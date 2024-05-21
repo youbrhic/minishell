@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:24:14 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/19 01:26:17 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:52:44 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,15 @@ int	ft_atoi(char *str)
 	return (res * sign);
 }
 
-void	ft_exit(char **args)
+int	ft_exit(char **args)
 {
-	int	exit_state;
+	int		exit_state;
 
 	ft_putstr_fd("exit\n", 1);
 	if (!args[1])
 		exit (0);
+	if (get_size_mat(args) > 2 && ft_isnumber(args[1]))
+		return (ft_putstr_fd("minisehll : exit: numeric argument required\n", 2), 2);
 	else if (ft_isnumber(args[1]))
 	{
 		exit_state = (unsigned char)ft_atoi(args[1]);
@@ -64,7 +66,8 @@ void	ft_exit(char **args)
 	}
 	else
 	{
-		ft_putstr_fd("Error: numeric argument required\n", 1);
+		
+		ft_putstr_fd("minisehll : exit: numeric argument required\n", 2);
 		exit (255);
 	}
 }

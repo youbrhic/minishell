@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 06:19:09 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 15:33:17 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,9 @@ int		ft_execv_cmd(t_node *node, char ***env, int exit_status);
 
 void	new_env(char **env, char ***n_env, int size);
 void	free_env(char ***env);
-void	ft_exit(char **args);
 void	add_env_kv(char *arg, char ***env);
 char	*ft_remove_plus(char *c);
+int		ft_exit(char **args);
 int		chr_key_env(char *key, char **env);
 int		ft_cd(char **args, char ***env);
 int		size_env(char **env);
