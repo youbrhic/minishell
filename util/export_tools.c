@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:23:25 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/20 03:48:47 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/21 22:02:55 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,16 @@ char	*ft_remove_plus(char *c)
 	char	*new;
 	int		f_oc;
 
-	(1) && (f_oc = 0, i = 0, j = 0);
-	new = (char *) malloc(ft_strlen(c) + 1);
+	(1) && (i = 0, j = 0, f_oc = 0);
+	new = (char *)malloc(ft_strlen(c));
 	if (!new)
 		return (NULL);
 	while (c[i])
 	{
 		if (c[i] == '+' && f_oc == 0)
 		{
-			i++;
 			f_oc = 1;
+			i++;
 		}
 		new[j] = c[i];
 		i++;
@@ -80,9 +80,9 @@ char	*ft_remove_plus(char *c)
 
 int	chr_key_env(char *key, char **env)
 {
-	int	i;
-	int	j;
-	int	k;
+	int		i;
+	int		k;
+	int		l;
 
 	i = -1;
 	k = 0;
@@ -90,10 +90,10 @@ int	chr_key_env(char *key, char **env)
 		k++;
 	while (env[++i])
 	{
-		j = 0;
-		while (env[i][j] && env[i][j] != '=')
-			j++;
-		if (!ft_strncmp(key, env[i], k))
+		l = 0;
+		while (env[i][l] && env[i][l] != '=')
+			l++;
+		if (!ft_strncmp(key, env[i], k) && l == k)
 			return (i);
 	}
 	return (-1);

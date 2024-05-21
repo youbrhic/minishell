@@ -3,31 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:21:27 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/20 11:39:09 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/21 22:01:30 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	update_env(char ***env, char *oldpwd)
+char	*ft_gete(char *key, char **env, int k_or_v)
 {
-	char *pwd;
+	int	index;
+
+	index = chr_key_env(key, env);
+	if (index < 0)
+		return (NULL);
+	if (k_or_v == 0)
+		return (env[index]);
+	return (env[index] + ft_strlen(key) + 1);
+}
+
+int	ft_setoldpwd(char ***env)
+{
+	char	*oldpwd;
+	char	*tmp;
+
+	oldpwd = ft_gete("PWD", *env, 1);
+	if (!oldpwd)
+		return (0);
+	tmp = ft_strjoin(ft_strdup("OLDPWD="), oldpwd);
+	add_env_kv(tmp, env);
+	return (free(tmp), 1);
+}
+
+int	update_env(char ***env, char *oldpwd, char *path)
+{
+	char	*pwd;
+	char	*tmp;
 
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 	{
-		ft_putstr_fd(strerror(errno), 2);
-		puts(""); //need newline
-		return (1);
+		ft_putstr_fd(ERROR_CD, 2);
+		if (ft_strcmp(path, "..") == 0)
+			tmp = ft_strjoin(ft_strdup(ft_gete("PWD", *env, 0)),"/..");
+		else
+			tmp = ft_strjoin(ft_strdup(ft_gete("PWD", *env, 0)),"/.");
+		add_env_kv(tmp, env);
+		return (free(tmp), 1);
 	}
-	add_env_kv(ft_strjoin(ft_strdup("OLDPWD="), oldpwd), env);
-	add_env_kv(ft_strjoin(ft_strdup("PWD="), pwd), env);
-	free(pwd);
-	free(oldpwd);
-	return (0);
+	tmp = ft_strjoin(ft_strdup("PWD="), pwd);
+	add_env_kv(tmp, env);
+	return (free(tmp), free(pwd), 0);
 }
 
 int	ft_cd(char **path, char ***env)
@@ -35,32 +63,20 @@ int	ft_cd(char **path, char ***env)
 	int		ret;
 	char	*oldpwd;
 
-	oldpwd = getcwd(NULL, 0);
-	if (!oldpwd)
-	{
-		ft_putstr_fd(strerror(errno), 2);
-		puts(""); //need newline
-		return (1);
-	}
 	if (path[1] && path[1][0] == '-' && path[1][1])
 	{
 		ft_putstr_fd("no option", 2);
 		return (1);
 	}
-	if (!path[1] || !ft_strcmp(path[1], "~"))
-		ret = chdir(getenv("HOME"));
-	else if (!ft_strcmp(path[1], "-"))
-		ret = chdir(getenv("OLDPWD"));
+	if (!path[1])
+		ret = chdir(ft_gete("HOME", *env, 1));
 	else
-	{
-		printf("path[1] = %s\n", path[1]);
 		ret = chdir(path[1]);
-	}
-	if (ret < 0)
+	if (ret < 0 || !ft_setoldpwd(env))
 	{
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd("\n", 2);
 		return (1);
 	}
-	return (update_env(env, oldpwd));
+	return (update_env(env, oldpwd, path[1]));
 }

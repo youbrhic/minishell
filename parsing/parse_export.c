@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 16:32:46 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/18 01:55:25 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/21 22:02:23 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	parse_arg(char *arg)
 	i = 0;
 	while (arg[i] && arg[i] != '=')
 		i++;
-	if (arg[i] == '=' && i - 1 >= 0 && arg[i - 1] == '+')
+	if (arg[i] == '=' && (i - 1 >= 0) && arg[i - 1] == '+')
 		i--;
 	key = ft_strndup(arg, i);
 	if (!key)

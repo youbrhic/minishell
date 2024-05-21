@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/21 06:18:35 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/21 22:05:49 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 # include <libc.h>
 # include <termios.h>
 # include <errno.h>
+
+# define ERROR_CD "cd: error retrieving current \
+					directory: getcwd: cannot access parent \
+					directories: No such file or directory\n"
 
 int		g_cld_proc;
 
@@ -106,15 +110,15 @@ int		ft_execv_cmd(t_node *node, char ***env, int exit_status);
 
 void	new_env(char **env, char ***n_env, int size);
 void	free_env(char ***env);
-void	add_env_kv(char *arg, char ***env);
-char	*ft_remove_plus(char *c);
-int		ft_exit(char **args, char **env, int flag);
-int		chr_key_env(char *key, char **env);
+char	*ft_gete(char *key, char **env, int k_or_v);
+
 int		ft_cd(char **args, char ***env);
 int		size_env(char **env);
 int		ft_echo(char **args);
 int		ft_env(char **args, char ***env);
-int		ft_pwd(char **args);
+int		ft_exit(char **args, char **env, int flag);
+char	*ft_remove_plus(char *c);
+int		ft_pwd(char **args, char ***env);
 int		ft_unset(char **args, char ***env);
 int		ft_export(char **args, char ***env);
 int		parse_arg(char *arg);
