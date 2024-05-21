@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/21 22:03:41 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/21 22:05:49 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int		ft_cd(char **args, char ***env);
 int		size_env(char **env);
 int		ft_echo(char **args);
 int		ft_env(char **args, char ***env);
-void	ft_exit(char **args);
+int		ft_exit(char **args, char **env, int flag);
 char	*ft_remove_plus(char *c);
 int		ft_pwd(char **args, char ***env);
 int		ft_unset(char **args, char ***env);
