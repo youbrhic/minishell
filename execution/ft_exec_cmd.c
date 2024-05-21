@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/21 06:18:10 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/21 09:44:50 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,15 @@ static int	print_error(char *str, char *path_cmd, int err)
 	{
 		if (access(path_cmd, X_OK))
 			return (write(2, ": command not found \n", 21), 127);
-		return (write(2, ": Permission denied\n", 20), 126);
+		if (!access (str, S_IFDIR))
+			return (write(2, ": is a directory \n", 21), 126);
+		return (perror(" "), 126);
 	}
 	else
 	{
 		if (i == ft_strlen(str))
 			return (write(2, ": command not found \n", 21), 127);
-		return (perror(""), 127);
+		return (perror(" "), 127);
 	}
 }
 
