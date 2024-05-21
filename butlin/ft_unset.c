@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:23:24 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/20 11:15:25 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/21 10:01:33 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,7 @@ int	ft_unset(char **args, char ***env)
 	if (!args[1])
 		return (0);
 	if (args[1][0] == '-' && args[1][1])
-	{
-		ft_putstr_fd("Error: no option\n", 2);
-		return (2);
-	}
+		return (ft_putstr_fd("Error: no option\n", 2), 2);
 	while (args[++i])
 	{
 		if (valid_arg(args[i]))
