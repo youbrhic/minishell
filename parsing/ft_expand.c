@@ -6,11 +6,24 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 15:09:14 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/12 05:46:14 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/21 09:33:04 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static int	check_expand(char *str, int i, int flag)
+{
+	if (flag)
+	{
+		return ((i + 1 < ft_strlen(str) && (is_alphanum(str[i + 1])
+					|| str[i + 1] == '?' || str[i + 1] == '_')));
+	}
+	else
+		return ((i + 1 < ft_strlen(str)
+				&& str[i] == '\\' && str[i + 1] == '\''));
+	return (0);
+}
 
 static int	get_index_dollar(char *str, int flag)
 {
@@ -19,93 +32,58 @@ static int	get_index_dollar(char *str, int flag)
 	i = -1;
 	while (str[++i])
 	{
-		if (str[i] == '\'' && flag)
-		{
-			while (str[i] && str[++i] != '\'')
+		if (check_expand(str, i, 0) && flag)
+			while (str[++i] && !check_expand(str, i, 0))
 				;
-		}
-		else if (str[i] && str[i] == '\"')
-		{
-			while (str[i] && str[++i] != '\"')
-			{
-				if (str[i] == '$' && str[i + 1] != '\"'
-					&& !is_space(str[i + 1]))
-					return (i);
-			}
-		}
-		else if (str[i] == '$'
-			&& (i + 1 < ft_strlen(str) && (is_alphanum(str[i + 1])
-					|| str[i + 1] == '?' || str[i + 1] == '_')))
+		else if (str[i] == '$' && check_expand(str, i, 1))
 			return (i);
 	}
 	return (-1);
 }
 
-static char	*ft_expenv(char *str, int *i, char *word, int index, char **env)
+static char	*get_str_env(char *str, int *index_d, char **env, int exit_status)
 {
+	char	*str_env;
 	char	*tmp;
-	char	*new_str;
-
-	if (!word)
-		return (NULL);
-	new_str = ft_strndup(word, ft_strlen(word));
-	if (!new_str)
-		return (free(word), NULL);
-	if (str[*i] == '_' && str[*i + 1] != '_' && !is_alphanum(str[*i + 1]))
-		(1) && (new_str = ft_strjoin(new_str, ft_getenv("_", env)), (*i)++);
-	else
-	{
-		tmp = ft_strndup(&str[index + 1], *i - index - 1);
-		if (ft_getenv(tmp, env))
-			new_str = ft_strjoin(new_str, ft_getenv(tmp, env));
-		else
-			new_str = ft_strjoin(new_str, "");
-		free(tmp);
-	}
-	return (free(word), new_str);
-}
-
-static char	*add_rest_word(char *str, char *str2, int *i, int index)
-{
-	char	*new_str;
-	char	*tmp;
-
-	if (!str2)
-		return (NULL);
-	while (str[++(*i)])
-		;
-	tmp = ft_strndup(&str[index], *i);
-	if (!tmp)
-		return (free(str2), NULL);
-	new_str = ft_strndup(str2, ft_strlen(str2));
-	new_str = ft_strjoin(new_str, tmp);
-	return (free(tmp), free(str2), new_str);
-}
-
-static char	*ft_strenv(char *str, int index, int exit_status, char **env)
-{
 	int		i;
+	int		size;
+
+	i = *index_d;
+	size = 0;
+	while (str[++i] && (is_alphanum(str[i]) || str[i] == '_'))
+		size++;
+	if (str[i] == '?' && i == *index_d + 1)
+		return (((*index_d) += 2), ft_itoa(exit_status));
+	else if (str[i])
+		size--;
+	tmp = ft_strndup(&str[*index_d + 1], size + 1);
+	if (!tmp)
+		return (NULL);
+	str_env = ft_getenv(tmp, env);
+	if (!str_env)
+		str_env = "";
+	return (free(tmp), (*index_d = i), ft_strdup(str_env));
+}
+
+static char	*ft_str_expand(char *str, int index_d, char **env, int exit_status)
+{
 	char	*tmp;
 	char	*new_str;
 
-	tmp = ft_strndup(str, index);
-	if (!tmp)
+	new_str = ft_strndup(str, index_d);
+	if (!new_str)
 		return (NULL);
-	(1) && (new_str = ft_strndup("", 1), new_str = ft_strjoin(new_str, tmp));
-	i = index + 1;
-	while (str[i] && (is_alphanum(str[i]) || str[i] == '_'))
-		i++;
-	if (str[i] == '?')
-	{
-		free(tmp);
-		(1) && (tmp = ft_itoa(exit_status),
-			new_str = ft_strjoin(new_str, tmp), i++);
-	}
-	else
-		new_str = ft_expenv(str, &i, new_str, index, env);
-	index = i;
-	if (str[i])
-		new_str = add_rest_word(str, new_str, &i, index);
+	tmp = get_str_env(str, &index_d, env, exit_status);
+	if (!tmp)
+		return (free(new_str), NULL);
+	new_str = ft_strjoin(new_str, tmp);
+	if (!new_str)
+		return (free(tmp), NULL);
+	free(tmp);
+	tmp = ft_strdup(&str[index_d]);
+	if (!tmp)
+		return (free(new_str), NULL);
+	new_str = ft_strjoin(new_str, tmp);
 	return (free(tmp), new_str);
 }
 
@@ -113,18 +91,20 @@ int	ft_expand(char **token, int flag, int exit_status, char **env)
 {
 	int		i;
 	char	*tmp;
+	int		old_index;
 
-	if (!token)
-		return (0);
 	i = -1;
+	old_index = 0;
 	while (token[++i])
 	{
-		if (!((i > 0 && !ft_strcmp(token[i - 1], "<<") && flag)
-			|| get_index_dollar(token[i], flag) < 0))
+		if (get_index_dollar(token[i], flag) >= old_index
+			&& !(i > 0 && !ft_strcmp(token[i - 1], "<<")))
 		{
-			tmp = ft_strenv(token[i], get_index_dollar(token[i], flag), exit_status, env);
-			if (!token[i])
-				return (perror("Error"), 0);
+			old_index = get_index_dollar(token[i], flag);
+			tmp = ft_str_expand(token[i],
+					get_index_dollar(token[i], flag), env, exit_status);
+			if (!tmp)
+				return (0);
 			free(token[i]);
 			token[i] = tmp;
 			i--;

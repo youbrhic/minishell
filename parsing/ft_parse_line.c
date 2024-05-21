@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 04:27:39 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/04 13:29:27 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 11:57:18 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,14 @@ static int	check_line(char **matr, int flag)
 	return (-1);
 }
 
-static void	skip_hardoc(char **matr)
+static int	skip_hardoc(char **matr, char **env, int exit_status)
 {
 	int		i;
 	int		index_error;
+	int		state;
 
 	i = -1;
+	state = 0;
 	index_error = check_line(matr, 0);
 	if (index_error == -1)
 		index_error = get_size_mat(matr);
@@ -50,24 +52,37 @@ static void	skip_hardoc(char **matr)
 	{
 		if (!ft_strcmp(matr[i], "<<") && !is_oper(matr[i + 1])
 			&& (i + 1) < get_size_mat(matr))
-			ft_hardoc(matr[i + 1]);
+			state = ft_hardoc(&matr[i + 1], env, exit_status);
+		if (state == 1)
+			break ;
 	}
+	return (state);
 }
 
-int	ft_parse_line(char **matr, int exit_status)
+int	ft_parse_line(char **matr, char **env, int exit_status)
 {
 	int		index_error;
+	int		state;
 
 	if (!matr || !*matr)
 		return (exit_status);
-	index_error = check_line(matr, 0);
+	(1) && (index_error = check_line(matr, 0), state = 0);
 	if (index_error == -1)
-		return (skip_hardoc(matr), 0);
+		return (state = skip_hardoc(matr, env, exit_status), state);
 	else
 	{
 		if (index_error != get_size_mat(matr))
-			return (check_line(matr, 1), skip_hardoc(matr), 258);
+		{
+			check_line(matr, 1);
+			state = skip_hardoc(matr, env, exit_status);
+		}
 		else
-			return (skip_hardoc(matr), check_line(matr, 1), 258);
+		{
+			state = skip_hardoc(matr, env, exit_status);
+			check_line(matr, 1);
+		}
+		if (!state)
+			state = 258;
+		return (state);
 	}
 }

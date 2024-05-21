@@ -3,75 +3,83 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:20:36 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/14 00:17:33 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/21 06:16:05 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	affiche(t_node *head)
+static int	init_shell(char **env, char ***copy_env,
+	struct termios *ter, int *exit_status)
 {
-	t_node	*tmp;
+	char	*shelvl;
+	char	*nb;
 
-	tmp = head;
-	while (tmp)
+	*copy_env = get_env(env);
+	if (!copy_env || !*copy_env)
+		return (perror("memmory problem"), 0);
+	if (ft_getenv("SHLVL", *copy_env))
 	{
-		printf ("cmd : %s \n", tmp->cmd);
-		printf ("rederiction : %s \n", tmp->redirections);
-		tmp = tmp->next;
-		printf("------------------------\n");
+		shelvl = ft_strdup(ft_getenv("SHLVL", *copy_env));
+		if (!shelvl)
+			return (perror("memmory problem"), free_mat(*copy_env), 0);
+		nb = ft_itoa(ft_atoi(shelvl) + 1);
+		if (!nb)
+			return (free(shelvl), free_mat(*copy_env),
+				perror("memmory problem"), 0);
+		ft_setenv("SHLVL", nb, copy_env);
+		free(nb);
+		free(shelvl);
 	}
+	if (tcgetattr(STDIN_FILENO, ter))
+		return (perror("ter"), 0);
+	*exit_status = 0;
+	rl_catch_signals = 0;
+	return (1);
 }
 
-static void	handle_fun(int sig)
+static void	clean_shell(char **copy_env,
+	char *input, int exit_status)
 {
-	g_cld_proc = 1;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-static void	ft_signals()
-{
-	signal(SIGINT, handle_fun);
-	signal(SIGQUIT, SIG_IGN);
+	unlinek_heredocs();
+	if (copy_env)
+		free_mat(copy_env);
+	if (input)
+		free(input);
+	else
+		write(2, "exit\n", 5);
+	rl_clear_history();
+	exit(exit_status);
 }
 
 int	main(int ac, char **av, char **env)
 {
-	char	*input;
-	int		exit_status;
-	char	**copy_env;
-	t_node	*head;
+	char			*input;
+	int				exit_status;
+	char			**copy_env;
+	t_node			*head;
+	struct termios	ter;
 
 	(void)ac;
 	(void)av;
-	(1) && (exit_status = 0, copy_env = get_matr_copy(env), rl_catch_signals = 0);
+	if (!init_shell(env, &copy_env, &ter, &exit_status))
+		exit(1);
 	ft_signals();
 	while (1)
 	{
 		input = readline("Minishell$ ");
-		if (!input)
-		{
-			write(1, "exit\n", 5);
-			exit(0);
-		}
+		if (!input || !isatty(STDIN_FILENO))
+			clean_shell(copy_env, input, 0);
 		if (*input)
 			add_history(input);
-		head = ft_create_list(input, &exit_status);
-		if (!head)
-			free(input);
-		else
-		{
-			exit_status = ft_execv_cmd(head, &copy_env, exit_status);
-			ft_lstclear(&head);
-			free(input);
-		}
+		head = ft_create_list(input, copy_env, &exit_status);
+		if (head)
+			(1) && (exit_status = ft_execv_cmd(head, &copy_env, exit_status),
+				ft_lstclear(&head));
+		if (tcsetattr(STDIN_FILENO, TCSANOW, &ter) != 0)
+			clean_shell(copy_env, input, exit_status);
 	}
-	free_mat(copy_env);
-	clear_history();
 }

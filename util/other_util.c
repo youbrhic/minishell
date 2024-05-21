@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 08:21:21 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/04/29 11:36:47 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 02:29:21 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,6 @@ int	is_redirection(char	*str)
 {
 	return (!ft_strcmp(str, ">>") || !ft_strcmp(str, "<<")
 		|| !ft_strcmp(str, "<") || !ft_strcmp(str, ">"));
-}
-
-void	init_node(t_node **node)
-{
-	(*node)->cmd = ft_strndup("", 1);
-	(*node)->redirections = ft_strndup("", 1);
-	(*node)->next = NULL;
 }
 
 void	ft_perror(char *str, int ex)
@@ -50,7 +43,7 @@ char	**free2d(char ***arr, int index)
 	int	i;
 
 	i = 0;
-	while (index - i >= 0)
+	while (index - i > 0)
 	{
 		free((*arr)[index - i]);
 		i++;

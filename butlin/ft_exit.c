@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:24:14 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/14 01:03:13 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/21 09:01:39 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,44 +28,34 @@ static int	ft_isnumber(char *str)
 	return (1);
 }
 
-static int	ft_atoi(char *str)
+static void	free_data(char **args, char **env, int exit_status)
 {
-	int	i;
-	int	sign;
-	int	res;
-
-	i = 0;
-	sign = 1;
-	res = 0;
-	if (str[i] == '-')
-	{
-		sign = -1;
-		i++;
-	}
-	while (str[i])
-	{
-		res = res * 10 + str[i] - '0';
-		i++;
-	}
-	return (res * sign);
+	free_mat(args);
+	free_mat(env);
+	exit(exit_status);
 }
 
-void	ft_exit(char **args)
-{
-	int	exit_state;
+// 9223372036854775807
 
-	ft_putstr_fd("exit\n", 1);
+int	ft_exit(char **args, char **env, int flag)
+{
+	int		exit_state;
+
+	if (flag)
+		ft_putstr_fd("exit\n", 2);
 	if (!args[1])
 		exit (0);
+	if (get_size_mat(args) > 2 && ft_isnumber(args[1]))
+		return (ft_putstr_fd("minisehll : exit: too many arguments\n", 2), 1);
 	else if (ft_isnumber(args[1]))
 	{
 		exit_state = (unsigned char)ft_atoi(args[1]);
-		exit (exit_state);
+		free_data(args, env, exit_state);
 	}
 	else
 	{
-		ft_putstr_fd("Error: numeric argument required\n", 1);
-		exit (255);
+		ft_putstr_fd("minishell: exit: numeric argument required", 2);
+		free_data(args, env, 255);
 	}
+	return (0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:23:03 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/21 00:42:22 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/21 22:01:49 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_pwd(char **args, char ***env)
 	if (args[1] && (args[1][0] == '-' && args[1][1]))
 	{
 		ft_putstr_fd("Error: no option\n", 2);
-		return (1);
+		return (free(pwd), 1);
 	}
 	ft_putstr_fd(pwd, 1);
 	ft_putstr_fd("\n", 1);

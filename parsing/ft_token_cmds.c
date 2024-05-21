@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_token_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 00:09:02 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/14 00:07:45 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/20 03:42:04 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	**re_split(char **token)
 	if (get_size_mat(first_cmd) > 1)
 	{
 		if (get_size_mat(token) == 1)
-			return (free_mat(token), free_mat(first_cmd), first_cmd);
+			return (free_mat(token), first_cmd);
 		free(token[0]);
 		(1) && (token[0] = first_cmd[0], tmp = ft_strdup(""), i = 0);
 		while (first_cmd[++i])
@@ -82,26 +82,22 @@ static char	**skip_empty_strs(char **token)
 	return (free_mat(token), new_token);
 }
 
-char	**ft_token_cmds(char *cmds, char **env, int exit_status)
+char	**ft_token_cmds(char *cmds, char **env, int exit_status, int flag)
 {
 	char	**token;
-	char	**expand_strs;
-	char	*tmp;
 
 	token = ft_split_cmd(cmds);
 	if (!token)
 		return (NULL);
-	if (!ft_add_skiper(token) || !ft_expand(token, 1, exit_status, env))
+	if (!ft_add_skiper(token) || !ft_expand(token, flag, exit_status, env))
 		return (free_mat(token), NULL);
-	if (!token)
-		return (NULL);
 	token = re_split(token);
 	if (!token)
 		return (NULL);
-	if (!ft_remove_quotes(token))
-		return (free_mat(token), NULL);
 	token = skip_empty_strs(token);
 	if (!token)
 		return (NULL);
+	if (flag && !ft_remove_quotes(token))
+		return (free_mat(token), NULL);
 	return (token);
 }

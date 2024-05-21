@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 15:01:51 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/13 23:00:17 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/19 04:32:00 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,23 +96,25 @@ int	ft_exec_list(t_node *lst, char ***env, int exit_status)
 	int			i;
 	int			pid;
 	t_argument	args;
+	int			pid_f;
 	int			status;
 
 	(1) && (i = 0, args.input = 0, args.output = 1,
-		args.exit_status = exit_status);
+		args.exit_status = exit_status, args.size = ft_lstsize(lst));
 	while (lst && ++i)
 	{
 		if ((ft_pipe(args.p_1, args.p_2, lst, i) < 0))
-			return (-1);
+			return (1);
 		pid = fork();
+		if (pid > 0 && i == args.size)
+			pid_f = pid;
 		if (pid == -1)
-			return (perror("fork"), 1);
-		if (pid == 0)
+			return (perror("fork"), kill(0, SIGINT), 1);
+		else if (pid == 0)
 			if (0 <= ft_dup(args.p_1, args.p_2, lst, i))
 				exec_node(lst, args, env);
 		(1) && (ft_close_fd(args.p_1, args.p_2, i), lst = lst->next);
 	}
-	while (waitpid(0, &status, 0) > 0)
-		;
-	return (WEXITSTATUS(status));
+	status = ft_wait(pid_f);
+	return (status);
 }

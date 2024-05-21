@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 18:23:25 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/20 16:25:57 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/21 22:02:55 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	new_env(char **env, char ***n_env, int size)
 {
 	int		i;
 
+	(void)size;
 	*n_env = (char **)malloc(sizeof(char *) * (size));
 	if (!*n_env)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:57:53 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/13 01:54:39 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 03:41:42 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,25 @@ static char	*ft_skipquote(char *str1, char *str2, int *index)
 	int		i;
 	char	*new_str;
 	char	*tmp;
+	int		size;
 	char	c;
 
 	new_str = ft_strndup(str2, ft_strlen(str2));
 	(*index)++;
 	i = *index + 1;
 	c = str1[*index];
+	size = 0;
 	while (str1[++(*index)] && !(*index + 1 < ft_strlen(str1)
 			&& str1[*index] == '\\' && str1[*index + 1] == c))
-		;
-	tmp = ft_strndup(&str1[i], *index - i);
+		size++;
+	tmp = ft_strndup(&str1[i], size);
 	new_str = ft_strjoin(new_str, tmp);
-	if (*index + 1 < ft_strlen(str1)
-		&& str1[*index] == '\\' && str1[*index + 1] == c)
-		(*index)--;
+	if (str1[*index])
+		(*index)++;
 	return (free(tmp), free(str2), new_str);
 }
 
-static char	*getwordquote(char *str, char *str2, int *i)
+static char	*getword(char *str, char *str2, int *i)
 {
 	char	*new_str;
 	char	*tmp;
@@ -70,7 +71,6 @@ static char	*ft_remove(char *str)
 {
 	int		i;
 	char	*new_str;
-	int		index;
 
 	i = -1;
 	new_str = ft_strndup("", 1);
@@ -78,11 +78,11 @@ static char	*ft_remove(char *str)
 		return (NULL);
 	while (str[++i])
 	{
-		if (!(i + 1 < ft_strlen(str) && str[i] == '\\' && is_quot(str[i + 1])))
-			new_str = getwordquote(str, new_str, &i);
-		else
+		if ((i + 1 < ft_strlen(str) && str[i] == '\\' && is_quot(str[i + 1])))
 			new_str = ft_skipquote(str, new_str, &i);
-		if (!str[i])
+		else
+			new_str = getword(str, new_str, &i);
+		if (str[i] == '\0')
 			break ;
 	}
 	return (new_str);
@@ -96,7 +96,8 @@ int	ft_remove_quotes(char **token)
 	i = -1;
 	while (token[++i])
 	{
-		if (getindexqoute(token[i]) >= 0)
+		if (getindexqoute(token[i]) >= 0 && (i == 0
+				|| (i - 1 >= 0 && ft_strcmp(token[i - 1], "<<"))))
 		{
 			tmp = ft_remove(token[i]);
 			if (!tmp)

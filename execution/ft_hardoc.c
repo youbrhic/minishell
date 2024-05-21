@@ -6,57 +6,77 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 02:15:06 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/13 01:37:41 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/20 03:41:22 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	**malloc_matr1(char *str, int flag)
+int	create_heredoc(char *limiter, char *file, char **env, int exit_status)
 {
-	char	**matr;
+	int		pid;
+	int		status;
 
-	matr = malloc(sizeof(char *) * 2);
-	if (!matr)
-		return (NULL);
-	matr[0] = ft_strndup(str, ft_strlen(str));
-	if (!matr[0])
-		return (NULL);
-	matr[1] = NULL;
-	if (flag)
-		free (str);
-	return (matr);
-}
-
-static void	ft_print_fd(int fd, char *str)
-{
-	if (fd < 0)
-		return ;
-	write(fd, str, ft_strlen(str));
-	write(fd, "\n", 1);
-}
-
-void	ft_hardoc(char *limiter)
-{
-	int		fd;
-	char	*input;
-	char	**matr;
-
-	if (!ft_strcmp(limiter, "hardoc"))
-		unlink("/tmp/hardoc");
-	fd = open("/tmp/hardoc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd < 0)
-		return ;
-	while (1)
+	pid = fork();
+	if (pid < 0)
 	{
-		input = readline(">");
-		if (!input || !ft_strcmp(input, limiter))
-			return ;
-		matr = malloc_matr1(input, 1);
-		if (!matr)
-			return ;
-		ft_print_fd(fd, matr[0]);
-		free_mat(matr);
+		perror("pid");
+		return (1);
 	}
-	close(fd);
+	else if (pid == 0)
+		write_hardoc(file, limiter, env, exit_status);
+	waitpid(pid, &status, 0);
+	return (WEXITSTATUS(status));
+}
+
+int	unlinek_heredocs(void)
+{
+	char	*tmp;
+	int		i;
+	char	*nb;
+
+	(1) && (i = 0, tmp = ft_strdup("/tmp/hardoc"));
+	if (!tmp)
+		return (0);
+	while (++i && !access(tmp, F_OK))
+	{
+		unlink(tmp);
+		free (tmp);
+		tmp = ft_strdup("/tmp/hardoc");
+		if (!tmp)
+			return (0);
+		nb = ft_itoa(i);
+		if (!nb)
+			return (0);
+		tmp = ft_strjoin(tmp, nb);
+		if (!tmp)
+			return (free(nb), 0);
+		free(nb);
+	}
+	return (free(tmp), 1);
+}
+
+int	ft_hardoc(char **limiter, char **env, int exit_status)
+{
+	char	*file;
+	char	*tmp;
+	int		state;
+
+	rl_catch_signals = 1;
+	ft_signal_heredoc();
+	file = get_file_hardoc();
+	if (!file)
+		return (1);
+	state = create_heredoc(*limiter, file, env, exit_status);
+	tmp = ft_strdup(file);
+	if (!tmp)
+		return (1);
+	free(*limiter);
+	free(file);
+	*limiter = tmp;
+	ft_signals();
+	rl_catch_signals = 0;
+	if (g_cld_proc == 1)
+		return (1);
+	return (0);
 }

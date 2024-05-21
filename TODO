@@ -1,0 +1,30 @@
+export = SGF
+export p+=+=+=+=======$     (Problem are your minishell are skiping always "+" += for this exemple "p+=+=+=+")
+export p= ""
+
+CHECK FOR echo "'$PATH'"''""
+
+exit 1 = (too many arg)
+
+echo - "ayssf" =========> excute without \n ??
+
+
+./minishell 45 4 5 4 5 6 (check ===> "bash: 4: No such file or directory")
+
+'"""'$HOME'"""'
+
+(cd Problem ) checking for (create folder l/l/l/l/ and cd ==> l/l/l/l/ than rm -rf l/l/l/l/ than create them again and try to return back or create file/folder on the same PATH l/l/l/l/)\
+
+
+# bash-3.2$ cat << youbrhic
+# > 
+# > yassine
+# > 1337
+# > $USER
+# > youbrhic
+
+# yassine
+# 1337
+# youbrhic
+
+# echo "$$?"

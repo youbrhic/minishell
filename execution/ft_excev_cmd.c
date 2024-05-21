@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_excev_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:05:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/13 23:10:02 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/21 06:18:41 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	exec_b(t_node *node, char **token, char ***env, int exit_status)
 				|| close(arg.output) < 0))
 			return (1);
 	}
-	state = ft_exec_bultin(token, env);
+	state = ft_exec_bultin(token, env, 1);
 	if (dup2(fdinput, 0) < 0 || dup2(fdoutput, 1) < 0
 		|| (fdinput != 0 && close(fdinput) < 0)
 		|| (fdoutput != 1 && close(fdoutput) < 0))
@@ -54,12 +54,15 @@ static int	exec_b(t_node *node, char **token, char ***env, int exit_status)
 int	ft_execv_cmd(t_node *node, char ***env, int exit_status)
 {
 	char	**token;
-	int		i;
 	int		state;
 
-	token = ft_token_cmds(node->cmd, *env, exit_status);
+	token = ft_token_cmds(node->cmd, *env, exit_status, 1);
 	if (!token)
 		return (perror("memory problem"), 0);
+	if (get_size_mat(token) - 1 > 0 && *token[get_size_mat(token) - 1])
+		ft_setenv("_", token[get_size_mat(token) - 1], env);
+	else if (get_size_mat(token) == 1)
+		ft_setenv("_", token[0], env);
 	if (ft_lstsize(node) == 1 && check_bultin(token[0]))
 	{
 		state = exec_b(node, token, env, exit_status);
