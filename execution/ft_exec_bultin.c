@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 23:02:18 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/02 17:00:37 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/18 00:54:59 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_exec_bultin(char **args, char ***env)
 	else if (!ft_strcmp(args[0], "exit"))
 		ft_exit(args);
 	else if (!ft_strcmp(args[0], "pwd"))
-		exit_state = ft_pwd(args);
+		exit_state = ft_pwd(args, env);
 	else if (!ft_strcmp(args[0], "unset"))
 		exit_state = ft_unset(args, env);
 	else if (!ft_strcmp(args[0], "export"))
