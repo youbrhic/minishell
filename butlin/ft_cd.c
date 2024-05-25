@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:21:27 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/21 22:01:30 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/21 23:22:09 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,17 @@ int	ft_setoldpwd(char ***env)
 
 	oldpwd = ft_gete("PWD", *env, 1);
 	if (!oldpwd)
-		return (0);
+	{
+		tmp = ft_strjoin(ft_strdup("OLDPWD="), "");
+		add_env_kv(tmp, env);
+		return (free(tmp), 1);
+	}
 	tmp = ft_strjoin(ft_strdup("OLDPWD="), oldpwd);
 	add_env_kv(tmp, env);
 	return (free(tmp), 1);
 }
 
-int	update_env(char ***env, char *oldpwd, char *path)
+int	update_env(char ***env, char *path)
 {
 	char	*pwd;
 	char	*tmp;
@@ -47,9 +51,9 @@ int	update_env(char ***env, char *oldpwd, char *path)
 	{
 		ft_putstr_fd(ERROR_CD, 2);
 		if (ft_strcmp(path, "..") == 0)
-			tmp = ft_strjoin(ft_strdup(ft_gete("PWD", *env, 0)),"/..");
+			tmp = ft_strjoin(ft_strdup(ft_gete("PWD", *env, 0)), "/..");
 		else
-			tmp = ft_strjoin(ft_strdup(ft_gete("PWD", *env, 0)),"/.");
+			tmp = ft_strjoin(ft_strdup(ft_gete("PWD", *env, 0)), "/.");
 		add_env_kv(tmp, env);
 		return (free(tmp), 1);
 	}
@@ -61,22 +65,22 @@ int	update_env(char ***env, char *oldpwd, char *path)
 int	ft_cd(char **path, char ***env)
 {
 	int		ret;
-	char	*oldpwd;
 
+	ft_setoldpwd(env);
 	if (path[1] && path[1][0] == '-' && path[1][1])
 	{
-		ft_putstr_fd("no option", 2);
+		ft_putstr_fd("minishell: no option\n", 2);
 		return (1);
 	}
 	if (!path[1])
 		ret = chdir(ft_gete("HOME", *env, 1));
 	else
 		ret = chdir(path[1]);
-	if (ret < 0 || !ft_setoldpwd(env))
+	if (ret < 0)
 	{
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putstr_fd("\n", 2);
 		return (1);
 	}
-	return (update_env(env, oldpwd, path[1]));
+	return (update_env(env, path[1]));
 }

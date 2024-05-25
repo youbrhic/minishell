@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:24:14 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/21 09:01:39 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/24 15:05:17 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,15 @@ static int	ft_isnumber(char *str)
 {
 	int	i;
 
-	i = -1;
-	while (str[++i])
+	i = 0;
+	if (str[0] == '-')
+		i++;
+	while (str[i])
+	{
 		if (!ft_isdigit(str[i]))
 			return (0);
+		i++;
+	}
 	return (1);
 }
 
@@ -34,8 +39,6 @@ static void	free_data(char **args, char **env, int exit_status)
 	free_mat(env);
 	exit(exit_status);
 }
-
-// 9223372036854775807
 
 int	ft_exit(char **args, char **env, int flag)
 {

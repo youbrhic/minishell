@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:57:53 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 03:41:42 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/22 10:21:54 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	ft_remove_quotes(char **token)
 		{
 			tmp = ft_remove(token[i]);
 			if (!tmp)
-				return (perror("Error"), 0);
+				return (ft_perror("Error"), 0);
 			free(token[i]);
 			token[i] = tmp;
 		}

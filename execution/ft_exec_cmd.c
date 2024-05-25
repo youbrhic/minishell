@@ -6,22 +6,44 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/21 09:44:50 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/24 14:57:52 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	**get_all_paths(char **env)
+static char	**get_all_paths(char **env, char *first_cmd)
 {
 	char	*path;
 	char	**paths;
 
 	path = ft_getenv("PATH", env);
 	if (!path)
-		return (NULL);
-	paths = ft_split(path, ':');
+	{
+		paths = malloc(sizeof(char *) * 2);
+		if (!paths)
+			return (NULL);
+		paths[0] = ft_strdup(first_cmd);
+		if (!paths[0])
+			return (free_mat(paths), NULL);
+		paths[1] = NULL;
+	}
+	else
+		paths = ft_split(path, ':');
 	return (paths);
+}
+
+static int	check_cmd(char *str)
+{
+	int		i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (str[i] == '/')
+			return (1);
+	}
+	return (0);
 }
 
 static char	*get_path_cmd(char *first_cmd, char **env)
@@ -30,16 +52,16 @@ static char	*get_path_cmd(char *first_cmd, char **env)
 	char	*tmp;
 	char	**all_paths;
 
-	all_paths = get_all_paths(env);
-	if (!all_paths || !first_cmd)
+	all_paths = get_all_paths(env, first_cmd);
+	if (!first_cmd)
 		return (NULL);
+	if (check_cmd(first_cmd))
+		return (ft_strdup(first_cmd));
 	i = -1;
 	while (all_paths[++i])
 	{
-		tmp = ft_strndup("", 1);
-		tmp = ft_strjoin(tmp, all_paths[i]);
-		tmp = ft_strjoin(tmp, "/");
-		tmp = ft_strjoin(tmp, first_cmd);
+		(1) && (tmp = ft_strndup("", 1), tmp = ft_strjoin(tmp, all_paths[i]));
+		(1) && (tmp = ft_strjoin(tmp, "/"), tmp = ft_strjoin(tmp, first_cmd));
 		if (!access(tmp, F_OK | X_OK))
 			return (free_mat(all_paths), tmp);
 		if (!tmp)
@@ -60,17 +82,17 @@ static int	print_error(char *str, char *path_cmd, int err)
 		;
 	if (err == 13)
 	{
-		if (access(path_cmd, X_OK))
+		if ((access(str, X_OK) && !access(str, R_OK)) || !*str || !*path_cmd)
 			return (write(2, ": command not found \n", 21), 127);
 		if (!access (str, S_IFDIR))
 			return (write(2, ": is a directory \n", 21), 126);
-		return (perror(" "), 126);
+		return (ft_perror(" "), 126);
 	}
 	else
 	{
 		if (i == ft_strlen(str))
 			return (write(2, ": command not found \n", 21), 127);
-		return (perror(" "), 127);
+		return (ft_perror(" "), 127);
 	}
 }
 
@@ -82,7 +104,7 @@ int	ft_exec_cmd(char *cmd, char ***env, int exit_status)
 
 	all_cmd = ft_token_cmds(cmd, *env, exit_status, 1);
 	if (!all_cmd)
-		return (perror("error"), 1);
+		return (ft_perror("error"), 1);
 	if (!*all_cmd)
 		return (free_mat(all_cmd), 0);
 	path_cmd = get_path_cmd(all_cmd[0], *env);

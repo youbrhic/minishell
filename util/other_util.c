@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 08:21:21 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 02:29:21 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/22 10:21:15 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,6 @@ int	is_redirection(char	*str)
 {
 	return (!ft_strcmp(str, ">>") || !ft_strcmp(str, "<<")
 		|| !ft_strcmp(str, "<") || !ft_strcmp(str, ">"));
-}
-
-void	ft_perror(char *str, int ex)
-{
-	perror(str);
-	exit(ex);
 }
 
 int	get_size_mat(char **str)

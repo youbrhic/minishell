@@ -6,7 +6,7 @@
 /*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:20:22 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/20 16:28:39 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/21 22:37:27 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	ft_export(char **args, char ***env)
 	exit_status = 0;
 	if (args[1] && args[1][0] == '-')
 	{
-		write(2, "no options\n", 11);
+		ft_putstr_fd("minishell: no option\n", 2);
 		return (2);
 	}
 	if (!args[1])

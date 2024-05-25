@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 03:02:51 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/18 23:39:51 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/22 10:21:54 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	print_error(char *str)
 static int	check_fd(int fd1, int fd2)
 {
 	if (fd1 != fd2 && (close(fd1) < 0))
-		return (perror("Erorr close"), 0);
+		return (ft_perror("Erorr close"), 0);
 	return (1);
 }
 
@@ -46,7 +46,7 @@ static int	check_ambiguous(char **matr, int exit_status, char **env)
 
 	copy = get_matr_copy(matr);
 	if (!copy)
-		return (perror("memory problem"), 1);
+		return (ft_perror("memory problem"), 1);
 	if (!ft_expand(copy, 1, exit_status, env))
 		return (free_mat(copy), 1);
 	i = -1;
@@ -74,7 +74,7 @@ int	ft_create_file(char *redirection, t_argument *arg,
 	i = -1;
 	matr = ft_split_cmd(redirection);
 	if (!matr)
-		return (perror("memory problem"), 1);
+		return (ft_perror("memory problem"), 1);
 	if (check_ambiguous(matr, exit_status, env))
 		return (free_mat(matr), 1);
 	while (matr[++i])
@@ -90,7 +90,7 @@ int	ft_create_file(char *redirection, t_argument *arg,
 				unlink(matr[i + 1]), ++i);
 		if ((arg->input < 0 || arg->output < 0))
 			return (write(2, "minishell :", 12),
-				perror(matr[i]), free_mat(matr), 1);
+				ft_perror(matr[i]), free_mat(matr), 1);
 	}
 	return (free_mat(matr), 0);
 }

@@ -3,27 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 21:19:16 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/21 22:05:49 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/22 22:10:55 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
+# include <libc.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <dirent.h>
-# include <libc.h>
 # include <termios.h>
 # include <errno.h>
 
-# define ERROR_CD "cd: error retrieving current \
-					directory: getcwd: cannot access parent \
-					directories: No such file or directory\n"
+# define ERROR_CD "cd: error retrieving current directory: \
+getcwd: cannot access parent directories: No such file or directory\n"
 
 int		g_cld_proc;
 
@@ -48,7 +45,7 @@ typedef struct s_argument
 
 void	free_mat(char **mtr);
 void	ft_lstadd_back(t_node **lst, t_node *new);
-void	ft_perror(char *str, int ex);
+void	ft_perror(char *str);
 void	ft_setenv(char *par, char *val, char ***env);
 void	write_fd(int fd, char *str);
 void	ft_putstr_fd(char *s, int fd);
@@ -111,6 +108,8 @@ int		ft_execv_cmd(t_node *node, char ***env, int exit_status);
 void	new_env(char **env, char ***n_env, int size);
 void	free_env(char ***env);
 char	*ft_gete(char *key, char **env, int k_or_v);
+int		chr_key_env(char *key, char **env);
+void	add_env_kv(char *arg, char ***env);
 
 int		ft_cd(char **args, char ***env);
 int		size_env(char **env);

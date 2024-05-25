@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:23:24 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/21 22:13:32 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/22 09:51:23 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ int	valid_arg(char *arg)
 	int	i;
 
 	i = 0;
+	if (arg[0] >= '0' && arg[0] <= '9')
+	{
+		ft_putstr_fd("Error: '", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd("' not a valid identifier\n", 2);
+		return (0);
+	}
 	while (arg[i])
 	{
 		if (!is_alphanum(arg[i]) && arg[i] != '_')
@@ -56,14 +63,13 @@ void	remove_arg(char *arg, char ***env)
 int	ft_unset(char **args, char ***env)
 {
 	int	i;
-	int	j;
 	int	exit_status;
 
 	(1) && (i = -1, exit_status = 0);
 	if (!args[1])
 		return (0);
 	if (args[1][0] == '-' && args[1][1])
-		return (ft_putstr_fd("Error: no option\n", 2), 2);
+		return (ft_putstr_fd("minishell: no option\n", 2), 2);
 	while (args[++i])
 	{
 		if (valid_arg(args[i]))

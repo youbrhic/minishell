@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 02:15:06 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 03:41:22 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/22 10:21:54 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	create_heredoc(char *limiter, char *file, char **env, int exit_status)
 	pid = fork();
 	if (pid < 0)
 	{
-		perror("pid");
+		ft_perror("pid");
 		return (1);
 	}
 	else if (pid == 0)

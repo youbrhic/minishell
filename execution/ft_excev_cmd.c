@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 21:05:24 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/21 06:18:41 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:57:56 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@ static int	ft_open_file_b(char *redirection, t_argument *arg,
 	return (0);
 }
 
+static int	ft_dup2(int fdinput, int fdoutput)
+{
+	if (dup2(fdinput, 0) < 0 || dup2(fdoutput, 1) < 0
+		|| (fdinput != 0 && close(fdinput) < 0)
+		|| (fdoutput != 1 && close(fdoutput) < 0))
+		return (ft_perror("close or dup2"), 1);
+	return (0);
+}
+
 static int	exec_b(t_node *node, char **token, char ***env, int exit_status)
 {
 	int			fdinput;
@@ -36,7 +45,7 @@ static int	exec_b(t_node *node, char **token, char ***env, int exit_status)
 		(1) && (fdinput = dup(0), fdoutput = dup(1));
 		state = ft_open_file_b(node->redirections, &arg, exit_status, *env);
 		if (state)
-			return (state);
+			return (ft_dup2(fdinput, fdoutput), state);
 		if (arg.input && (dup2(arg.input, 0) < 0 || close(arg.input) < 0))
 			return (1);
 		if (arg.output != 1 && (dup2(arg.output, 1) < 0
@@ -44,10 +53,8 @@ static int	exec_b(t_node *node, char **token, char ***env, int exit_status)
 			return (1);
 	}
 	state = ft_exec_bultin(token, env, 1);
-	if (dup2(fdinput, 0) < 0 || dup2(fdoutput, 1) < 0
-		|| (fdinput != 0 && close(fdinput) < 0)
-		|| (fdoutput != 1 && close(fdoutput) < 0))
-		return (perror("close or dup2"), 1);
+	if (ft_dup2(fdinput, fdoutput))
+		return (1);
 	return (state);
 }
 
@@ -58,8 +65,10 @@ int	ft_execv_cmd(t_node *node, char ***env, int exit_status)
 
 	token = ft_token_cmds(node->cmd, *env, exit_status, 1);
 	if (!token)
-		return (perror("memory problem"), 0);
-	if (get_size_mat(token) - 1 > 0 && *token[get_size_mat(token) - 1])
+		return (ft_perror("memory problem"), 0);
+	if (ft_lstsize(node) > 1 || !token[0])
+		ft_setenv("_", "", env);
+	else if (get_size_mat(token) - 1 > 0 && *token[get_size_mat(token) - 1])
 		ft_setenv("_", token[get_size_mat(token) - 1], env);
 	else if (get_size_mat(token) == 1)
 		ft_setenv("_", token[0], env);

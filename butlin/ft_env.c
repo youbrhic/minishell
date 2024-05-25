@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:22:18 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/08 19:02:27 by aait-bab         ###   ########.fr       */
+/*   Updated: 2024/05/22 08:44:07 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,17 @@ int	ft_env(char **args, char ***env)
 	int	i;
 
 	i = -1;
+	if (!ft_getenv("PATH", *env))
+		return (ft_putstr_fd("minishell:", 2),
+			ft_putstr_fd("env: No such file or directory\n", 2), 127);
 	if (args[1] && args[1][0] == '-' && args[1][1])
 	{
-		write(2, "Error: no option\n", 17);
+		ft_putstr_fd("minishell: no option\n", 2);
 		return (127);
 	}
 	if (args[1])
 	{
-		write(2, "Error: no arguments\n", 20);
+		ft_putstr_fd("minishell: no arguemnts\n", 2);
 		return (1);
 	}
 	while ((*env)[++i])

@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/11 03:21:11 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/20 02:36:32 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/22 10:21:54 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	*ft_add_skiper_str(char *str)
 
 	new_str = malloc(ft_strlen(str) + count_quotes(str) + 1);
 	if (!new_str)
-		return (perror("Error"), NULL);
+		return (ft_perror("Error"), NULL);
 	(1) && (i = -1, j = -1);
 	while (str[++i])
 	{
@@ -72,7 +72,7 @@ int	ft_add_skiper(char **token)
 		{
 			tmp = ft_add_skiper_str(token[i]);
 			if (!tmp)
-				return (perror("Error"), 0);
+				return (ft_perror("Error"), 0);
 			free(token[i]);
 			token[i] = tmp;
 		}

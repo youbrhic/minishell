@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 06:30:14 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/21 09:32:51 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/22 08:26:44 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	ft_atoi(char *str)
 		res = res * 10 + str[i] - '0';
 		if (res > (unsigned long long)max)
 			return (ft_putstr_fd("minishell:exit:", 2), ft_putstr_fd(str, 2)
-				, ft_putstr_fd(":numeric argument required", 2), 2);
+				, ft_putstr_fd(":numeric argument required", 2), 255);
 		i++;
 	}
 	return (res * sign);
