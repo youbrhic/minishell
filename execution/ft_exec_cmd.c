@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 11:08:44 by youbrhic          #+#    #+#             */
-/*   Updated: 2024/05/24 14:57:52 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/25 17:17:41 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ static int	print_error(char *str, char *path_cmd, int err)
 		if ((access(str, X_OK) && !access(str, R_OK)) || !*str || !*path_cmd)
 			return (write(2, ": command not found \n", 21), 127);
 		if (!access (str, S_IFDIR))
-			return (write(2, ": is a directory \n", 21), 126);
-		return (ft_perror(" "), 126);
+			return (write(2, ": is a directory \n", 18), 126);
+		return (ft_perror(" "),126);
 	}
 	else
 	{
