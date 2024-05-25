@@ -6,7 +6,7 @@
 /*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:19:20 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/20 04:20:34 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/25 21:45:44 by youbrhic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ static int	check_multi_n(char *arg)
 	int	i;
 
 	i = 1;
-	while (arg[i] == 'n')
+	if (arg[0] == '\0')
+		return (0);
+	while (arg[i] && arg[i] == 'n')
 		i++;
 	if (arg[i] == '\0' && arg[0] == '-' && ft_strlen(arg) > 1)
 		return (1);
