@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+         #
+#    By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 14:12:01 by youbrhic          #+#    #+#              #
-#    Updated: 2024/05/24 14:52:45 by youbrhic         ###   ########.fr        #
+#    Updated: 2024/05/25 16:33:56 by aait-bab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ INCLUDE = minishell.h
 
 CC =gcc -g
 
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 READLINE_FLAGS = -lreadline -lncurses
 

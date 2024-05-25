@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: youbrhic <youbrhic@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-bab <aait-bab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 08:21:27 by aait-bab          #+#    #+#             */
-/*   Updated: 2024/05/21 23:22:09 by youbrhic         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:40:54 by aait-bab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,7 @@ int	ft_setoldpwd(char ***env)
 
 	oldpwd = ft_gete("PWD", *env, 1);
 	if (!oldpwd)
-	{
-		tmp = ft_strjoin(ft_strdup("OLDPWD="), "");
-		add_env_kv(tmp, env);
-		return (free(tmp), 1);
-	}
+		return (1);
 	tmp = ft_strjoin(ft_strdup("OLDPWD="), oldpwd);
 	add_env_kv(tmp, env);
 	return (free(tmp), 1);
@@ -50,6 +46,8 @@ int	update_env(char ***env, char *path)
 	if (!pwd)
 	{
 		ft_putstr_fd(ERROR_CD, 2);
+		if (!ft_gete("PWD", *env, 0))
+			return (1);
 		if (ft_strcmp(path, "..") == 0)
 			tmp = ft_strjoin(ft_strdup(ft_gete("PWD", *env, 0)), "/..");
 		else
