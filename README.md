@@ -51,6 +51,7 @@ This project is a deep dive into:
 
 ## 🧱 Project Structure
 
+```
 minishell/
 ├── Makefile
 ├── README
@@ -102,3 +103,4 @@ minishell/
     ├── libtf_util4.c
     ├── other_util.c
     └── other_util2.c
+```
